@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, Integer, String, Text
+from sqlalchemy import DateTime, Integer, String, Text, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
 from core.db.base import Base
@@ -19,6 +19,6 @@ class AchievementModel(Base):
 class UserAchievementModel(Base):
     __tablename__ = "user_achievement"
 
-    user_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    achievement_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("user.id"), primary_key=True, index=True)
+    achievement_id: Mapped[int] = mapped_column(Integer, ForeignKey("achievement.id"), primary_key=True, index=True)
     unlocked_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
