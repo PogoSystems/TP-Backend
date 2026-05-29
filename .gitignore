@@ -12,6 +12,7 @@
 *.env
 *venv/
 copilot-instructions.md
+docs/
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
