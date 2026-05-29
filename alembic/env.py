@@ -9,7 +9,19 @@ from sqlalchemy import pool
 from sqlalchemy import create_engine
 
 # import models EXAMPLE
-from modules.iam.infrastructure.models import user_model
+from modules.analytics.infrastructure.models import UserBloomStatsModel
+from modules.bloom_taxonomy.infrastructure.models import BloomLevelModel
+from modules.content_processing.infrastructure.models import ContentDocumentModel
+from modules.course_management.infrastructure.models import CourseModel
+from modules.gamification.infrastructure.models import AchievementModel, UserAchievementModel
+from modules.iam.infrastructure.models import UserModel
+from modules.quiz_management.infrastructure.models import (
+    AnswerModel,
+    QuestionAttemptModel,
+    QuestionModel,
+    QuizAttemptModel,
+    QuizModel,
+)
 ##from modules.course.infrastructure.models import Course
 
 # ALEMBIC CONFIG

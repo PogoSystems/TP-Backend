@@ -10,3 +10,4 @@ llama-index==0.14.22
 google-generativeai==0.8.6
 python-multipart==0.0.29
 httpx==0.28.1
+psycopg2-binary
