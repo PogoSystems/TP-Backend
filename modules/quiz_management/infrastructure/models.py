@@ -63,5 +63,5 @@ class QuizSourceDocumentModel(Base):
     __tablename__ = "quiz_source_document"
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     quiz_id: Mapped[int] = mapped_column(Integer, ForeignKey("quiz.id"), index=True)
-    document_id: Mapped[int] = mapped_column(Integer, ForeignKey("document.id"), index=True)
+    document_id: Mapped[int] = mapped_column(Integer, ForeignKey("content_document.id"), index=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
