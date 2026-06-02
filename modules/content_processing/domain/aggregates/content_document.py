@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 @dataclass(slots=True)
@@ -9,7 +9,9 @@ class ContentDocumentAggregate:
     user_id: int = 0
     title: str = ""
     storage_key: str = ""
-    created_at: datetime = field(default_factory=datetime.utcnow)
+    created_at: datetime = field(
+    default_factory=lambda: datetime.now(timezone.utc)
+    )
 
     def __post_init__(self) -> None:
         if self.course_id <= 0:

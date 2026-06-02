@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 @dataclass(slots=True)
@@ -9,7 +9,9 @@ class CourseAggregate:
     description: str | None = None
     user_id: int = 0
     max_score: int | None = None
-    created_at: datetime = field(default_factory=datetime.utcnow)
+    created_at: datetime = field(
+    default_factory=lambda: datetime.now(timezone.utc)
+    )
 
     def __post_init__(self) -> None:
         if not self.name:
