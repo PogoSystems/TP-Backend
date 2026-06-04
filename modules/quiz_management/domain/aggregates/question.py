@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 ALLOWED_BLOOM_LEVELS = {"remember", "understand", "apply", "analyze", "evaluate", "create"}
@@ -12,7 +12,9 @@ class QuestionAggregate:
     text: str = ""
     bloom_level: str = ""
     score: int = 0
-    created_at: datetime = field(default_factory=datetime.utcnow)
+    created_at: datetime = field(
+    default_factory=lambda: datetime.now(timezone.utc)
+    )
 
     def __post_init__(self) -> None:
         if self.quiz_id <= 0:

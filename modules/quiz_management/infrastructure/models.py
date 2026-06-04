@@ -58,3 +58,10 @@ class QuestionAttemptModel(Base):
     is_correct: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     score_obtained: Mapped[int | None] = mapped_column(Integer, nullable=True)
     answered_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+
+class QuizSourceDocumentModel(Base):
+    __tablename__ = "quiz_source_document"
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    quiz_id: Mapped[int] = mapped_column(Integer, ForeignKey("quiz.id"), index=True)
+    document_id: Mapped[int] = mapped_column(Integer, ForeignKey("content_document.id"), index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
