@@ -57,5 +57,5 @@ def test_preparation_service_procesa_pdf_real(tmp_path: Path) -> None:
     )
     # Guardamos el JSON completo
     archivo_salida.write_text(json_data, encoding="utf-8")
-    
+    print(prepared.raw.markdown)
     print(f"\n✅ Archivo de inspección generado en: {archivo_salida.absolute()}")

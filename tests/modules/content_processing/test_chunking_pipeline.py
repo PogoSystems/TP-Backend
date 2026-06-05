@@ -155,6 +155,7 @@ def test_chunking_service_with_real_pdf(tmp_path: Path) -> None:
     )
 
     print("\n")
+    
     print(
         f"✅ Chunk inspection file generated:\n"
     )
