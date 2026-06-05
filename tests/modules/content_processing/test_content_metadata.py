@@ -1,4 +1,4 @@
-from modules.content_processing.application.services.content_metadata import enhance_section_metadata
+from modules.content_processing.application.services.parsing.content_metadata import enhance_section_metadata
 from modules.content_processing.domain.value_objects.prepared_content import StructuredSection
 
 

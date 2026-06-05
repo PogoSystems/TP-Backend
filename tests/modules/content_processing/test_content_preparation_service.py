@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from modules.content_processing.application.services.content_preparation_service import (
+from modules.content_processing.application.services.parsing.content_preparation_service import (
     ContentPreparationService,
 )
 from modules.content_processing.domain.value_objects.prepared_content import PreparedDocument
