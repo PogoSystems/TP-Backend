@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from modules.content_processing.application.services.content_metadata import enhance_section_metadata
-from modules.content_processing.application.services.content_normalization import normalize_markdown
-from modules.content_processing.application.services.content_structuring import structure_sections
+from modules.content_processing.application.services.parsing.content_metadata import enhance_section_metadata
+from modules.content_processing.application.services.parsing.content_normalization import normalize_markdown
+from modules.content_processing.application.services.parsing.content_structuring import structure_sections
 from modules.content_processing.domain.value_objects.prepared_content import PreparedDocument, RawContent
 from modules.content_processing.infrastructure.extractors.pdf_extractor import PdfContentExtractor
 from modules.content_processing.infrastructure.storage.local_document_store import LocalDocumentStore

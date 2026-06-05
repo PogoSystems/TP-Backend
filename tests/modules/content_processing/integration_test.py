@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 # Importa la clase real en lugar del Stub
 from modules.content_processing.infrastructure.extractors.pdf_extractor import PdfContentExtractor 
-from modules.content_processing.application.services.content_preparation_service import ContentPreparationService
+from modules.content_processing.application.services.parsing.content_preparation_service import ContentPreparationService
 from modules.content_processing.infrastructure.storage.local_document_store import LocalDocumentStore
 
 def test_preparation_service_procesa_pdf_real(tmp_path: Path) -> None:

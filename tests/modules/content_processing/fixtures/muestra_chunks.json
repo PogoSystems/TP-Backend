@@ -1,0 +1,1193 @@
+{
+    "document_title": "Documento Real",
+    "chunks": [
+        {
+            "chunk_id": "26eea09c-0d1f-4048-852e-6bade1247e3b",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "USER STORIES & ACCEPTANCE CRITERIA"
+            ],
+            "raw_content": "**Material producido por la Universidad Peruana de Ciencias Aplicadas UPC, 2021.** \n\nUser stories & Acceptance criteria",
+            "enriched_text": "Documento Real\n\nUSER STORIES & ACCEPTANCE CRITERIA\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas UPC, 2021.** \n\nUser stories & Acceptance criteria",
+            "token_count": 31,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 0,
+                "token_count": 16
+            }
+        },
+        {
+            "chunk_id": "d378f50d-7fec-490a-943c-ac91a285c2ad",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "CONTENIDO"
+            ],
+            "raw_content": "|Objetivo de aprendizaje|3|\n|---|---|\n|Introducción|3|\n|Acceptance criteria|5|\n|Scenarios|7|\n|Behavior-Driven Development|9|\n|Tips & best practices|11|\n|Conclusiones|14|\n|Referencias|14|\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021.",
+            "enriched_text": "Documento Real\n\nCONTENIDO\n\n|Objetivo de aprendizaje|3|\n|---|---|\n|Introducción|3|\n|Acceptance criteria|5|\n|Scenarios|7|\n|Behavior-Driven Development|9|\n|Tips & best practices|11|\n|Conclusiones|14|\n|Referencias|14|\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021.",
+            "token_count": 94,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 1,
+                "token_count": 28
+            }
+        },
+        {
+            "chunk_id": "68da8f2c-1d21-45a6-812b-b80805cb4df2",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "CONTENIDO"
+            ],
+            "raw_content": "UPC, 2021.** \n\n**2**",
+            "enriched_text": "Documento Real\n\nCONTENIDO\n\nUPC, 2021.** \n\n**2**",
+            "token_count": 12,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 1,
+                "token_count": 28
+            }
+        },
+        {
+            "chunk_id": "312b2c14-3584-48d8-8bb0-376d08198d46",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "Ya conocemos el formato: \n\n**“As a** (type of user), **I want to** (perform Para los equipos ágiles, User Stories son el some action) **so that I** (can achieve some primer método para identificar necesidades goal/result/value).” de los usuarios.",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nYa conocemos el formato: \n\n**“As a** (type of user), **I want to** (perform Para los equipos ágiles, User Stories son el some action) **so that I** (can achieve some primer método para identificar necesidades goal/result/value).” de los usuarios.",
+            "token_count": 87,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 2,
+                "token_count": 60
+            }
+        },
+        {
+            "chunk_id": "24714e9a-d58b-40e3-ad66-52e58296a499",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "¿Cómo nos aseguramos de que las User Stories se han completado correctamente y conforme a las demandas de los clientes? \n\n**Acceptance criteria**",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\n¿Cómo nos aseguramos de que las User Stories se han completado correctamente y conforme a las demandas de los clientes? \n\n**Acceptance criteria**",
+            "token_count": 39,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 2,
+                "token_count": 60
+            }
+        },
+        {
+            "chunk_id": "544a62a5-7f9a-4a44-bdef-37b4ebb3a2bb",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "3. ACCEPTANCE CRITERIA (Criterios de aceptación)"
+            ],
+            "raw_content": "Son una lista formalizada de condiciones que permiten asegurar que todos los escenarios se han tomado en cuenta y se ha completado una User Story. \n\nCriterios expresados de forma concisa por escrito, ayudan al equipo a evitar ambigüedad sobre las necesidades de los clientes y evitan problemas de comunicación.",
+            "enriched_text": "Documento Real\n\n3. ACCEPTANCE CRITERIA (Criterios de aceptación)\n\nSon una lista formalizada de condiciones que permiten asegurar que todos los escenarios se han tomado en cuenta y se ha completado una User Story. \n\nCriterios expresados de forma concisa por escrito, ayudan al equipo a evitar ambigüedad sobre las necesidades de los clientes y evitan problemas de comunicación.",
+            "token_count": 99,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 3,
+                "token_count": 63
+            }
+        },
+        {
+            "chunk_id": "40c5e0d0-af08-4642-be42-a500ffbe6dd2",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "3. ACCEPTANCE CRITERIA (Criterios de aceptación)"
+            ],
+            "raw_content": "Criterios expresados de forma concisa por escrito, ayudan al equipo a evitar ambigüedad sobre las necesidades de los clientes y evitan problemas de comunicación. \n\nPermiten establecer la visión de un producto, incluso ayudan en el proceso de desarrollo.",
+            "enriched_text": "Documento Real\n\n3. ACCEPTANCE CRITERIA (Criterios de aceptación)\n\nCriterios expresados de forma concisa por escrito, ayudan al equipo a evitar ambigüedad sobre las necesidades de los clientes y evitan problemas de comunicación. \n\nPermiten establecer la visión de un producto, incluso ayudan en el proceso de desarrollo.",
+            "token_count": 83,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 3,
+                "token_count": 63
+            }
+        },
+        {
+            "chunk_id": "cc62c25d-c1b3-4ab3-a091-e6d97c6b6ab7",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "3.1 UTILIDAD"
+            ],
+            "raw_content": "**==> picture [347 x 183] intentionally omitted <==**\n\n**----- Start of picture text -----**<br>\nDefinir Ayudan al equipo a definir los límites de una user story.<br>Permiten confirmar cuándo la aplicación funciona como se<br>alcance<br>desea,",
+            "enriched_text": "Documento Real\n\n3.1 UTILIDAD\n\n**==> picture [347 x 183] intentionally omitted <==**\n\n**----- Start of picture text -----**<br>\nDefinir Ayudan al equipo a definir los límites de una user story.<br>Permiten confirmar cuándo la aplicación funciona como se<br>alcance<br>desea,",
+            "token_count": 92,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 4,
+                "token_count": 141
+            }
+        },
+        {
+            "chunk_id": "c8461c89-c50d-482a-b469-c9a9e7652db4",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "3.1 UTILIDAD"
+            ],
+            "raw_content": "<br>Permiten confirmar cuándo la aplicación funciona como se<br>alcance<br>desea, lo que significa que la user story se ha completado.<br>Tener acceptance criteria sincroniza el equipo de desarrollo<br>Lograr con el cliente.",
+            "enriched_text": "Documento Real\n\n3.1 UTILIDAD\n\n<br>Permiten confirmar cuándo la aplicación funciona como se<br>alcance<br>desea, lo que significa que la user story se ha completado.<br>Tener acceptance criteria sincroniza el equipo de desarrollo<br>Lograr con el cliente.",
+            "token_count": 76,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 4,
+                "token_count": 141
+            }
+        },
+        {
+            "chunk_id": "540222dd-1503-4822-aa0a-ead68fd82c81",
+            "document_title": "Documento Real",
+            "chunk_index": 2,
+            "heading_path": [
+                "3.1 UTILIDAD"
+            ],
+            "raw_content": "lo que significa que la user story se ha completado.<br>Tener acceptance criteria sincroniza el equipo de desarrollo<br>Lograr con el cliente. El equipo sabe con exactitud qué condiciones<br>concenso se deberían cumplir, a la vez que el cliente sabe qué esperar<br>de la app.",
+            "enriched_text": "Documento Real\n\n3.1 UTILIDAD\n\nlo que significa que la user story se ha completado.<br>Tener acceptance criteria sincroniza el equipo de desarrollo<br>Lograr con el cliente. El equipo sabe con exactitud qué condiciones<br>concenso se deberían cumplir, a la vez que el cliente sabe qué esperar<br>de la app.",
+            "token_count": 96,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 4,
+                "token_count": 141
+            }
+        },
+        {
+            "chunk_id": "3d08f143-1f45-4858-a28f-fd517107b121",
+            "document_title": "Documento Real",
+            "chunk_index": 3,
+            "heading_path": [
+                "3.1 UTILIDAD"
+            ],
+            "raw_content": "a la vez que el cliente sabe qué esperar<br>de la app.<br>Servir de Son la piedra angular de pruebas positivas y negativas que<br>base para tests buscan verificar si el sistema trabaja como se espera.",
+            "enriched_text": "Documento Real\n\n3.1 UTILIDAD\n\na la vez que el cliente sabe qué esperar<br>de la app.<br>Servir de Son la piedra angular de pruebas positivas y negativas que<br>base para tests buscan verificar si el sistema trabaja como se espera.",
+            "token_count": 72,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 4,
+                "token_count": 141
+            }
+        },
+        {
+            "chunk_id": "73a50220-41a3-4929-984f-9ced8ee76533",
+            "document_title": "Documento Real",
+            "chunk_index": 4,
+            "heading_path": [
+                "3.1 UTILIDAD"
+            ],
+            "raw_content": "<br>Permitir planificación y Los escenarios de acceptance criteria facilitan que las user<br>estimaciones precisas stories se dividan en tareas que se puedan estimar y planificar.<br>**----- End of picture text -----**<br>\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas.",
+            "enriched_text": "Documento Real\n\n3.1 UTILIDAD\n\n<br>Permitir planificación y Los escenarios de acceptance criteria facilitan que las user<br>estimaciones precisas stories se dividan en tareas que se puedan estimar y planificar.<br>**----- End of picture text -----**<br>\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas.",
+            "token_count": 100,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 4,
+                "token_count": 141
+            }
+        },
+        {
+            "chunk_id": "d941f82d-6718-4a1b-bb6f-e2c7a6f388d0",
+            "document_title": "Documento Real",
+            "chunk_index": 5,
+            "heading_path": [
+                "3.1 UTILIDAD"
+            ],
+            "raw_content": "<br>**----- End of picture text -----**<br>\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021. 4** \n\nUser stories & Acceptance criteria",
+            "enriched_text": "Documento Real\n\n3.1 UTILIDAD\n\n<br>**----- End of picture text -----**<br>\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021. 4** \n\nUser stories & Acceptance criteria",
+            "token_count": 57,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 4,
+                "token_count": 141
+            }
+        },
+        {
+            "chunk_id": "69eeef5d-e82a-4bdf-85e0-50f5685def61",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "**Who writes**"
+            ],
+            "raw_content": "- Puede ser el cliente o el equipo de desarrollo.",
+            "enriched_text": "Documento Real\n\n**Who writes**\n\n- Puede ser el cliente o el equipo de desarrollo.",
+            "token_count": 18,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 5,
+                "token_count": 101
+            }
+        },
+        {
+            "chunk_id": "9fd8aca5-8c4f-41c7-b598-eefd040fb15c",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "**Who writes**"
+            ],
+            "raw_content": "- Criterios escritos por el product owner (cliente) son revisados por un miembro del equipo de desarrollo, para asegurarse que los criterios están especificados con claridad y que no hay restricciones técnicas o inconsistencias desde la perspectiva del desarrollo.",
+            "enriched_text": "Documento Real\n\n**Who writes**\n\n- Criterios escritos por el product owner (cliente) son revisados por un miembro del equipo de desarrollo, para asegurarse que los criterios están especificados con claridad y que no hay restricciones técnicas o inconsistencias desde la perspectiva del desarrollo.",
+            "token_count": 88,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 5,
+                "token_count": 101
+            }
+        },
+        {
+            "chunk_id": "04df7bac-fa15-4c2c-8038-d0c3fe4d671f",
+            "document_title": "Documento Real",
+            "chunk_index": 2,
+            "heading_path": [
+                "**Who writes**"
+            ],
+            "raw_content": "- Este flujo aplica a colaboraciones donde el product owner tiene experiencia en proyectos de desarrollo de software y tiene conocimiento sobre documentación de proyectos.",
+            "enriched_text": "Documento Real\n\n**Who writes**\n\n- Este flujo aplica a colaboraciones donde el product owner tiene experiencia en proyectos de desarrollo de software y tiene conocimiento sobre documentación de proyectos.",
+            "token_count": 52,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 5,
+                "token_count": 101
+            }
+        },
+        {
+            "chunk_id": "5fdffe3a-6a55-460c-a7da-a47036be43cf",
+            "document_title": "Documento Real",
+            "chunk_index": 3,
+            "heading_path": [
+                "**Who writes**"
+            ],
+            "raw_content": "- Cuando los criterios son escritos por el equipo de desarrollo, entonces un analista de requisitos, project manager o especialista de QA debería encargarse de esta tarea.",
+            "enriched_text": "Documento Real\n\n**Who writes**\n\n- Cuando los criterios son escritos por el equipo de desarrollo, entonces un analista de requisitos, project manager o especialista de QA debería encargarse de esta tarea.",
+            "token_count": 58,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 5,
+                "token_count": 101
+            }
+        },
+        {
+            "chunk_id": "c761bae7-29d2-4abc-a2dd-73302d977d98",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "**When**"
+            ],
+            "raw_content": "- Deberían especificarse antes y nunca después que el desarrollo ha comenzado. De esta manera, el equipo y el product owner estarían de acuerdo sobre la minima cantidad de entregas que satisfacen los requisitos del product owner.",
+            "enriched_text": "Documento Real\n\n**When**\n\n- Deberían especificarse antes y nunca después que el desarrollo ha comenzado. De esta manera, el equipo y el product owner estarían de acuerdo sobre la minima cantidad de entregas que satisfacen los requisitos del product owner.",
+            "token_count": 75,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 6,
+                "token_count": 78
+            }
+        },
+        {
+            "chunk_id": "41097636-26a7-4ff3-8575-708c53b46336",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "**When**"
+            ],
+            "raw_content": "Tipos: \n\n**==> picture [49 x 7] intentionally omitted <==**\n\n**----- Start of picture text -----**<br>\nHow to write<br>**----- End of picture text -----**<br>\n\n- **Rules-oriented** . En forma de lista. \n\n- **Scenario-oriented** .",
+            "enriched_text": "Documento Real\n\n**When**\n\nTipos: \n\n**==> picture [49 x 7] intentionally omitted <==**\n\n**----- Start of picture text -----**<br>\nHow to write<br>**----- End of picture text -----**<br>\n\n- **Rules-oriented** . En forma de lista. \n\n- **Scenario-oriented** .",
+            "token_count": 94,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 6,
+                "token_count": 78
+            }
+        },
+        {
+            "chunk_id": "b00fdc58-f398-4bbb-9fb3-ab7e6f3751d1",
+            "document_title": "Documento Real",
+            "chunk_index": 2,
+            "heading_path": [
+                "**When**"
+            ],
+            "raw_content": "En forma de lista. \n\n- **Scenario-oriented** . En forma de escenarios que ilustran cada criterio.",
+            "enriched_text": "Documento Real\n\n**When**\n\nEn forma de lista. \n\n- **Scenario-oriented** . En forma de escenarios que ilustran cada criterio.",
+            "token_count": 34,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 6,
+                "token_count": 78
+            }
+        },
+        {
+            "chunk_id": "03eb7c60-4c69-46fc-ada3-59702bac947a",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "4.1 SCENARIO-ORIENTED APPROACH"
+            ],
+            "raw_content": "Ayuda a captar de forma rápida los requisitos, contemplar varios casos de uso y además utilizar los escenarios para pruebas de aceptación manuales y automatizadas. \n\n- Es el approach preferido por equipos ágiles. \n\n- Template común: Given / When / Then \n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas.",
+            "enriched_text": "Documento Real\n\n4.1 SCENARIO-ORIENTED APPROACH\n\nAyuda a captar de forma rápida los requisitos, contemplar varios casos de uso y además utilizar los escenarios para pruebas de aceptación manuales y automatizadas. \n\n- Es el approach preferido por equipos ágiles. \n\n- Template común: Given / When / Then \n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas.",
+            "token_count": 100,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 7,
+                "token_count": 53
+            }
+        },
+        {
+            "chunk_id": "08e35f80-c5b3-47ac-8965-f90733a4cee0",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "4.1 SCENARIO-ORIENTED APPROACH"
+            ],
+            "raw_content": "- Es el approach preferido por equipos ágiles. \n\n- Template común: Given / When / Then \n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021. 5**",
+            "enriched_text": "Documento Real\n\n4.1 SCENARIO-ORIENTED APPROACH\n\n- Es el approach preferido por equipos ágiles. \n\n- Template común: Given / When / Then \n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021. 5**",
+            "token_count": 52,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 7,
+                "token_count": 53
+            }
+        },
+        {
+            "chunk_id": "afc4ac8d-7c36-466f-ab8a-7ceb104889c2",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "**==> picture [343 x 157] intentionally omitted <==**\n\n**----- Start of picture text -----**<br>\nComo usuario del website, deseo<br>poder proporcionar feedback, para<br>Scenario: usuario visualiza formulario “Brindar<br>que mi opinión sea considerada por<br>feedback”.",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\n**==> picture [343 x 157] intentionally omitted <==**\n\n**----- Start of picture text -----**<br>\nComo usuario del website, deseo<br>poder proporcionar feedback, para<br>Scenario: usuario visualiza formulario “Brindar<br>que mi opinión sea considerada por<br>feedback”.",
+            "token_count": 92,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 8,
+                "token_count": 172
+            }
+        },
+        {
+            "chunk_id": "e90f07a5-061f-44c3-8d8c-404cf9966b6c",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "deseo<br>poder proporcionar feedback, para<br>Scenario: usuario visualiza formulario “Brindar<br>que mi opinión sea considerada por<br>feedback”.<br>los dueños del website en futuras<br>actualizaciones del mismo.",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\ndeseo<br>poder proporcionar feedback, para<br>Scenario: usuario visualiza formulario “Brindar<br>que mi opinión sea considerada por<br>feedback”.<br>los dueños del website en futuras<br>actualizaciones del mismo.",
+            "token_count": 69,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 8,
+                "token_count": 172
+            }
+        },
+        {
+            "chunk_id": "615826b4-64a1-4a1c-ac4b-25876b3db987",
+            "document_title": "Documento Real",
+            "chunk_index": 2,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "<br>Dado que el usuario cuenta con el rol de usuario<br>autenticado o invitado<br>Cuando el usuario abre la página “Feedback”<br>Entonces el sistema muestra el formulario “Brindar<br>feedback” conteniendo los campos “Email”,",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\n<br>Dado que el usuario cuenta con el rol de usuario<br>autenticado o invitado<br>Cuando el usuario abre la página “Feedback”<br>Entonces el sistema muestra el formulario “Brindar<br>feedback” conteniendo los campos “Email”,",
+            "token_count": 82,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 8,
+                "token_count": 172
+            }
+        },
+        {
+            "chunk_id": "ceec2bca-a5e5-4460-84f3-f802152efcac",
+            "document_title": "Documento Real",
+            "chunk_index": 3,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "<br>“Nombre” y “Comentario” los cuales son requeridos.<br>Scenario: usuario envía el formulario de feedback con datos válidos.<br>**----- End of picture text -----**<br>\n\n**Dado que** el sistema muestra el formulario “Brindar feedback” conteniendo los campos “Email”,",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\n<br>“Nombre” y “Comentario” los cuales son requeridos.<br>Scenario: usuario envía el formulario de feedback con datos válidos.<br>**----- End of picture text -----**<br>\n\n**Dado que** el sistema muestra el formulario “Brindar feedback” conteniendo los campos “Email”,",
+            "token_count": 99,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 8,
+                "token_count": 172
+            }
+        },
+        {
+            "chunk_id": "23d780c5-571b-42de-ad2b-3974bf4a225b",
+            "document_title": "Documento Real",
+            "chunk_index": 4,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "<br>**----- End of picture text -----**<br>\n\n**Dado que** el sistema muestra el formulario “Brindar feedback” conteniendo los campos “Email”, “Nombre” y “Comentario” los cuales son requeridos. **Y** el usuario coloca una dirección de email válida en el campo “Email”",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\n<br>**----- End of picture text -----**<br>\n\n**Dado que** el sistema muestra el formulario “Brindar feedback” conteniendo los campos “Email”, “Nombre” y “Comentario” los cuales son requeridos. **Y** el usuario coloca una dirección de email válida en el campo “Email”",
+            "token_count": 100,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 8,
+                "token_count": 172
+            }
+        },
+        {
+            "chunk_id": "d9a275ff-6d4a-43e9-835e-5b0328d1b00c",
+            "document_title": "Documento Real",
+            "chunk_index": 5,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "“Nombre” y “Comentario” los cuales son requeridos. **Y** el usuario coloca una dirección de email válida en el campo “Email” **Y** el usuario coloca su nombre en el campo “Nombre” **Y** el usuario coloca su comentario en el campo “Comentario” **Cuando** el usuario",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\n“Nombre” y “Comentario” los cuales son requeridos. **Y** el usuario coloca una dirección de email válida en el campo “Email” **Y** el usuario coloca su nombre en el campo “Nombre” **Y** el usuario coloca su comentario en el campo “Comentario” **Cuando** el usuario",
+            "token_count": 98,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 8,
+                "token_count": 172
+            }
+        },
+        {
+            "chunk_id": "86238b85-dbd1-478a-bea0-b7e737c57cfb",
+            "document_title": "Documento Real",
+            "chunk_index": 6,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "de email válida en el campo “Email” **Y** el usuario coloca su nombre en el campo “Nombre” **Y** el usuario coloca su comentario en el campo “Comentario” **Cuando** el usuario ordena “Enviar feedback” **Entonces** el sistema envía mi feedback **Y** el sistema muestra el",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nde email válida en el campo “Email” **Y** el usuario coloca su nombre en el campo “Nombre” **Y** el usuario coloca su comentario en el campo “Comentario” **Cuando** el usuario ordena “Enviar feedback” **Entonces** el sistema envía mi feedback **Y** el sistema muestra el",
+            "token_count": 100,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 8,
+                "token_count": 172
+            }
+        },
+        {
+            "chunk_id": "d1f09c03-53b3-4dd5-bc82-36dd7f242cc3",
+            "document_title": "Documento Real",
+            "chunk_index": 7,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "el usuario coloca su comentario en el campo “Comentario” **Cuando** el usuario ordena “Enviar feedback” **Entonces** el sistema envía mi feedback **Y** el sistema muestra el mensaje “Su feedback fue enviado con éxito” **Y** el sistema limpia los campos del formulario “Brindar",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nel usuario coloca su comentario en el campo “Comentario” **Cuando** el usuario ordena “Enviar feedback” **Entonces** el sistema envía mi feedback **Y** el sistema muestra el mensaje “Su feedback fue enviado con éxito” **Y** el sistema limpia los campos del formulario “Brindar",
+            "token_count": 99,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 8,
+                "token_count": 172
+            }
+        },
+        {
+            "chunk_id": "0878323f-302d-490e-b02a-2da990129829",
+            "document_title": "Documento Real",
+            "chunk_index": 8,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "feedback” **Entonces** el sistema envía mi feedback **Y** el sistema muestra el mensaje “Su feedback fue enviado con éxito” **Y** el sistema limpia los campos del formulario “Brindar feedback”.",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nfeedback” **Entonces** el sistema envía mi feedback **Y** el sistema muestra el mensaje “Su feedback fue enviado con éxito” **Y** el sistema limpia los campos del formulario “Brindar feedback”.",
+            "token_count": 67,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 8,
+                "token_count": 172
+            }
+        },
+        {
+            "chunk_id": "5464ae90-7871-4eee-bf82-eba81cd335ef",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "5. BEHAVIOR-DRIVEN DEVELOPMENT (BDD)"
+            ],
+            "raw_content": "- Es un proceso de desarrollo de software que coloca en primer lugar al comportamiento. \n\n- Un behavior (comportamiento) es cómo un feature que opera dentro de un escenario bien definido de entradas, acciones y resultados. \n\n- Los comportamientos se identifican utilizando specification by example.",
+            "enriched_text": "Documento Real\n\n5. BEHAVIOR-DRIVEN DEVELOPMENT (BDD)\n\n- Es un proceso de desarrollo de software que coloca en primer lugar al comportamiento. \n\n- Un behavior (comportamiento) es cómo un feature que opera dentro de un escenario bien definido de entradas, acciones y resultados. \n\n- Los comportamientos se identifican utilizando specification by example.",
+            "token_count": 87,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 9,
+                "token_count": 62
+            }
+        },
+        {
+            "chunk_id": "1a42435c-8ead-43c7-a4db-578c3c785c33",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "5. BEHAVIOR-DRIVEN DEVELOPMENT (BDD)"
+            ],
+            "raw_content": "- Un behavior (comportamiento) es cómo un feature que opera dentro de un escenario bien definido de entradas, acciones y resultados. \n\n- Los comportamientos se identifican utilizando specification by example. \n\n- Behavior specs se convierten en los requisitos, los criterios de aceptación y las pruebas de aceptación.",
+            "enriched_text": "Documento Real\n\n5. BEHAVIOR-DRIVEN DEVELOPMENT (BDD)\n\n- Un behavior (comportamiento) es cómo un feature que opera dentro de un escenario bien definido de entradas, acciones y resultados. \n\n- Los comportamientos se identifican utilizando specification by example. \n\n- Behavior specs se convierten en los requisitos, los criterios de aceptación y las pruebas de aceptación.",
+            "token_count": 92,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 9,
+                "token_count": 62
+            }
+        },
+        {
+            "chunk_id": "2ed96c06-bd0c-43ce-b3d6-a420448ee9d8",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "5.1 BDD TEST FRAMEWORKS"
+            ],
+            "raw_content": "- Test frameworks también pueden automatizar specs – specs declarativos y que deberían cubrir unidades de cobertura para comportamientos únicos del producto.",
+            "enriched_text": "Documento Real\n\n5.1 BDD TEST FRAMEWORKS\n\n- Test frameworks también pueden automatizar specs – specs declarativos y que deberían cubrir unidades de cobertura para comportamientos únicos del producto.",
+            "token_count": 51,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 10,
+                "token_count": 56
+            }
+        },
+        {
+            "chunk_id": "860f7013-cc70-4be5-ace6-9dd619b471d8",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "5.1 BDD TEST FRAMEWORKS"
+            ],
+            "raw_content": "- Los BDD test frameworks más conocidos son Cucumber y sus derivados, que escriben specs el lenguaje Gherkin, con el estilo “Given-When-Then”. \n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021.** \n\n**7**",
+            "enriched_text": "Documento Real\n\n5.1 BDD TEST FRAMEWORKS\n\n- Los BDD test frameworks más conocidos son Cucumber y sus derivados, que escriben specs el lenguaje Gherkin, con el estilo “Given-When-Then”. \n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021.** \n\n**7**",
+            "token_count": 82,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 10,
+                "token_count": 56
+            }
+        },
+        {
+            "chunk_id": "f1f1f81a-cc14-4375-b682-bf29e7cb4fb1",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "|Language|Framework|Type|\n|---|---|---|\n|C|Catch|In-line Spec|\n|C++|Igloo|In-line Spec|\n||Concordion|In-line Spec|\n||LightBDD|In-line Gherkin|\n|C# and .",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\n|Language|Framework|Type|\n|---|---|---|\n|C|Catch|In-line Spec|\n|C++|Igloo|In-line Spec|\n||Concordion|In-line Spec|\n||LightBDD|In-line Gherkin|\n|C# and .",
+            "token_count": 72,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 11,
+                "token_count": 98
+            }
+        },
+        {
+            "chunk_id": "83cce312-6999-4d25-81d7-c424d83c7d10",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "NET|NBehave x|Separated semi-Gherkin|\n||NSpec|In-line Spec|\n||SpecFlow *|Separated Gherkin|\n||xBehave.net|In-line Gherkin|\n|Golang|Ginkgo|In-line Spec|\n||Cucumber-JVM *|Separated Gherkin|\n||JBehave|Separated semi-Gherkin|\n|Java and",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nNET|NBehave x|Separated semi-Gherkin|\n||NSpec|In-line Spec|\n||SpecFlow *|Separated Gherkin|\n||xBehave.net|In-line Gherkin|\n|Golang|Ginkgo|In-line Spec|\n||Cucumber-JVM *|Separated Gherkin|\n||JBehave|Separated semi-Gherkin|\n|Java and",
+            "token_count": 99,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 11,
+                "token_count": 98
+            }
+        },
+        {
+            "chunk_id": "5179a69f-bef4-422b-909c-eb1b02120635",
+            "document_title": "Documento Real",
+            "chunk_index": 2,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "net|In-line Gherkin|\n|Golang|Ginkgo|In-line Spec|\n||Cucumber-JVM *|Separated Gherkin|\n||JBehave|Separated semi-Gherkin|\n|Java and JVM|JDave x|In-line Spec|\n||JGiven *|In-line Gherkin|\n||Scalatest|In-line Spec|\n||Spock|In-line",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nnet|In-line Gherkin|\n|Golang|Ginkgo|In-line Spec|\n||Cucumber-JVM *|Separated Gherkin|\n||JBehave|Separated semi-Gherkin|\n|Java and JVM|JDave x|In-line Spec|\n||JGiven *|In-line Gherkin|\n||Scalatest|In-line Spec|\n||Spock|In-line",
+            "token_count": 100,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 11,
+                "token_count": 98
+            }
+        },
+        {
+            "chunk_id": "a6277165-1cc3-4e24-aa34-f802c6c79649",
+            "document_title": "Documento Real",
+            "chunk_index": 3,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "semi-Gherkin|\n|Java and JVM|JDave x|In-line Spec|\n||JGiven *|In-line Gherkin|\n||Scalatest|In-line Spec|\n||Spock|In-line Spec|\n||Cucumber.js *|Separated Gherkin|\n||Yadda|Separated semi-Gherkin|\n|JavaScript|Jasmine|In-line",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nsemi-Gherkin|\n|Java and JVM|JDave x|In-line Spec|\n||JGiven *|In-line Gherkin|\n||Scalatest|In-line Spec|\n||Spock|In-line Spec|\n||Cucumber.js *|Separated Gherkin|\n||Yadda|Separated semi-Gherkin|\n|JavaScript|Jasmine|In-line",
+            "token_count": 92,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 11,
+                "token_count": 98
+            }
+        },
+        {
+            "chunk_id": "569fae15-e2c6-402a-afdf-b341da2ca48c",
+            "document_title": "Documento Real",
+            "chunk_index": 4,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "Gherkin|\n||Scalatest|In-line Spec|\n||Spock|In-line Spec|\n||Cucumber.js *|Separated Gherkin|\n||Yadda|Separated semi-Gherkin|\n|JavaScript|Jasmine|In-line Spec|\n||Mocha|In-line Spec|\n||Vows|In-line Spec|\n|Perl|Test::BDD::Cucumber|Separated",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nGherkin|\n||Scalatest|In-line Spec|\n||Spock|In-line Spec|\n||Cucumber.js *|Separated Gherkin|\n||Yadda|Separated semi-Gherkin|\n|JavaScript|Jasmine|In-line Spec|\n||Mocha|In-line Spec|\n||Vows|In-line Spec|\n|Perl|Test::BDD::Cucumber|Separated",
+            "token_count": 97,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 11,
+                "token_count": 98
+            }
+        },
+        {
+            "chunk_id": "5c5342eb-b475-4b6b-90f0-3231c85b6088",
+            "document_title": "Documento Real",
+            "chunk_index": 5,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "Gherkin|\n||Yadda|Separated semi-Gherkin|\n|JavaScript|Jasmine|In-line Spec|\n||Mocha|In-line Spec|\n||Vows|In-line Spec|\n|Perl|Test::BDD::Cucumber|Separated Gherkin|\n|PHP|Behat|Separated Gherkin|\n||Codeception *|Separated or In-line|\n||behave *|Separated",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nGherkin|\n||Yadda|Separated semi-Gherkin|\n|JavaScript|Jasmine|In-line Spec|\n||Mocha|In-line Spec|\n||Vows|In-line Spec|\n|Perl|Test::BDD::Cucumber|Separated Gherkin|\n|PHP|Behat|Separated Gherkin|\n||Codeception *|Separated or In-line|\n||behave *|Separated",
+            "token_count": 95,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 11,
+                "token_count": 98
+            }
+        },
+        {
+            "chunk_id": "70bee24f-e4b3-4375-8e87-da16a159cdec",
+            "document_title": "Documento Real",
+            "chunk_index": 6,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "Spec|\n||Vows|In-line Spec|\n|Perl|Test::BDD::Cucumber|Separated Gherkin|\n|PHP|Behat|Separated Gherkin|\n||Codeception *|Separated or In-line|\n||behave *|Separated Gherkin|\n||freshen x|Separated Gherkin|\n|Python|lettuce<br>pyspecs|Separated",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nSpec|\n||Vows|In-line Spec|\n|Perl|Test::BDD::Cucumber|Separated Gherkin|\n|PHP|Behat|Separated Gherkin|\n||Codeception *|Separated or In-line|\n||behave *|Separated Gherkin|\n||freshen x|Separated Gherkin|\n|Python|lettuce<br>pyspecs|Separated",
+            "token_count": 90,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 11,
+                "token_count": 98
+            }
+        },
+        {
+            "chunk_id": "6ba8c250-2954-458f-962f-f57e4342f47e",
+            "document_title": "Documento Real",
+            "chunk_index": 7,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "Gherkin|\n|PHP|Behat|Separated Gherkin|\n||Codeception *|Separated or In-line|\n||behave *|Separated Gherkin|\n||freshen x|Separated Gherkin|\n|Python|lettuce<br>pyspecs|Separated semi-Gherkin<br>In-line Spec|\n||pytest-bdd *|Separated semi-Gherkin|\n||radish|Separated",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nGherkin|\n|PHP|Behat|Separated Gherkin|\n||Codeception *|Separated or In-line|\n||behave *|Separated Gherkin|\n||freshen x|Separated Gherkin|\n|Python|lettuce<br>pyspecs|Separated semi-Gherkin<br>In-line Spec|\n||pytest-bdd *|Separated semi-Gherkin|\n||radish|Separated",
+            "token_count": 100,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 11,
+                "token_count": 98
+            }
+        },
+        {
+            "chunk_id": "114be2be-296f-4f97-b5d9-010c13801768",
+            "document_title": "Documento Real",
+            "chunk_index": 8,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "x|Separated Gherkin|\n|Python|lettuce<br>pyspecs|Separated semi-Gherkin<br>In-line Spec|\n||pytest-bdd *|Separated semi-Gherkin|\n||radish|Separated Gherkin-plus|\n||Cucumber *|Separated Gherkin|\n|Ruby|RSpec|In-line Spec|\n||Spinach|Separated",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nx|Separated Gherkin|\n|Python|lettuce<br>pyspecs|Separated semi-Gherkin<br>In-line Spec|\n||pytest-bdd *|Separated semi-Gherkin|\n||radish|Separated Gherkin-plus|\n||Cucumber *|Separated Gherkin|\n|Ruby|RSpec|In-line Spec|\n||Spinach|Separated",
+            "token_count": 95,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 11,
+                "token_count": 98
+            }
+        },
+        {
+            "chunk_id": "7a0a7ca5-8edc-49bc-ad1d-1f0bdf425207",
+            "document_title": "Documento Real",
+            "chunk_index": 9,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "Spec|\n||pytest-bdd *|Separated semi-Gherkin|\n||radish|Separated Gherkin-plus|\n||Cucumber *|Separated Gherkin|\n|Ruby|RSpec|In-line Spec|\n||Spinach|Separated Gherki|\n|Swift / Objective C|Quick|In-line Spec|\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas.",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nSpec|\n||pytest-bdd *|Separated semi-Gherkin|\n||radish|Separated Gherkin-plus|\n||Cucumber *|Separated Gherkin|\n|Ruby|RSpec|In-line Spec|\n||Spinach|Separated Gherki|\n|Swift / Objective C|Quick|In-line Spec|\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas.",
+            "token_count": 99,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 11,
+                "token_count": 98
+            }
+        },
+        {
+            "chunk_id": "bb8dd48b-9761-4b2a-b122-814bd94e6e8b",
+            "document_title": "Documento Real",
+            "chunk_index": 10,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "*|Separated Gherkin|\n|Ruby|RSpec|In-line Spec|\n||Spinach|Separated Gherki|\n|Swift / Objective C|Quick|In-line Spec|\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021.** \n\n**8**",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\n*|Separated Gherkin|\n|Ruby|RSpec|In-line Spec|\n||Spinach|Separated Gherki|\n|Swift / Objective C|Quick|In-line Spec|\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021.** \n\n**8**",
+            "token_count": 74,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 11,
+                "token_count": 98
+            }
+        },
+        {
+            "chunk_id": "1b10c45a-19ab-4996-a723-e8381a05c04b",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "Proper behavior"
+            ],
+            "raw_content": "- Error típico: escribir sin un pensamiento orientado al comportamiento (procedure-driven en vez de behavior-driven).",
+            "enriched_text": "Documento Real\n\nProper behavior\n\n- Error típico: escribir sin un pensamiento orientado al comportamiento (procedure-driven en vez de behavior-driven).",
+            "token_count": 36,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 12,
+                "token_count": 54
+            }
+        },
+        {
+            "chunk_id": "d52231b9-d46d-4507-aa02-7ee361b13cdc",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "Proper behavior"
+            ],
+            "raw_content": "- Evita los procedure-driven criteria, que son a menudo imperativos y trazan una ruta para el sistema que cubre múltiples comportamientos, lo cual resulta en extensión innecesaria, retrasa el análisis de fallas, incrementa costos de mantenimiento y crea confusión.",
+            "enriched_text": "Documento Real\n\nProper behavior\n\n- Evita los procedure-driven criteria, que son a menudo imperativos y trazan una ruta para el sistema que cubre múltiples comportamientos, lo cual resulta en extensión innecesaria, retrasa el análisis de fallas, incrementa costos de mantenimiento y crea confusión.",
+            "token_count": 81,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 12,
+                "token_count": 54
+            }
+        },
+        {
+            "chunk_id": "24c02bc7-dddc-469f-8825-a0b09afcdc5e",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "# Bad example! Do not copy"
+            ],
+            "raw_content": "- **Feature:** Google Searching \n\n- **Scenario:** Google Image search shows pictures \n\n- **Given** the user opens a web browser \n\n- **And** the user navigates to “https://www.google.",
+            "enriched_text": "Documento Real\n\n# Bad example! Do not copy\n\n- **Feature:** Google Searching \n\n- **Scenario:** Google Image search shows pictures \n\n- **Given** the user opens a web browser \n\n- **And** the user navigates to “https://www.google.",
+            "token_count": 53,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 13,
+                "token_count": 77
+            }
+        },
+        {
+            "chunk_id": "eee99477-1d99-4e05-be7a-be8b41c05446",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "# Bad example! Do not copy"
+            ],
+            "raw_content": "google.com/” \n\n- **• When** the user enters “panda” into the search bar \n\n- **Then** links related to “panda” are shown on the results page \n\n- **When** the user clicks on the “Images” link at the top of the results page \n\n- **Then** images related to “panda” are shown on the results page",
+            "enriched_text": "Documento Real\n\n# Bad example! Do not copy\n\ngoogle.com/” \n\n- **• When** the user enters “panda” into the search bar \n\n- **Then** links related to “panda” are shown on the results page \n\n- **When** the user clicks on the “Images” link at the top of the results page \n\n- **Then** images related to “panda” are shown on the results page",
+            "token_count": 80,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 13,
+                "token_count": 77
+            }
+        },
+        {
+            "chunk_id": "983a2290-0a26-4df7-8158-ba0d519c3ac0",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "# The right way"
+            ],
+            "raw_content": "- **Feature:** Google Searching \n\n- **Scenario:** Search from the search bar \n\n- **Given** a web browser is at the Google home page \n\n- **• When** the user enters “panda” into the search bar **• Then** links related to “panda” are shown on the results page **One** scenario covers **• Scenario:** Image search **one** behavior **• Given** Google",
+            "enriched_text": "Documento Real\n\n# The right way\n\n- **Feature:** Google Searching \n\n- **Scenario:** Search from the search bar \n\n- **Given** a web browser is at the Google home page \n\n- **• When** the user enters “panda” into the search bar **• Then** links related to “panda” are shown on the results page **One** scenario covers **• Scenario:** Image search **one** behavior **• Given** Google",
+            "token_count": 100,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 14,
+                "token_count": 103
+            }
+        },
+        {
+            "chunk_id": "028225e7-27c7-45af-85ee-26b5d1e29901",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "# The right way"
+            ],
+            "raw_content": "- **• When** the user enters “panda” into the search bar **• Then** links related to “panda” are shown on the results page **One** scenario covers **• Scenario:** Image search **one** behavior **• Given** Google search results for “panda” are shown **• When** the user clicks on the “Images” link at the top of the results page \n\n- **Then**",
+            "enriched_text": "Documento Real\n\n# The right way\n\n- **• When** the user enters “panda” into the search bar **• Then** links related to “panda” are shown on the results page **One** scenario covers **• Scenario:** Image search **one** behavior **• Given** Google search results for “panda” are shown **• When** the user clicks on the “Images” link at the top of the results page \n\n- **Then**",
+            "token_count": 100,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 14,
+                "token_count": 103
+            }
+        },
+        {
+            "chunk_id": "162b1f8c-6865-4305-a506-635c1d57bf5a",
+            "document_title": "Documento Real",
+            "chunk_index": 2,
+            "heading_path": [
+                "# The right way"
+            ],
+            "raw_content": "scenario covers **• Scenario:** Image search **one** behavior **• Given** Google search results for “panda” are shown **• When** the user clicks on the “Images” link at the top of the results page \n\n- **Then** images related to “panda” are shown on the results page \n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021. 10**",
+            "enriched_text": "Documento Real\n\n# The right way\n\nscenario covers **• Scenario:** Image search **one** behavior **• Given** Google search results for “panda” are shown **• When** the user clicks on the “Images” link at the top of the results page \n\n- **Then** images related to “panda” are shown on the results page \n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021. 10**",
+            "token_count": 100,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 14,
+                "token_count": 103
+            }
+        },
+        {
+            "chunk_id": "ba7de43d-5cd8-42e8-b836-72f33319208c",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "Phrasing steps"
+            ],
+            "raw_content": "- Cómo escribir un paso es importante. Un paso escrito de forma deficiente es difícil que se pueda reutilizar. \n\n- **Escribe todos los pasos en tercera persona** . Solo usa tercera persona siempre. \n\n- **Escribe los pasos como una frase que denote acción con sujeto y predicado** .",
+            "enriched_text": "Documento Real\n\nPhrasing steps\n\n- Cómo escribir un paso es importante. Un paso escrito de forma deficiente es difícil que se pueda reutilizar. \n\n- **Escribe todos los pasos en tercera persona** . Solo usa tercera persona siempre. \n\n- **Escribe los pasos como una frase que denote acción con sujeto y predicado** .",
+            "token_count": 92,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 15,
+                "token_count": 77
+            }
+        },
+        {
+            "chunk_id": "ce20703d-ec0a-4002-be3b-2b5a1c54c9b6",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "Phrasing steps"
+            ],
+            "raw_content": "- **Escribe todos los pasos en tercera persona** . Solo usa tercera persona siempre. \n\n- **Escribe los pasos como una frase que denote acción con sujeto y predicado** . Las frases parciales generan ambigüedad e incluso se podrían reutilizar de forma incorrecta.",
+            "enriched_text": "Documento Real\n\nPhrasing steps\n\n- **Escribe todos los pasos en tercera persona** . Solo usa tercera persona siempre. \n\n- **Escribe los pasos como una frase que denote acción con sujeto y predicado** . Las frases parciales generan ambigüedad e incluso se podrían reutilizar de forma incorrecta.",
+            "token_count": 84,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 15,
+                "token_count": 77
+            }
+        },
+        {
+            "chunk_id": "c1f4a9fa-bfc7-4d69-a154-1d542497d602",
+            "document_title": "Documento Real",
+            "chunk_index": 2,
+            "heading_path": [
+                "Phrasing steps"
+            ],
+            "raw_content": "- **Escribe los pasos como una frase que denote acción con sujeto y predicado** . Las frases parciales generan ambigüedad e incluso se podrían reutilizar de forma incorrecta. \n\n- Los pasos “Given” se utilizan para establecer un estado inicial, no para denotar un comportamiento.",
+            "enriched_text": "Documento Real\n\nPhrasing steps\n\n- **Escribe los pasos como una frase que denote acción con sujeto y predicado** . Las frases parciales generan ambigüedad e incluso se podrían reutilizar de forma incorrecta. \n\n- Los pasos “Given” se utilizan para establecer un estado inicial, no para denotar un comportamiento.",
+            "token_count": 91,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 15,
+                "token_count": 77
+            }
+        },
+        {
+            "chunk_id": "68853f86-58e7-4b62-81b3-e86fc5c5d117",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "# Bad example! Do not copy"
+            ],
+            "raw_content": "- **Feature:** Google Searching \n\n- **Scenario:** Google search result page elements \n\n- **Given** the user navigates to the Google home page \n\n- **• When** the user entered “panda” at the search bar \n\n- **Then** the results page shows links related to “panda” \n\n- **And** image links for “panda” \n\n- **And** video links for “panda” \n\n- **Feature:**",
+            "enriched_text": "Documento Real\n\n# Bad example! Do not copy\n\n- **Feature:** Google Searching \n\n- **Scenario:** Google search result page elements \n\n- **Given** the user navigates to the Google home page \n\n- **• When** the user entered “panda” at the search bar \n\n- **Then** the results page shows links related to “panda” \n\n- **And** image links for “panda” \n\n- **And** video links for “panda” \n\n- **Feature:**",
+            "token_count": 100,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 16,
+                "token_count": 97
+            }
+        },
+        {
+            "chunk_id": "0acdafa5-5ae9-425c-81b7-d6651e00671f",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "# Bad example! Do not copy"
+            ],
+            "raw_content": "- **• When** the user entered “panda” at the search bar \n\n- **Then** the results page shows links related to “panda” \n\n- **And** image links for “panda” \n\n- **And** video links for “panda” \n\n- **Feature:** Google Searching \n\n- **Scenario:** Simple Google search \n\n- **Given** the user navigates to the Google home page \n\n- **• When** the user",
+            "enriched_text": "Documento Real\n\n# Bad example! Do not copy\n\n- **• When** the user entered “panda” at the search bar \n\n- **Then** the results page shows links related to “panda” \n\n- **And** image links for “panda” \n\n- **And** video links for “panda” \n\n- **Feature:** Google Searching \n\n- **Scenario:** Simple Google search \n\n- **Given** the user navigates to the Google home page \n\n- **• When** the user",
+            "token_count": 100,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 16,
+                "token_count": 97
+            }
+        },
+        {
+            "chunk_id": "bb4a27ac-4fc0-446d-8c2e-b3b341c981b4",
+            "document_title": "Documento Real",
+            "chunk_index": 2,
+            "heading_path": [
+                "# Bad example! Do not copy"
+            ],
+            "raw_content": "image links for “panda” \n\n- **And** video links for “panda” \n\n- **Feature:** Google Searching \n\n- **Scenario:** Simple Google search \n\n- **Given** the user navigates to the Google home page \n\n- **• When** the user entered “panda” at the search bar **• Then** links related to “panda” will be shown on the results page",
+            "enriched_text": "Documento Real\n\n# Bad example! Do not copy\n\nimage links for “panda” \n\n- **And** video links for “panda” \n\n- **Feature:** Google Searching \n\n- **Scenario:** Simple Google search \n\n- **Given** the user navigates to the Google home page \n\n- **• When** the user entered “panda” at the search bar **• Then** links related to “panda” will be shown on the results page",
+            "token_count": 88,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 16,
+                "token_count": 97
+            }
+        },
+        {
+            "chunk_id": "800269c6-ed33-433d-9d17-09d9fc73460a",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "# The right way"
+            ],
+            "raw_content": "- **Feature:** Google Searching \n\n- **Scenario:** Simple Google search \n\n- **Given** a web browser is at the Google home page \n\n- **• When** the user enters “panda” into the search bar \n\n- **Then** links related to “panda” are shown on the results page \n\n- “Given” should always use present or present perfect tense, and “When” and “Then” should always use present tense.",
+            "enriched_text": "Documento Real\n\n# The right way\n\n- **Feature:** Google Searching \n\n- **Scenario:** Simple Google search \n\n- **Given** a web browser is at the Google home page \n\n- **• When** the user enters “panda” into the search bar \n\n- **Then** links related to “panda” are shown on the results page \n\n- “Given” should always use present or present perfect tense, and “When” and “Then” should always use present tense.",
+            "token_count": 96,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 17,
+                "token_count": 74
+            }
+        },
+        {
+            "chunk_id": "aa779611-568e-48d5-8121-d6e2e7ff8465",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "# The right way"
+            ],
+            "raw_content": "**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021. 11**",
+            "enriched_text": "Documento Real\n\n# The right way\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021. 11**",
+            "token_count": 28,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 17,
+                "token_count": 74
+            }
+        },
+        {
+            "chunk_id": "b4930837-1db3-408d-bdca-a8b27a83c814",
+            "document_title": "Documento Real",
+            "chunk_index": 0,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "**==> picture [326 x 197] intentionally omitted <==**\n\n**----- Start of picture text -----**<br>\nAvoid assertion language +<br>• Evita palabras “verify”, “assert” o “should” en títulos de escenarios.",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\n**==> picture [326 x 197] intentionally omitted <==**\n\n**----- Start of picture text -----**<br>\nAvoid assertion language +<br>• Evita palabras “verify”, “assert” o “should” en títulos de escenarios.",
+            "token_count": 73,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 18,
+                "token_count": 124
+            }
+        },
+        {
+            "chunk_id": "ad3e4aaa-a016-42dc-9772-81b90c6ed46d",
+            "document_title": "Documento Real",
+            "chunk_index": 1,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "Esas palabras<br>ponen mas énfasis en la aseveración más que en el comportamiento, además se torna<br>un título repetitivo.<br># Bad example! Do not copy # The right way<br>Verify the user can change their<br>address on the profile page.<br>Profile page address change.",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nEsas palabras<br>ponen mas énfasis en la aseveración más que en el comportamiento, además se torna<br>un título repetitivo.<br># Bad example! Do not copy # The right way<br>Verify the user can change their<br>address on the profile page.<br>Profile page address change.",
+            "token_count": 87,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 18,
+                "token_count": 124
+            }
+        },
+        {
+            "chunk_id": "2c69261e-b444-4594-be73-93a2c7a00f86",
+            "document_title": "Documento Real",
+            "chunk_index": 2,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "Do not copy # The right way<br>Verify the user can change their<br>address on the profile page.<br>Profile page address change.<br>Assert that a stock quote is<br>A stock quote has green text when<br>displayed in green text when its<br>its value is higher than its previous<br>value is higher than its previous<br>closing value.<br>closing value.",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\nDo not copy # The right way<br>Verify the user can change their<br>address on the profile page.<br>Profile page address change.<br>Assert that a stock quote is<br>A stock quote has green text when<br>displayed in green text when its<br>its value is higher than its previous<br>value is higher than its previous<br>closing value.<br>closing value.",
+            "token_count": 92,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 18,
+                "token_count": 124
+            }
+        },
+        {
+            "chunk_id": "0cb80a23-b552-4b8d-8254-8bbc7ace2ca3",
+            "document_title": "Documento Real",
+            "chunk_index": 3,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "<br>Assert that a stock quote is<br>A stock quote has green text when<br>displayed in green text when its<br>its value is higher than its previous<br>value is higher than its previous<br>closing value.<br>closing value.<br>Logout displays the goodbye page.<br>The goodbye page should be<br>displayed after a successful logout.",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\n<br>Assert that a stock quote is<br>A stock quote has green text when<br>displayed in green text when its<br>its value is higher than its previous<br>value is higher than its previous<br>closing value.<br>closing value.<br>Logout displays the goodbye page.<br>The goodbye page should be<br>displayed after a successful logout.",
+            "token_count": 87,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 18,
+                "token_count": 124
+            }
+        },
+        {
+            "chunk_id": "1de148cf-1d1e-43a7-826f-b1ec3dfebffc",
+            "document_title": "Documento Real",
+            "chunk_index": 4,
+            "heading_path": [
+                "User stories & Acceptance criteria"
+            ],
+            "raw_content": "<br>closing value.<br>Logout displays the goodbye page.<br>The goodbye page should be<br>displayed after a successful logout.<br>**----- End of picture text -----**<br>\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021.** \n\n**13**",
+            "enriched_text": "Documento Real\n\nUser stories & Acceptance criteria\n\n<br>closing value.<br>Logout displays the goodbye page.<br>The goodbye page should be<br>displayed after a successful logout.<br>**----- End of picture text -----**<br>\n\n**Material producido por la Universidad Peruana de Ciencias Aplicadas. UPC, 2021.** \n\n**13**",
+            "token_count": 90,
+            "metadata": {
+                "storage_key": "87c5765e54aa412d8cb5b117a59b07fd.pdf",
+                "document_title": "Documento Real",
+                "document_type": "pdf",
+                "section_index": 18,
+                "token_count": 124
+            }
+        }
+    ]
+}

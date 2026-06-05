@@ -13,3 +13,4 @@ httpx==0.28.1
 psycopg2-binary == 2.9.12
 pymupdf4llm == 1.27.2.3
 pytest==9.0.3
+tokenizers==0.23.1

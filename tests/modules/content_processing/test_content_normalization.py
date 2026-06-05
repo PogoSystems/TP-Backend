@@ -1,4 +1,4 @@
-from modules.content_processing.application.services.content_normalization import normalize_markdown
+from modules.content_processing.application.services.parsing.content_normalization import normalize_markdown
 
 
 def test_normalize_markdown_cleans_whitespace_and_hyphens() -> None:
