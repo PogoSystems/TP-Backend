@@ -1,4 +1,3 @@
-import uuid
 
 from llama_index.core.node_parser import SentenceSplitter
 
@@ -8,6 +7,7 @@ from modules.content_processing.domain.value_objects import PreparedDocument, St
 from modules.content_processing.domain.value_objects.chunk import ChunkedDocument, Chunk
 from modules.content_processing.infrastructure.tokenizers.token_counter import TokenCounter
 
+from core.settings import settings
 
 class ChunkingService:
     """
@@ -16,8 +16,8 @@ class ChunkingService:
 
     def __init__(self,*,
                  token_counter:TokenCounter,
-                 max_chunk_tokens: int = 512,
-                 chunk_overlap: int = 64) -> None:
+                 max_chunk_tokens: settings.CHUNK_SIZE,
+                 chunk_overlap: settings.CHUNK_OVERLAP) -> None:
         self._token_counter = token_counter
         self._max_tokens = max_chunk_tokens
 
@@ -58,7 +58,7 @@ class ChunkingService:
         text=section.text
         token_count = self._token_counter.count_tokens(text)
 
-        # is the section has less tokens than the token limit
+        # is the section has fewer tokens than the token limit
         if token_count <= self._max_tokens:
             return [
                 self._create_chunk(
@@ -115,7 +115,6 @@ class ChunkingService:
 
         # final chunk object
         return Chunk(
-            chunk_id=str(uuid.uuid4()),
             document_title=prepared_doc.raw.title,
             chunk_index=index,
             heading_path=heading_path,
