@@ -11,12 +11,12 @@
 *.sln.docstates
 *.env
 *venv/
-copilot-instructions.md
 docs/
 .worktrees/
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-
+*.md
+pyrefly.toml
 # Mono auto generated files
 mono_crash.*
 

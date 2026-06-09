@@ -1,7 +1,8 @@
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from modules.content_processing.domain.value_objects.embedded_chunk import EmbeddedChunk
-from modules.content_processing.infrastructure.models import DocumentChunkModel
+from modules.content_processing.infrastructure.models import DocumentChunkModel, ContentDocumentModel
 
 
 class DocumentChunkRepository:
@@ -38,3 +39,30 @@ class DocumentChunkRepository:
 
         # SQLAlchemy performs the insert operation
         self._session.add_all(models)
+
+    async def similarity_search(
+        self,
+        *,
+        query_vector: list[float],
+        course_id: int | None = None,
+        limit: int = 5
+    ) -> list[DocumentChunkModel]:
+        """
+        Retrieves the top K chunks most similar to the query_vector.
+        Optionally filters by course_id through joining ContentDocumentModel.
+        """
+        stmt = select(DocumentChunkModel)
+        if course_id is not None:
+            stmt = stmt.join(ContentDocumentModel).where(
+                ContentDocumentModel.course_id == course_id
+            )
+        stmt = stmt.order_by(
+            DocumentChunkModel.embedding.cosine_distance(query_vector)
+        ).limit(limit)
+
+        result = await self._session.execute(stmt)
+        return list(result.scalars().all())
+        
+"""
+Falta implementar la busqueda lexica (BM25)
+"""
