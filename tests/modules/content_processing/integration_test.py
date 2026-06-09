@@ -30,9 +30,6 @@ def test_preparation_service_procesa_pdf_real(tmp_path: Path) -> None:
     # Esto creará un archivo llamado "resultado_debug.md" en la raíz de tu proyecto
     archivo_salida = pdf_real_path.with_suffix(".json")
     
-# --- EXPORTAR PARA INSPECCIÓN VISUAL ---
-    archivo_salida = pdf_real_path.with_suffix(".json")
-    
     # Función robusta para desarmar el objeto a un diccionario puro de Python
     def object_to_dict(obj):
         if dataclasses.is_dataclass(obj):

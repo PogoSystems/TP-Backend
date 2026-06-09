@@ -1,0 +1,125 @@
+{
+    "title": "Quiz on User Stories and Acceptance Criteria",
+    "questions": [
+        {
+            "text": "According to the reference material, what is the standard format for a User Story?",
+            "bloom_level": "remember",
+            "score": 10,
+            "explanation": "The reference material explicitly states the format: '“As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).”'",
+            "answers": [
+                {
+                    "text": "As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).",
+                    "is_correct": true
+                },
+                {
+                    "text": "Given (a context), When (an event occurs), Then (an outcome results).",
+                    "is_correct": false
+                },
+                {
+                    "text": "The system shall (perform an action) when (a condition is met).",
+                    "is_correct": false
+                },
+                {
+                    "text": "I need (a feature) to (solve a problem).",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "What is the primary role of User Stories for agile teams, as described in the document?",
+            "bloom_level": "understand",
+            "score": 10,
+            "explanation": "The document states: 'Para los equipos ágiles, User Stories son el primer método para identificar necesidades de los usuarios.'",
+            "answers": [
+                {
+                    "text": "To identify user needs.",
+                    "is_correct": true
+                },
+                {
+                    "text": "To define technical specifications.",
+                    "is_correct": false
+                },
+                {
+                    "text": "To track project budgets.",
+                    "is_correct": false
+                },
+                {
+                    "text": "To manage team schedules.",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "How do Acceptance Criteria contribute to the development process, according to the provided text?",
+            "bloom_level": "understand",
+            "score": 10,
+            "explanation": "The text poses the question: '¿Cómo nos aseguramos de que las User Stories se han completado correctamente y conforme a las demandas de los clientes?' and immediately follows with 'Acceptance criteria', indicating their role in ensuring correct completion.",
+            "answers": [
+                {
+                    "text": "They ensure User Stories are completed correctly and meet client demands.",
+                    "is_correct": true
+                },
+                {
+                    "text": "They describe the user interface design.",
+                    "is_correct": false
+                },
+                {
+                    "text": "They list all database requirements.",
+                    "is_correct": false
+                },
+                {
+                    "text": "They define the project's overall architecture.",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Based on the 'Scenario: usuario visualiza formulario “Brindar feedback”' described in the reference, which of the following is a required field in the feedback form?",
+            "bloom_level": "apply",
+            "score": 10,
+            "explanation": "The acceptance criteria for the feedback form state: 'Entonces el sistema muestra el formulario “Brindar feedback” conteniendo los campos “Email”, “Nombre” y “Comentario” los cuales son requeridos.'",
+            "answers": [
+                {
+                    "text": "Email",
+                    "is_correct": true
+                },
+                {
+                    "text": "Phone Number",
+                    "is_correct": false
+                },
+                {
+                    "text": "Address",
+                    "is_correct": false
+                },
+                {
+                    "text": "Company Name",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "According to the Behavior-Driven Development (BDD) section, what type of language should be avoided in scenario titles?",
+            "bloom_level": "remember",
+            "score": 10,
+            "explanation": "The document explicitly advises: 'Evita palabras “verify”, “assert” o “should” en títulos de escenarios. Esas palabras ponen mas énfasis en la aseveración más que en el comportamiento, además se torna un título repetitivo.'",
+            "answers": [
+                {
+                    "text": "Assertion language like 'verify', 'assert', or 'should'.",
+                    "is_correct": true
+                },
+                {
+                    "text": "Descriptive language.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Action verbs.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Technical jargon.",
+                    "is_correct": false
+                }
+            ]
+        }
+    ]
+}
