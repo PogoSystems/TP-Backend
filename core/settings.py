@@ -25,16 +25,16 @@ class Settings(BaseSettings):
     DB_MAX_OVERFLOW: int = 20
 
     # LLM
-    GEMINI_API_KEY: str
     GEMINI_MODEL: str = ""
 
     # embeddings
+    GEMINI_API_KEY: str = ""
     EMBEDDING_MODEL: str = ""
     EMBEDDING_DIMENSION: int = 768
 
     # RAG CONFIG
-    CHUNK_SIZE: int = 800
-    CHUNK_OVERLAP: int = 150
+    CHUNK_SIZE: int = 512
+    CHUNK_OVERLAP: int = 64
     TOP_K_RETRIEVAL: int = 5
 
     # AUTH

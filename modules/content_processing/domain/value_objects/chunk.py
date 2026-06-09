@@ -4,7 +4,6 @@ from dataclasses import dataclass
 @dataclass(slots=True)
 class Chunk:
     """Value object that represent a single chunk of a document"""
-    chunk_id: str # To identify the chunk inside the vector db
     document_title:str
     chunk_index: int
     heading_path: list[str]
