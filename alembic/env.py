@@ -16,7 +16,7 @@ from modules.content_processing.infrastructure.models import (ContentDocumentMod
 
 from modules.course_management.infrastructure.models import CourseModel
 from modules.gamification.infrastructure.models import AchievementModel, UserAchievementModel
-from modules.iam.infrastructure.models import UserModel
+from modules.iam.infrastructure.user_model import UserModel
 from modules.quiz_management.infrastructure.models import (
     AnswerModel,
     QuestionAttemptModel,

@@ -37,9 +37,19 @@ class ChunkingService:
         # convert flat sections into hierarchical paths
         sections_with_paths = HierarchyBuilder.process_heading_paths(prepared_doc.sections)
 
+        global_index=0
+
         # process each section and apply the chunking strategy
         for sections, path in sections_with_paths:
-            list_chunks.extend(self._chunk_section(prepared_doc, sections, path))
+            section_chunks = self._chunk_section(
+                prepared_doc,
+                sections,
+                path,
+                start_index=global_index
+            )
+
+            list_chunks.extend(section_chunks)
+            global_index += len(section_chunks)
 
         # wrap the result into a chunkDocument object for the embedding model
         return ChunkedDocument(document_title=prepared_doc.raw.title,
@@ -48,7 +58,8 @@ class ChunkingService:
     def _chunk_section(self,
                        prepared_doc: PreparedDocument,
                        section: StructuredSection,
-                       heading_path: list[str]) -> list[Chunk]:
+                       heading_path: list[str],
+                       start_index: int) -> list[Chunk]:
 
         """
         Applies the chunking strategy to a structured section
@@ -66,8 +77,8 @@ class ChunkingService:
                     section,
                     heading_path,
                     text,
-                    0,
-                    token_count
+                    index=start_index,
+                    token_count=token_count
                 )
             ]
 
@@ -80,8 +91,8 @@ class ChunkingService:
                 section,
                 heading_path,
                 split,
-                i,
-                self._token_counter.count_tokens(split)
+                index=start_index + i,
+                token_count=self._token_counter.count_tokens(split),
             )
             for i, split in enumerate(splits)
         ]
