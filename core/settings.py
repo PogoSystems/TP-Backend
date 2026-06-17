@@ -45,4 +45,8 @@ class Settings(BaseSettings):
     # VECTOR STORE
     VECTOR_DB_TYPE: str = "pgvector"
 
+    #SUPABASE STORAGE
+    SUPABASE_URL: str
+    SUPABASE_SERVICE_KEY: str
+
 settings = Settings()
