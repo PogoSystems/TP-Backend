@@ -27,7 +27,7 @@ class DocumentService:
         content_type: str,
         file_data: bytes,
         course_id: int,
-        user_id: int,
+        current_user_id: int, # this comes from the JWT token of the authentication
     ) -> ContentDocumentAggregate:
 
         # Validations
@@ -37,15 +37,15 @@ class DocumentService:
         if len(file_data) > MAX_FILE_SIZE:
             raise ValueError("The file size is too large. Maximum allowed size is 10 MB.")
 
-        key = StorageKeyBuilder.build(user_id, course_id, filename) # Build the storage_key of the document
+        key = StorageKeyBuilder.build(current_user_id,course_id, filename) # Build the storage_key of the document
         await self._storage.upload(key, file_data, content_type)
 
         document = ContentDocumentAggregate(
             course_id=course_id,
-            user_id=user_id,
             title=filename,
             document_type=doc_type,
             storage_key=key,
+            user_id=current_user_id,
         )
         return await self._repository.save(document)
 
