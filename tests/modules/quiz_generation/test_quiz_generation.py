@@ -1,4 +1,5 @@
 from pathlib import Path
+import uuid
 import pytest
 from sqlalchemy import select
 from google import genai
@@ -12,7 +13,7 @@ from modules.content_processing.infrastructure.storage.local_document_store impo
 from modules.content_processing.application.services.chunking.chunking_service import ChunkingService
 from modules.content_processing.infrastructure.tokenizers.token_counter import TokenCounter
 from modules.content_processing.application.services.embedding.embedding_generation_service import EmbeddingGenerationService
-from modules.content_processing.infrastructure.repositories.content_document_repository import ContentDocumentRepository
+from modules.content_processing.infrastructure.repositories.document_repository import DocumentRepository
 from modules.content_processing.infrastructure.repositories.document_chunk_repository import DocumentChunkRepository
 
 from modules.course_management.infrastructure.models import CourseModel
@@ -30,9 +31,10 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
     """
     async for session in get_db():
         # 1. Create a dummy user
+        unique_suffix = uuid.uuid4().hex[:8]
         user = UserModel(
-            username="rag_tester",
-            email="tester@rag.com",
+            username=f"rag_tester_{unique_suffix}",
+            email=f"tester_{unique_suffix}@rag.com",
         )
         session.add(user)
         await session.flush()
@@ -61,13 +63,14 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
         )
 
         # 4. Save content document
-        doc_repo = ContentDocumentRepository(session)
-        saved_doc = await doc_repo.save_document(
+        doc_repo = DocumentRepository(session)
+        saved_doc = await doc_repo.save(
             ContentDocumentAggregate(
                 course_id=course.id,
                 user_id=user.id,
                 title=prepared_doc.raw.title,
                 storage_key=prepared_doc.raw.storage_key,
+                document_type=prepared_doc.raw.document_type,
             )
         )
 

@@ -5,118 +5,118 @@
             "text": "According to the reference material, what is the standard format for a User Story?",
             "bloom_level": "remember",
             "score": 10,
-            "explanation": "The reference material explicitly states the format: '“As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).”'",
+            "explanation": "The document explicitly states the format: 'As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).'",
             "answers": [
                 {
                     "text": "As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).",
                     "is_correct": true
                 },
                 {
-                    "text": "Given (a context), When (an event occurs), Then (an outcome results).",
+                    "text": "Given (a context), When (an event occurs), Then (an outcome).",
                     "is_correct": false
                 },
                 {
-                    "text": "The system shall (perform an action) when (a condition is met).",
+                    "text": "I need to (do something) because (of a reason).",
                     "is_correct": false
                 },
                 {
-                    "text": "I need (a feature) to (solve a problem).",
+                    "text": "The system shall (perform a function) to (meet a requirement).",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "What is the primary role of User Stories for agile teams, as described in the document?",
-            "bloom_level": "understand",
+            "text": "For agile teams, what is the primary method identified by User Stories, according to the provided text?",
+            "bloom_level": "remember",
             "score": 10,
-            "explanation": "The document states: 'Para los equipos ágiles, User Stories son el primer método para identificar necesidades de los usuarios.'",
+            "explanation": "The text states: 'Para los equipos ágiles, User Stories son el primer método para identificar necesidades de los usuarios.'",
             "answers": [
                 {
                     "text": "To identify user needs.",
                     "is_correct": true
                 },
                 {
-                    "text": "To define technical specifications.",
+                    "text": "To define the project's technical architecture.",
                     "is_correct": false
                 },
                 {
-                    "text": "To track project budgets.",
+                    "text": "To track software bugs and defects.",
                     "is_correct": false
                 },
                 {
-                    "text": "To manage team schedules.",
+                    "text": "To manage the project budget and resources.",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "How do Acceptance Criteria contribute to the development process, according to the provided text?",
+            "text": "How do Acceptance Criteria ensure the correct completion of User Stories?",
             "bloom_level": "understand",
             "score": 10,
-            "explanation": "The text poses the question: '¿Cómo nos aseguramos de que las User Stories se han completado correctamente y conforme a las demandas de los clientes?' and immediately follows with 'Acceptance criteria', indicating their role in ensuring correct completion.",
+            "explanation": "The text asks: '¿Cómo nos aseguramos de que las User Stories se han completado correctamente y conforme a las demandas de los clientes?' and then immediately introduces 'Acceptance criteria' as the answer.",
             "answers": [
                 {
-                    "text": "They ensure User Stories are completed correctly and meet client demands.",
+                    "text": "By defining the conditions that must be met for a User Story to be considered complete and satisfactory to the client.",
                     "is_correct": true
                 },
                 {
-                    "text": "They describe the user interface design.",
+                    "text": "By outlining the user interface design specifications.",
                     "is_correct": false
                 },
                 {
-                    "text": "They list all database requirements.",
+                    "text": "By prioritizing which User Stories should be developed first.",
                     "is_correct": false
                 },
                 {
-                    "text": "They define the project's overall architecture.",
+                    "text": "By estimating the development effort required for each User Story.",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "Based on the 'Scenario: usuario visualiza formulario “Brindar feedback”' described in the reference, which of the following is a required field in the feedback form?",
+            "text": "In the context of Behavior-Driven Development (BDD), what do 'behavior specs' ultimately become?",
+            "bloom_level": "understand",
+            "score": 10,
+            "explanation": "The text states: 'Behavior specs se convierten en los requisitos, los criterios de aceptación y las pruebas de aceptación.'",
+            "answers": [
+                {
+                    "text": "Requirements, acceptance criteria, and acceptance tests.",
+                    "is_correct": true
+                },
+                {
+                    "text": "Only the system's functional requirements.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Only the acceptance tests for the software.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Only the design documentation for the user interface.",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Based on the BDD guidelines for scenario titles, which of the following is considered a good practice?",
             "bloom_level": "apply",
             "score": 10,
-            "explanation": "The acceptance criteria for the feedback form state: 'Entonces el sistema muestra el formulario “Brindar feedback” conteniendo los campos “Email”, “Nombre” y “Comentario” los cuales son requeridos.'",
+            "explanation": "The BDD section advises to 'Evita palabras “verify”, “assert” o “should” en títulos de escenarios.' and provides 'The right way' examples like 'Profile page address change.'",
             "answers": [
                 {
-                    "text": "Email",
+                    "text": "Profile page address change.",
                     "is_correct": true
                 },
                 {
-                    "text": "Phone Number",
+                    "text": "Verify the user can change their address on the profile page.",
                     "is_correct": false
                 },
                 {
-                    "text": "Address",
+                    "text": "Assert that a stock quote is displayed in green text.",
                     "is_correct": false
                 },
                 {
-                    "text": "Company Name",
-                    "is_correct": false
-                }
-            ]
-        },
-        {
-            "text": "According to the Behavior-Driven Development (BDD) section, what type of language should be avoided in scenario titles?",
-            "bloom_level": "remember",
-            "score": 10,
-            "explanation": "The document explicitly advises: 'Evita palabras “verify”, “assert” o “should” en títulos de escenarios. Esas palabras ponen mas énfasis en la aseveración más que en el comportamiento, además se torna un título repetitivo.'",
-            "answers": [
-                {
-                    "text": "Assertion language like 'verify', 'assert', or 'should'.",
-                    "is_correct": true
-                },
-                {
-                    "text": "Descriptive language.",
-                    "is_correct": false
-                },
-                {
-                    "text": "Action verbs.",
-                    "is_correct": false
-                },
-                {
-                    "text": "Technical jargon.",
+                    "text": "The goodbye page should be displayed after a successful logout.",
                     "is_correct": false
                 }
             ]

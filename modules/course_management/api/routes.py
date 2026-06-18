@@ -67,17 +67,20 @@ async def list_courses(
 ) -> list[CourseResponse]:
     """Retorna los cursos del usuario indicado con paginación."""
     courses = await service.list_courses(user_id=user_id, page=page, page_size=page_size)
-    return [
-        CourseResponse(
-            id=c.id,
-            name=c.name,
-            description=c.description,
-            user_id=c.user_id,
-            max_score=c.max_score,
-            created_at=c.created_at,
+    response_courses = []
+    for c in courses:
+        assert c.id is not None
+        response_courses.append(
+            CourseResponse(
+                id=c.id,
+                name=c.name,
+                description=c.description,
+                user_id=c.user_id,
+                max_score=c.max_score,
+                created_at=c.created_at,
+            )
         )
-        for c in courses
-    ]
+    return response_courses
 
 
 @router.get(

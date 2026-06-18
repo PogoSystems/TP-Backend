@@ -16,8 +16,8 @@ class ChunkingService:
 
     def __init__(self,*,
                  token_counter:TokenCounter,
-                 max_chunk_tokens: settings.CHUNK_SIZE,
-                 chunk_overlap: settings.CHUNK_OVERLAP) -> None:
+                 max_chunk_tokens: int = settings.CHUNK_SIZE,
+                 chunk_overlap: int = settings.CHUNK_OVERLAP) -> None:
         self._token_counter = token_counter
         self._max_tokens = max_chunk_tokens
 

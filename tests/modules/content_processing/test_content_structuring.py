@@ -1,4 +1,4 @@
-from modules.content_processing.application.services import structure_sections
+from modules.content_processing.application.services.parsing.content_structuring import structure_sections
 
 
 def test_structure_sections_creates_preamble_and_headings() -> None:
