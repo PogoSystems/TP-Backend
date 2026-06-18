@@ -430,3 +430,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+tests/modules/content_processing/fixtures/muestra.json
+tests/modules/content_processing/fixtures/muestra_chunks.json
+tests/modules/quiz_generation/fixtures/generated_quiz.json
