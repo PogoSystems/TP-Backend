@@ -13,5 +13,8 @@ class ContentDocumentModel(Base):
     course_id: Mapped[int] = mapped_column(Integer, ForeignKey("course.id"), index=True)
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("user.id"), index=True)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
+    document_type: Mapped[str] = mapped_column(String(50), nullable=False)
     storage_key: Mapped[str] = mapped_column(String(255), nullable=False)
+    processing_status: Mapped[str] = mapped_column(String(50), default="pending", nullable=False)
+    processed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
