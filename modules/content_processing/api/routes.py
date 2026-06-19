@@ -63,7 +63,7 @@ async def upload_document(service: DocSvc, file: UploadFile = File(...), course_
 )
 async def list_documents(course_id: int, service:DocSvc) -> list[DocumentResponse]:
     documents = await service.list_documents(course_id, TEMP_USER_ID)
-    return[
+    return [
         DocumentResponse(
             id=d.id,
             course_id=d.course_id,
@@ -73,7 +73,7 @@ async def list_documents(course_id: int, service:DocSvc) -> list[DocumentRespons
             processing_status=d.processing_status.value,
             created_at=d.created_at,
         )
-        for d in documents
+        for d in documents if d.id is not None
     ]
 
 @router.delete(

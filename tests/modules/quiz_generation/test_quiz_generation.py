@@ -100,22 +100,34 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
         )
         await session.flush()
 
-        # 8. Setup Quiz Generator & Quiz Generation Service
+        # 8. Setup Facade & Quiz Generation Service
         quiz_generator = GeminiQuizGenerator(client=client)
-        quiz_generation_service = QuizGenerationService(
+        from modules.content_processing.application.services.content_retrieval_facade import ContentRetrievalFacade
+        from modules.content_processing.domain.ports.storage_port import StoragePort
+        
+        class MockStorage(StoragePort):
+            async def upload(self, key: str, data: bytes, content_type: str) -> str: return ""
+            async def download(self, key: str) -> bytes: return b""
+            async def delete(self, key: str) -> None: pass
+
+        
+        content_facade = ContentRetrievalFacade(
             session=session,
             embedding_provider=embedding_provider,
+            storage=MockStorage()
+        )
+        
+        quiz_generation_service = QuizGenerationService(
+            context_retriever=content_facade,
             quiz_generator=quiz_generator,
         )
 
         # 9. Execute Quiz Generation (RAG)
         # Search query: "User stories"
-        # Prompt: "Generame 5 preguntas en relacion a User stories"
-        generated_quiz = await quiz_generation_service.generate_quiz(
+        generated_quiz = await quiz_generation_service.generate_quiz_from_course(
             course_id=course.id,
             query_text="User stories",
             num_questions=5,
-            prompt_instruction="Generame 5 preguntas en relacion a User stories"
         )
 
         directorio_actual = Path(__file__).parent
@@ -128,9 +140,10 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
         assert generated_quiz.title != ""
         assert len(generated_quiz.questions) == 5
 
+        from modules.quiz_generation.schemas.generation_schemas import BloomLevel
         for i, question in enumerate(generated_quiz.questions):
             assert question.text != ""
-            assert question.bloom_level in {"remember", "understand", "apply", "analyze", "evaluate", "create"}
+            assert question.bloom_level.value in [e.value for e in BloomLevel]
             assert question.score > 0
             assert question.explanation != ""
             assert len(question.answers) >= 2

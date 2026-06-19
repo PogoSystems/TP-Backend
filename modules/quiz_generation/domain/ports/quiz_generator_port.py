@@ -13,10 +13,9 @@ class QuizGeneratorPort(Protocol):
         *,
         context_text: str,
         num_questions: int,
-        prompt_instruction: str,
     ) -> GeneratedQuiz:
         """
         Generates a structured quiz from the provided document context
-        and instructions using an LLM.
+        using an LLM.
         """
         ...

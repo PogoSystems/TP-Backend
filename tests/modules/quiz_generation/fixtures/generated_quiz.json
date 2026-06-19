@@ -1,123 +1,123 @@
 {
-    "title": "Quiz on User Stories and Acceptance Criteria",
+    "title": "Quiz on User Stories, Acceptance Criteria, and BDD",
     "questions": [
         {
             "text": "According to the reference material, what is the standard format for a User Story?",
             "bloom_level": "remember",
             "score": 10,
-            "explanation": "The document explicitly states the format: 'As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).'",
+            "explanation": "The reference material explicitly states the format: 'As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).'",
             "answers": [
                 {
                     "text": "As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).",
                     "is_correct": true
                 },
                 {
-                    "text": "Given (a context), When (an event occurs), Then (an outcome).",
+                    "text": "Given (a context), When (an event occurs), Then (an outcome is expected).",
                     "is_correct": false
                 },
                 {
-                    "text": "I need to (do something) because (of a reason).",
+                    "text": "The system shall (perform an action) when (a condition is met).",
                     "is_correct": false
                 },
                 {
-                    "text": "The system shall (perform a function) to (meet a requirement).",
+                    "text": "I need (a feature) because (a reason).",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "For agile teams, what is the primary method identified by User Stories, according to the provided text?",
+            "text": "What is the main purpose of Acceptance Criteria in relation to User Stories, as stated in the document?",
+            "bloom_level": "understand",
+            "score": 10,
+            "explanation": "The text asks, '¿Cómo nos aseguramos de que las User Stories se han completado correctamente y conforme a las demandas de los clientes?' and then introduces 'Acceptance criteria' as the answer.",
+            "answers": [
+                {
+                    "text": "To ensure User Stories are completed correctly and conform to client demands.",
+                    "is_correct": true
+                },
+                {
+                    "text": "To define the technical implementation details of a User Story.",
+                    "is_correct": false
+                },
+                {
+                    "text": "To prioritize User Stories for development.",
+                    "is_correct": false
+                },
+                {
+                    "text": "To identify new user needs for future development.",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "In the context of Behavior-Driven Development (BDD), what is a 'behavior' primarily defined as?",
             "bloom_level": "remember",
             "score": 10,
-            "explanation": "The text states: 'Para los equipos ágiles, User Stories son el primer método para identificar necesidades de los usuarios.'",
+            "explanation": "The text states: 'Un behavior (comportamiento) es cómo un feature que opera dentro de un escenario bien definido de entradas, acciones y resultados.'",
             "answers": [
                 {
-                    "text": "To identify user needs.",
+                    "text": "How a feature operates within a well-defined scenario of inputs, actions, and results.",
                     "is_correct": true
                 },
                 {
-                    "text": "To define the project's technical architecture.",
+                    "text": "The technical architecture of a software component.",
                     "is_correct": false
                 },
                 {
-                    "text": "To track software bugs and defects.",
+                    "text": "A list of user interface elements.",
                     "is_correct": false
                 },
                 {
-                    "text": "To manage the project budget and resources.",
+                    "text": "The performance metrics of a system.",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "How do Acceptance Criteria ensure the correct completion of User Stories?",
-            "bloom_level": "understand",
-            "score": 10,
-            "explanation": "The text asks: '¿Cómo nos aseguramos de que las User Stories se han completado correctamente y conforme a las demandas de los clientes?' and then immediately introduces 'Acceptance criteria' as the answer.",
-            "answers": [
-                {
-                    "text": "By defining the conditions that must be met for a User Story to be considered complete and satisfactory to the client.",
-                    "is_correct": true
-                },
-                {
-                    "text": "By outlining the user interface design specifications.",
-                    "is_correct": false
-                },
-                {
-                    "text": "By prioritizing which User Stories should be developed first.",
-                    "is_correct": false
-                },
-                {
-                    "text": "By estimating the development effort required for each User Story.",
-                    "is_correct": false
-                }
-            ]
-        },
-        {
-            "text": "In the context of Behavior-Driven Development (BDD), what do 'behavior specs' ultimately become?",
-            "bloom_level": "understand",
-            "score": 10,
-            "explanation": "The text states: 'Behavior specs se convierten en los requisitos, los criterios de aceptación y las pruebas de aceptación.'",
-            "answers": [
-                {
-                    "text": "Requirements, acceptance criteria, and acceptance tests.",
-                    "is_correct": true
-                },
-                {
-                    "text": "Only the system's functional requirements.",
-                    "is_correct": false
-                },
-                {
-                    "text": "Only the acceptance tests for the software.",
-                    "is_correct": false
-                },
-                {
-                    "text": "Only the design documentation for the user interface.",
-                    "is_correct": false
-                }
-            ]
-        },
-        {
-            "text": "Based on the BDD guidelines for scenario titles, which of the following is considered a good practice?",
+            "text": "According to the BDD guidelines on avoiding assertion language, which of the following scenario titles is considered a 'Bad example'?",
             "bloom_level": "apply",
             "score": 10,
-            "explanation": "The BDD section advises to 'Evita palabras “verify”, “assert” o “should” en títulos de escenarios.' and provides 'The right way' examples like 'Profile page address change.'",
+            "explanation": "The document explicitly lists 'Bad example!' titles that use 'Verify', 'Assert', or 'should'. 'Verify the user can change their address on the profile page.' is given as a bad example.",
             "answers": [
                 {
-                    "text": "Profile page address change.",
+                    "text": "Verify the user can change their address on the profile page.",
                     "is_correct": true
                 },
                 {
-                    "text": "Verify the user can change their address on the profile page.",
+                    "text": "Profile page address change.",
                     "is_correct": false
                 },
                 {
-                    "text": "Assert that a stock quote is displayed in green text.",
+                    "text": "A stock quote has green text when its value is higher than its previous closing value.",
                     "is_correct": false
                 },
                 {
-                    "text": "The goodbye page should be displayed after a successful logout.",
+                    "text": "Logout displays the goodbye page.",
                     "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "For the 'Scenario: usuario envía el formulario de feedback con datos válidos', which of the following is NOT an expected 'Entonces' (Then) outcome after the user orders 'Enviar feedback'?",
+            "bloom_level": "analyze",
+            "score": 10,
+            "explanation": "The text states the 'Then' outcomes are: 'el sistema envía mi feedback', 'el sistema muestra el mensaje “Su feedback fue enviado con éxito”', and 'el sistema limpia los campos del formulario “Brindar feedback”'. The option about redirecting to the homepage is not mentioned.",
+            "answers": [
+                {
+                    "text": "The system sends the feedback.",
+                    "is_correct": false
+                },
+                {
+                    "text": "The system displays the message 'Su feedback fue enviado con éxito'.",
+                    "is_correct": false
+                },
+                {
+                    "text": "The system clears the fields of the feedback form.",
+                    "is_correct": false
+                },
+                {
+                    "text": "The system redirects the user to the website's homepage.",
+                    "is_correct": true
                 }
             ]
         }

@@ -1,4 +1,6 @@
-from sqlalchemy import select, delete
+from datetime import datetime, timezone
+
+from sqlalchemy import select, delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from modules.content_processing.domain.aggregates import ContentDocumentAggregate
@@ -30,6 +32,30 @@ class DocumentRepository:
             )
         result= await self._session.execute(smtm)
         return [self._to_aggregate(m) for m in result.scalars().all()]
+
+    async def find_by_ids(self, document_ids: list[int]) -> list[ContentDocumentAggregate]:
+        """Retrieve multiple documents by a list of IDs in a single query."""
+        stmt = ( #select statements
+            select(ContentDocumentModel)
+            .where(ContentDocumentModel.id.in_(document_ids))
+        )
+        result = await self._session.execute(stmt)
+        return [self._to_aggregate(m) for m in result.scalars().all()]
+
+    async def update_status(self, document_id: int, status: ProcessingStatus) -> None:
+        """Update the processing status (and processed_at if COMPLETED) of a document."""
+        values: dict = {"processing_status": status.value}
+        if status == ProcessingStatus.COMPLETED:
+            # Usamos replace(tzinfo=None) para crear un naive datetime en UTC
+            # y así evitar el error de asyncpg con TIMESTAMP WITHOUT TIME ZONE
+            values["processed_at"] = datetime.now(timezone.utc).replace(tzinfo=None)
+        stmt = (
+            update(ContentDocumentModel)
+            .where(ContentDocumentModel.id == document_id)
+            .values(**values)
+        )
+        await self._session.execute(stmt)
+        await self._session.flush()
 
     async def delete_by_id(self, document_id:int) -> None:
         smtm= delete(ContentDocumentModel).where(ContentDocumentModel.id==document_id)

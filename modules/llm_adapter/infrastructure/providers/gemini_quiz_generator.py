@@ -10,7 +10,7 @@ from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz
 logger = logging.getLogger(__name__)
 
 
-class GeminiQuizGenerator(QuizGeneratorPort):
+class GeminiQuizGenerator():
     """
     Gemini implementation of the QuizGeneratorPort.
     Responsible for sending prompt and context to Gemini using Structured Output.
@@ -25,7 +25,6 @@ class GeminiQuizGenerator(QuizGeneratorPort):
         *,
         context_text: str,
         num_questions: int,
-        prompt_instruction: str,
     ) -> GeneratedQuiz:
         """
         Generate structured quiz using Gemini API.
@@ -37,9 +36,6 @@ Reference material (RAG Context):
 ---
 {context_text}
 ---
-
-Main Instruction:
-{prompt_instruction}
 
 Generate the output strictly following the requested JSON schema.
 """
