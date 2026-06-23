@@ -8,7 +8,6 @@ class BloomLevel(str, Enum):
     APPLY = "apply"
     ANALYZE = "analyze"
     EVALUATE = "evaluate"
-    CREATE = "create"
 
 
 class GeneratedAnswer(BaseModel):
