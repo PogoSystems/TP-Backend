@@ -23,6 +23,8 @@ from modules.llm_adapter.infrastructure.providers.gemini_quiz_generator import G
 from modules.quiz_generation.application.services.quiz_generation_service import QuizGenerationService
 from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz
 
+from modules.quiz_generation.infrastructure.repositories.quiz_persistence_repository import QuizPersistenceRepository 
+
 
 @pytest.mark.asyncio
 async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
@@ -116,10 +118,14 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
             embedding_provider=embedding_provider,
             storage=MockStorage()
         )
+
+        repository = QuizPersistenceRepository(session)
         
         quiz_generation_service = QuizGenerationService(
             context_retriever=content_facade,
             quiz_generator=quiz_generator,
+            quiz_repository=repository,
+
         )
 
         # 9. Execute Quiz Generation (RAG)
@@ -128,6 +134,7 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
             course_id=course.id,
             query_text="User stories",
             num_questions=5,
+            user_id=user.id,
         )
 
         directorio_actual = Path(__file__).parent

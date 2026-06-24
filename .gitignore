@@ -13,9 +13,13 @@
 *venv/
 docs/
 .worktrees/
+tests/modules/content_processing/fixtures/*
+tests/modules/quiz_generation/fixtures/*
+AI-instructions.md
+project_context.md
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-*.md
 pyrefly.toml
 # Mono auto generated files
 mono_crash.*
