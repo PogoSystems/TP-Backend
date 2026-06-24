@@ -1,5 +1,5 @@
 from modules.course_management.domain.aggregates.course import CourseAggregate
-from modules.course_management.domain.ports.course_repository import CourseRepositoryPort
+from modules.course_management.domain.ports.course_port import CourseRepositoryPort
 from modules.course_management.schemas import CourseCreate, CourseUpdate
 from shared.exceptions import CourseNotFoundError
 

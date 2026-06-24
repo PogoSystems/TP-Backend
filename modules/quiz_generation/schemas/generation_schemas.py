@@ -1,13 +1,5 @@
-from enum import Enum
 from pydantic import BaseModel, Field, field_validator
-
-
-class BloomLevel(str, Enum):
-    REMEMBER = "remember"
-    UNDERSTAND = "understand"
-    APPLY = "apply"
-    ANALYZE = "analyze"
-    EVALUATE = "evaluate"
+from modules.quiz_generation.domain.aggregates.question import BloomLevel
 
 
 class GeneratedAnswer(BaseModel):

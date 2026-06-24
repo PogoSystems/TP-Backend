@@ -13,6 +13,7 @@ from modules.content_processing.application.services.content_retrieval_facade im
 from modules.content_processing.infrastructure.storage.supabase_storage import SupabaseStorageAdapter
 from modules.llm_adapter.infrastructure.providers.gemini_embedding_provider import GeminiEmbeddingProvider
 from modules.llm_adapter.infrastructure.providers.gemini_quiz_generator import GeminiQuizGenerator
+from modules.quiz_generation.infrastructure.repositories.quiz_persistence_repository import QuizPersistenceRepository
 from modules.quiz_generation.application.services.quiz_generation_service import QuizGenerationService
 from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz
 from modules.quiz_generation.schemas.request_schemas import QuizGenerationRequest
@@ -31,6 +32,7 @@ def get_quiz_generation_service(
     client = genai.Client(api_key=settings.GEMINI_API_KEY)
     embedding_provider = GeminiEmbeddingProvider(client=client)
     quiz_generator = GeminiQuizGenerator(client=client)
+
     storage = SupabaseStorageAdapter(supabase)
     
     context_retriever = ContentRetrievalFacade(
@@ -39,9 +41,13 @@ def get_quiz_generation_service(
         storage=storage,
     )
 
+    quiz_repository = QuizPersistenceRepository(session)
+
     return QuizGenerationService(
         context_retriever=context_retriever,
         quiz_generator=quiz_generator,
+        quiz_repository=quiz_repository,
+
     )
 
 
@@ -67,6 +73,8 @@ async def generate_quiz(
             document_ids=request.document_ids,
             query_text=request.query_text,
             num_questions=request.num_questions,
+            user_id= request.user_id,
+            course_id=request.course_id,
         )
         return generated_quiz
 

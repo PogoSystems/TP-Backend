@@ -1,123 +1,123 @@
 {
-    "title": "Quiz on User Stories, Acceptance Criteria, and BDD",
+    "title": "Quiz sobre User Stories y Criterios de Aceptación",
     "questions": [
         {
-            "text": "According to the reference material, what is the standard format for a User Story?",
+            "text": "¿Cuál es el propósito principal de las User Stories según el material de referencia?",
             "bloom_level": "remember",
-            "score": 10,
-            "explanation": "The reference material explicitly states the format: 'As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).'",
+            "score": 1,
+            "explanation": "El material indica que 'Para los equipos ágiles, User Stories son el primer método para identificar necesidades de los usuarios.'",
             "answers": [
                 {
-                    "text": "As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).",
+                    "text": "Documentar el código fuente.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Identificar las necesidades de los usuarios.",
                     "is_correct": true
                 },
                 {
-                    "text": "Given (a context), When (an event occurs), Then (an outcome is expected).",
+                    "text": "Crear diagramas de flujo.",
                     "is_correct": false
                 },
                 {
-                    "text": "The system shall (perform an action) when (a condition is met).",
-                    "is_correct": false
-                },
-                {
-                    "text": "I need (a feature) because (a reason).",
+                    "text": "Realizar pruebas de rendimiento.",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "What is the main purpose of Acceptance Criteria in relation to User Stories, as stated in the document?",
+            "text": "Según el escenario 'usuario visualiza formulario “Brindar feedback”', ¿cuáles son los campos requeridos en el formulario de feedback?",
+            "bloom_level": "remember",
+            "score": 2,
+            "explanation": "El escenario establece que el formulario 'contiene los campos “Email”, “Nombre” y “Comentario” los cuales son requeridos.'",
+            "answers": [
+                {
+                    "text": "Email, Contraseña y Comentario.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Nombre, Apellido y Email.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Email, Nombre y Comentario.",
+                    "is_correct": true
+                },
+                {
+                    "text": "Teléfono, Dirección y Comentario.",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Después de que un usuario envía el formulario de feedback con datos válidos, ¿qué acciones realiza el sistema?",
             "bloom_level": "understand",
-            "score": 10,
-            "explanation": "The text asks, '¿Cómo nos aseguramos de que las User Stories se han completado correctamente y conforme a las demandas de los clientes?' and then introduces 'Acceptance criteria' as the answer.",
+            "score": 3,
+            "explanation": "El escenario 'usuario envía el formulario de feedback con datos válidos' especifica que 'el sistema envía mi feedback Y el sistema muestra el mensaje “Su feedback fue enviado con éxito” Y el sistema limpia los campos del formulario “Brindar feedback”.'",
             "answers": [
                 {
-                    "text": "To ensure User Stories are completed correctly and conform to client demands.",
+                    "text": "Envía el feedback, muestra un mensaje de éxito y limpia los campos.",
                     "is_correct": true
                 },
                 {
-                    "text": "To define the technical implementation details of a User Story.",
+                    "text": "Envía el feedback y redirige al usuario a la página principal.",
                     "is_correct": false
                 },
                 {
-                    "text": "To prioritize User Stories for development.",
+                    "text": "Muestra un mensaje de error y mantiene los campos llenos.",
                     "is_correct": false
                 },
                 {
-                    "text": "To identify new user needs for future development.",
+                    "text": "Guarda el feedback en borrador y cierra la sesión del usuario.",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "In the context of Behavior-Driven Development (BDD), what is a 'behavior' primarily defined as?",
+            "text": "Según los principios de Behavior-Driven Development (BDD) mencionados en el documento, ¿qué tipo de palabras se deben evitar en los títulos de los escenarios?",
             "bloom_level": "remember",
-            "score": 10,
-            "explanation": "The text states: 'Un behavior (comportamiento) es cómo un feature que opera dentro de un escenario bien definido de entradas, acciones y resultados.'",
+            "score": 2,
+            "explanation": "El material indica: 'Evita palabras “verify”, “assert” o “should” en títulos de escenarios.'",
             "answers": [
                 {
-                    "text": "How a feature operates within a well-defined scenario of inputs, actions, and results.",
+                    "text": "Palabras que describen acciones del usuario.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Palabras como 'verify', 'assert' o 'should'.",
                     "is_correct": true
                 },
                 {
-                    "text": "The technical architecture of a software component.",
+                    "text": "Nombres de usuarios o roles.",
                     "is_correct": false
                 },
                 {
-                    "text": "A list of user interface elements.",
-                    "is_correct": false
-                },
-                {
-                    "text": "The performance metrics of a system.",
+                    "text": "Verbos en infinitivo.",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "According to the BDD guidelines on avoiding assertion language, which of the following scenario titles is considered a 'Bad example'?",
-            "bloom_level": "apply",
-            "score": 10,
-            "explanation": "The document explicitly lists 'Bad example!' titles that use 'Verify', 'Assert', or 'should'. 'Verify the user can change their address on the profile page.' is given as a bad example.",
+            "text": "¿Qué es Behavior-Driven Development (BDD) según la definición proporcionada?",
+            "bloom_level": "remember",
+            "score": 1,
+            "explanation": "El documento define BDD como 'un proceso de desarrollo de software que coloca en primer lugar al comportamiento.'",
             "answers": [
                 {
-                    "text": "Verify the user can change their address on the profile page.",
+                    "text": "Un método para diseñar interfaces de usuario.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Un proceso de desarrollo de software que coloca en primer lugar al comportamiento.",
                     "is_correct": true
                 },
                 {
-                    "text": "Profile page address change.",
+                    "text": "Una técnica para optimizar bases de datos.",
                     "is_correct": false
                 },
                 {
-                    "text": "A stock quote has green text when its value is higher than its previous closing value.",
+                    "text": "Un lenguaje de programación.",
                     "is_correct": false
-                },
-                {
-                    "text": "Logout displays the goodbye page.",
-                    "is_correct": false
-                }
-            ]
-        },
-        {
-            "text": "For the 'Scenario: usuario envía el formulario de feedback con datos válidos', which of the following is NOT an expected 'Entonces' (Then) outcome after the user orders 'Enviar feedback'?",
-            "bloom_level": "analyze",
-            "score": 10,
-            "explanation": "The text states the 'Then' outcomes are: 'el sistema envía mi feedback', 'el sistema muestra el mensaje “Su feedback fue enviado con éxito”', and 'el sistema limpia los campos del formulario “Brindar feedback”'. The option about redirecting to the homepage is not mentioned.",
-            "answers": [
-                {
-                    "text": "The system sends the feedback.",
-                    "is_correct": false
-                },
-                {
-                    "text": "The system displays the message 'Su feedback fue enviado con éxito'.",
-                    "is_correct": false
-                },
-                {
-                    "text": "The system clears the fields of the feedback form.",
-                    "is_correct": false
-                },
-                {
-                    "text": "The system redirects the user to the website's homepage.",
-                    "is_correct": true
                 }
             ]
         }
