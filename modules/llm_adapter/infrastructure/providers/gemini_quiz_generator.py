@@ -32,6 +32,10 @@ class GeminiQuizGenerator():
         prompt = f"""
 You are an expert educator. Generate a quiz containing exactly {num_questions} questions based strictly on the following reference material.
 
+The questions in the quiz can be one of two types: Multiple Choice or True/False.
+
+The default language for the questions is Spanish.
+
 Reference material (RAG Context):
 ---
 {context_text}

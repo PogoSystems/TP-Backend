@@ -18,7 +18,7 @@ class GeneratedAnswer(BaseModel):
 class GeneratedQuestion(BaseModel):
     text: str = Field(description="The text content of the question.")
     bloom_level: BloomLevel = Field(description="The cognitive level of the question according to Bloom's Taxonomy.")
-    score: int = Field(description="The weight or score points allocated to this question (must be positive).")
+    score: int = Field(description="The weight or score points allocated to this question according to the complexity of the question (must be positive).")
     explanation: str = Field(description="Explanation or feedback about why the correct answer is right and why others are wrong.")
     answers: list[GeneratedAnswer] = Field(description="List of answer choices for this question.")
 
