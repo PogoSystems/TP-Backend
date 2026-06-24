@@ -53,6 +53,7 @@ async def upload_document(service: DocSvc, file: UploadFile = File(...), course_
         document_type=doc.document_type,
         processing_status=doc.processing_status.value,
         created_at=doc.created_at,
+        syllabus=doc.syllabus
     )
 
 @router.get(
@@ -72,6 +73,7 @@ async def list_documents(course_id: int, service:DocSvc) -> list[DocumentRespons
             document_type=d.document_type,
             processing_status=d.processing_status.value,
             created_at=d.created_at,
+            syllabus = d.syllabus
         )
         for d in documents if d.id is not None
     ]

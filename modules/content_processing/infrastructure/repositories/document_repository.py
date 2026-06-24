@@ -71,6 +71,7 @@ class DocumentRepository:
             title=model.title,
             document_type=model.document_type,
             storage_key=model.storage_key,
+            syllabus=model.syllabus,
             processing_status=ProcessingStatus(model.processing_status), # to make the convertion of value to processing status object
             processed_at=model.processed_at,
             created_at=model.created_at,
@@ -84,5 +85,6 @@ class DocumentRepository:
             title=aggregate.title,
             document_type=aggregate.document_type,
             storage_key=aggregate.storage_key,
+            syllabus=aggregate.syllabus,
             processing_status=aggregate.processing_status.value, # to extract the value of the enum
         )

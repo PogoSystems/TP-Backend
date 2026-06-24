@@ -8,6 +8,7 @@ class DocumentResponse(BaseModel):
     user_id: int
     title: str
     document_type: str
+    syllabus: bool
     processing_status: str
     created_at: datetime
 

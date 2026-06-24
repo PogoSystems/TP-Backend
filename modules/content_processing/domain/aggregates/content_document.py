@@ -12,6 +12,7 @@ class ContentDocumentAggregate:
     title: str = ""
     storage_key: str = ""
     document_type: str = ""
+    syllabus: bool = False
     processing_status: ProcessingStatus = ProcessingStatus.PENDING
     processed_at:datetime | None = None
     created_at: datetime = field(
