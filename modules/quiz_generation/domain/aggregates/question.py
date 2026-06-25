@@ -2,13 +2,9 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
 from modules.quiz_generation.domain.aggregates.answer import AnswerAggregate
+from shared.value_objects.Bloom import BloomLevel
 
-class BloomLevel(str, Enum):
-    REMEMBER = "remember"
-    UNDERSTAND = "understand"
-    APPLY = "apply"
-    ANALYZE = "analyze"
-    EVALUATE = "evaluate"
+
 
 
 @dataclass(slots=True)

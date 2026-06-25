@@ -103,6 +103,7 @@ class DocumentChunkRepository:
         course_id:int,
         distance_threshold: float,
         limit: int,
+        query_text: str,
         )->list[DocumentChunkModel]:
         """
         Verifica si el topic (representado por query_vector) es semánticamente 
@@ -116,11 +117,13 @@ class DocumentChunkRepository:
             .where(
                 ContentDocumentModel.course_id == course_id,
                 ContentDocumentModel.syllabus == True,
-                distance_expr < distance_threshold
             )
-            .order_by(distance_expr)
-            .limit(limit)
         )
+        
+        if query_text != "Resumen principal, conceptos clave y temas principales.":
+            stmt = stmt.where(distance_expr < distance_threshold)
+            
+        stmt = stmt.order_by(distance_expr).limit(limit)
         
         result = await self._session.execute(stmt)
         return list(result.scalars().all()) # Devuelve una lista de chunks (o vacía)

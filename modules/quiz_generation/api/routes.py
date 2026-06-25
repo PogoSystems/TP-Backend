@@ -75,6 +75,7 @@ async def generate_quiz(
             num_questions=request.num_questions,
             user_id= request.user_id,
             course_id=request.course_id,
+            bloom_levels = request.bloom_levels,
         )
         return generated_quiz
 

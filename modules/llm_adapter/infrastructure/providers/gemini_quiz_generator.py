@@ -6,6 +6,7 @@ from google.genai.errors import APIError
 from core.settings import settings
 from modules.quiz_generation.domain.ports.quiz_generator_port import QuizGeneratorPort
 from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz
+from shared.value_objects.Bloom import BloomLevel
 
 logger = logging.getLogger(__name__)
 
@@ -25,12 +26,19 @@ class GeminiQuizGenerator():
         *,
         context_text: str,
         num_questions: int,
+        bloom_levels: list[BloomLevel]
     ) -> GeneratedQuiz:
         """
         Generate structured quiz using Gemini API.
         """
+        bloom_instruction = ""
+        if bloom_levels:
+            bloom_str = ", ".join([level.value for level in bloom_levels])
+            bloom_instruction = f"\nCRITICAL INSTRUCTION: Focus EXCLUSIVELY on these levels of Bloom's Taxonomy: {bloom_str}\n"
         prompt = f"""
-You are an expert educator. Generate a quiz containing exactly {num_questions} questions based strictly on the following reference material.
+You are an expert educator. Generate a quiz containing exactly {num_questions} questions using the bloom taxonomy based strictly on the following reference material.
+
+{bloom_instruction}
 
 The reference material is divided into two parts:
 1. The syllabus objectives and competencies.

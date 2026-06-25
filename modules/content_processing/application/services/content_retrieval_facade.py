@@ -84,39 +84,28 @@ class ContentRetrievalFacade:
             raise NoSyllabusError()
 
         await self._ensure_documents_processed(documents)
-
-        # Generate embedding for the query in batch
-        syllabus_query = f"{query_text} objetivos competencias resultados de aprendizaje temario"
         
-        query_embeddings = await self._embedding_provider.generate_embeddings([
-            query_text,      # Vector 0
-            syllabus_query   # Vector 1
-        ])
+        query_embeddings = await self._embedding_provider.generate_embeddings([query_text])
         
-        if not query_embeddings or len(query_embeddings) < 2:
+        if not query_embeddings:
             raise ValueError("Failed to generate embeddings for queries")
             
         query_vector = query_embeddings[0]
-        syllabus_query_vector = query_embeddings[1]
 
         # Validate that the topic is valid for the course
-        syllabus_chunks = await self._chunk_repo.check_topic_in_syllabus(
-            query_vector=query_vector,
-            course_id=course_id,
-            distance_threshold=0.38,
-            limit=3
-        )
 
-        # DEPURACIÓN: Ver qué está devolviendo el syllabus
-        print("\n\n--- DEPURACIÓN DE SÍLABO ---")
-        for i, chunk in enumerate(syllabus_chunks):
-            print(f"Chunk {i+1}: {chunk.enriched_content[:200]}...") # Imprime los primeros 200 caracteres
-        print("----------------------------\n\n")
-        
+        syllabus_chunks = await self._chunk_repo.check_topic_in_syllabus(
+                query_vector=query_vector,
+                course_id=course_id,
+                distance_threshold=0.38,
+                limit=3,
+                query_text= query_text
+            )
+
         # If no syllabus chunks are found, raise an error
         if not syllabus_chunks:
-            from shared.exceptions import TopicNotInSyllabusError
-            raise TopicNotInSyllabusError()
+                from shared.exceptions import TopicNotInSyllabusError
+                raise TopicNotInSyllabusError()
 
         # Extract the syllabus text
         syllabus_text = "\n\n".join([chunk.enriched_content for chunk in syllabus_chunks])

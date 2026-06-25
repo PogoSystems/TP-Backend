@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-
+from shared.value_objects.Bloom import BloomLevel
 
 class QuizGenerationRequest(BaseModel):
     """Request body for the POST /quizzes endpoint."""
@@ -30,4 +30,9 @@ class QuizGenerationRequest(BaseModel):
         ...,
         gt=0,
         description="Number of questions to generate in the quiz.",
+    )
+
+    bloom_levels: list[BloomLevel] = Field(
+        ...,
+        description="Bloom taxonomy level for the questions.",
     )

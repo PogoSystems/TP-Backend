@@ -1,3 +1,4 @@
+from enum import Enum
 from pathlib import Path
 import uuid
 import pytest
@@ -24,6 +25,8 @@ from modules.quiz_generation.application.services.quiz_generation_service import
 from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz
 
 from modules.quiz_generation.infrastructure.repositories.quiz_persistence_repository import QuizPersistenceRepository 
+
+from shared.value_objects.Bloom import BloomLevel
 
 
 @pytest.mark.asyncio
@@ -135,6 +138,7 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
             query_text="User stories",
             num_questions=5,
             user_id=user.id,
+            bloom_levels=[BloomLevel.REMEMBER]
         )
 
         directorio_actual = Path(__file__).parent
@@ -147,7 +151,6 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
         assert generated_quiz.title != ""
         assert len(generated_quiz.questions) == 5
 
-        from modules.quiz_generation.schemas.generation_schemas import BloomLevel
         for i, question in enumerate(generated_quiz.questions):
             assert question.text != ""
             assert question.bloom_level.value in [e.value for e in BloomLevel]

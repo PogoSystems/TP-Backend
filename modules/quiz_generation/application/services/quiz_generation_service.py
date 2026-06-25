@@ -1,3 +1,4 @@
+from shared.value_objects.Bloom import BloomLevel
 from modules.quiz_generation.domain.aggregates.answer import AnswerAggregate
 from modules.quiz_generation.domain.aggregates.question import QuestionAggregate
 from modules.quiz_generation.domain.aggregates.quiz import QuizAggregate
@@ -38,12 +39,13 @@ class QuizGenerationService:
         query_text: str | None = None,
         num_questions: int,
         user_id: int,
+        bloom_levels: list[BloomLevel]
     ) -> GeneratedQuiz:
         """
         Generates a quiz using context retrieved by course_id.
         """
         effective_query = query_text.strip() if query_text and query_text.strip() else (
-            "Main summary, key concepts, and key topics."
+            "Resumen principal, conceptos clave y temas principales."
         )
 
         context_text = await self._context_retriever.get_context_from_course(
@@ -55,6 +57,7 @@ class QuizGenerationService:
         generated_quiz = await self._generate_quiz_with_llm(
             context_text=context_text,
             num_questions=num_questions,
+            bloom_levels = bloom_levels,
         )
 
         # Map GeneratedQuiz (LLM schema) → QuizAggregate (domain)
@@ -91,12 +94,13 @@ class QuizGenerationService:
         num_questions: int,
         user_id: int,
         course_id: int,
+        bloom_levels: list[BloomLevel]
     ) -> GeneratedQuiz:
         """
         Generates a quiz using context retrieved only from specific documents.
         """
         effective_query = query_text.strip() if query_text and query_text.strip() else (
-            "Main summary, key concepts, and key topics."
+            "Resumen principal, conceptos clave y temas principales."
         )
 
         context_text = await self._context_retriever.get_context_from_documents(
@@ -109,6 +113,7 @@ class QuizGenerationService:
         generated_quiz = await self._generate_quiz_with_llm(
             context_text=context_text,
             num_questions=num_questions,
+            bloom_levels = bloom_levels,
         )
 
         # Map GeneratedQuiz (LLM schema) → QuizAggregate (domain)
@@ -142,6 +147,7 @@ class QuizGenerationService:
         *,
         context_text: str,
         num_questions: int,
+        bloom_levels: list[BloomLevel],
     ) -> GeneratedQuiz:
         """
         Helper method to call the LLM adapter.
@@ -149,6 +155,7 @@ class QuizGenerationService:
         generated_quiz = await self._quiz_generator.generate_quiz_from_context(
             context_text=context_text,
             num_questions=num_questions,
+            bloom_levels = bloom_levels,
         )
 
         return generated_quiz
