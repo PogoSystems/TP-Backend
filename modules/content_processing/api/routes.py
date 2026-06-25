@@ -31,7 +31,7 @@ TEMP_USER_ID=1
     summary="Subir un nuevo documento para un curso")
 
 
-async def upload_document(service: DocSvc, file: UploadFile = File(...), course_id: int = Form(...)) -> DocumentResponse:
+async def upload_document(service: DocSvc, file: UploadFile = File(...), course_id: int = Form(...), syllabus: bool = Form(...)) -> DocumentResponse:
     data = await file.read()
     try:
         doc = await service.upload_document(
@@ -39,7 +39,8 @@ async def upload_document(service: DocSvc, file: UploadFile = File(...), course_
             content_type=file.content_type or "application/octet-stream",
             file_data=data,
             course_id=course_id,
-            current_user_id=TEMP_USER_ID
+            current_user_id=TEMP_USER_ID,
+            syllabus=syllabus,
         )
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(exc))
@@ -53,6 +54,7 @@ async def upload_document(service: DocSvc, file: UploadFile = File(...), course_
         document_type=doc.document_type,
         processing_status=doc.processing_status.value,
         created_at=doc.created_at,
+        syllabus=doc.syllabus
     )
 
 @router.get(
@@ -63,7 +65,7 @@ async def upload_document(service: DocSvc, file: UploadFile = File(...), course_
 )
 async def list_documents(course_id: int, service:DocSvc) -> list[DocumentResponse]:
     documents = await service.list_documents(course_id, TEMP_USER_ID)
-    return[
+    return [
         DocumentResponse(
             id=d.id,
             course_id=d.course_id,
@@ -72,8 +74,9 @@ async def list_documents(course_id: int, service:DocSvc) -> list[DocumentRespons
             document_type=d.document_type,
             processing_status=d.processing_status.value,
             created_at=d.created_at,
+            syllabus = d.syllabus
         )
-        for d in documents
+        for d in documents if d.id is not None
     ]
 
 @router.delete(

@@ -1,4 +1,6 @@
+from enum import Enum
 from pathlib import Path
+import uuid
 import pytest
 from sqlalchemy import select
 from google import genai
@@ -12,7 +14,7 @@ from modules.content_processing.infrastructure.storage.local_document_store impo
 from modules.content_processing.application.services.chunking.chunking_service import ChunkingService
 from modules.content_processing.infrastructure.tokenizers.token_counter import TokenCounter
 from modules.content_processing.application.services.embedding.embedding_generation_service import EmbeddingGenerationService
-from modules.content_processing.infrastructure.repositories.content_document_repository import ContentDocumentRepository
+from modules.content_processing.infrastructure.repositories.document_repository import DocumentRepository
 from modules.content_processing.infrastructure.repositories.document_chunk_repository import DocumentChunkRepository
 
 from modules.course_management.infrastructure.models import CourseModel
@@ -22,6 +24,10 @@ from modules.llm_adapter.infrastructure.providers.gemini_quiz_generator import G
 from modules.quiz_generation.application.services.quiz_generation_service import QuizGenerationService
 from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz
 
+from modules.quiz_generation.infrastructure.repositories.quiz_persistence_repository import QuizPersistenceRepository 
+
+from shared.value_objects.Bloom import BloomLevel
+
 
 @pytest.mark.asyncio
 async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
@@ -30,9 +36,10 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
     """
     async for session in get_db():
         # 1. Create a dummy user
+        unique_suffix = uuid.uuid4().hex[:8]
         user = UserModel(
-            username="rag_tester",
-            email="tester@rag.com",
+            username=f"rag_tester_{unique_suffix}",
+            email=f"tester_{unique_suffix}@rag.com",
         )
         session.add(user)
         await session.flush()
@@ -61,13 +68,14 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
         )
 
         # 4. Save content document
-        doc_repo = ContentDocumentRepository(session)
-        saved_doc = await doc_repo.save_document(
+        doc_repo = DocumentRepository(session)
+        saved_doc = await doc_repo.save(
             ContentDocumentAggregate(
                 course_id=course.id,
                 user_id=user.id,
                 title=prepared_doc.raw.title,
                 storage_key=prepared_doc.raw.storage_key,
+                document_type=prepared_doc.raw.document_type,
             )
         )
 
@@ -97,22 +105,40 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
         )
         await session.flush()
 
-        # 8. Setup Quiz Generator & Quiz Generation Service
+        # 8. Setup Facade & Quiz Generation Service
         quiz_generator = GeminiQuizGenerator(client=client)
-        quiz_generation_service = QuizGenerationService(
+        from modules.content_processing.application.services.content_retrieval_facade import ContentRetrievalFacade
+        from modules.content_processing.domain.ports.storage_port import StoragePort
+        
+        class MockStorage(StoragePort):
+            async def upload(self, key: str, data: bytes, content_type: str) -> str: return ""
+            async def download(self, key: str) -> bytes: return b""
+            async def delete(self, key: str) -> None: pass
+
+        
+        content_facade = ContentRetrievalFacade(
             session=session,
             embedding_provider=embedding_provider,
+            storage=MockStorage()
+        )
+
+        repository = QuizPersistenceRepository(session)
+        
+        quiz_generation_service = QuizGenerationService(
+            context_retriever=content_facade,
             quiz_generator=quiz_generator,
+            quiz_repository=repository,
+
         )
 
         # 9. Execute Quiz Generation (RAG)
         # Search query: "User stories"
-        # Prompt: "Generame 5 preguntas en relacion a User stories"
-        generated_quiz = await quiz_generation_service.generate_quiz(
+        generated_quiz = await quiz_generation_service.generate_quiz_from_course(
             course_id=course.id,
             query_text="User stories",
             num_questions=5,
-            prompt_instruction="Generame 5 preguntas en relacion a User stories"
+            user_id=user.id,
+            bloom_levels=[BloomLevel.REMEMBER]
         )
 
         directorio_actual = Path(__file__).parent
@@ -127,7 +153,7 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
 
         for i, question in enumerate(generated_quiz.questions):
             assert question.text != ""
-            assert question.bloom_level in {"remember", "understand", "apply", "analyze", "evaluate", "create"}
+            assert question.bloom_level.value in [e.value for e in BloomLevel]
             assert question.score > 0
             assert question.explanation != ""
             assert len(question.answers) >= 2

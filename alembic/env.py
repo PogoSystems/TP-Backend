@@ -17,12 +17,13 @@ from modules.content_processing.infrastructure.models import (ContentDocumentMod
 from modules.course_management.infrastructure.models import CourseModel
 from modules.gamification.infrastructure.models import AchievementModel, UserAchievementModel
 from modules.iam.infrastructure.user_model import UserModel
+from modules.quiz_generation.infrastructure.models.answer_model import AnswerModel
+from modules.quiz_generation.infrastructure.models.question_model import QuestionModel
+from modules.quiz_generation.infrastructure.models.quiz_model import QuizModel
 from modules.quiz_management.infrastructure.models import (
-    AnswerModel,
     QuestionAttemptModel,
-    QuestionModel,
     QuizAttemptModel,
-    QuizModel,
+    QuizSourceDocumentModel,
 )
 ##from modules.course.infrastructure.models import Course
 

@@ -19,5 +19,10 @@ class SupabaseStorageAdapter:
         )
         return key
 
+    async def download(self, key: str) -> bytes:
+        """Download a file from Supabase Storage by its storage key."""
+        response = await self._client.storage.from_(self.BUCKET).download(key)
+        return response
+
     async def delete(self, key: str) -> None:
         await self._client.storage.from_(self.BUCKET).remove([key])

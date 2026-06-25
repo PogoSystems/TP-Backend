@@ -6,11 +6,12 @@ from google.genai.errors import APIError
 from core.settings import settings
 from modules.quiz_generation.domain.ports.quiz_generator_port import QuizGeneratorPort
 from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz
+from shared.value_objects.Bloom import BloomLevel
 
 logger = logging.getLogger(__name__)
 
 
-class GeminiQuizGenerator(QuizGeneratorPort):
+class GeminiQuizGenerator():
     """
     Gemini implementation of the QuizGeneratorPort.
     Responsible for sending prompt and context to Gemini using Structured Output.
@@ -25,21 +26,36 @@ class GeminiQuizGenerator(QuizGeneratorPort):
         *,
         context_text: str,
         num_questions: int,
-        prompt_instruction: str,
+        bloom_levels: list[BloomLevel]
     ) -> GeneratedQuiz:
         """
         Generate structured quiz using Gemini API.
         """
+        bloom_instruction = ""
+        if bloom_levels:
+            bloom_str = ", ".join([level.value for level in bloom_levels])
+            bloom_instruction = f"\nCRITICAL INSTRUCTION: Focus EXCLUSIVELY on these levels of Bloom's Taxonomy: {bloom_str}\n"
         prompt = f"""
-You are an expert educator. Generate a quiz containing exactly {num_questions} questions based strictly on the following reference material.
+You are an expert educator. Generate a quiz containing exactly {num_questions} questions using the bloom taxonomy based strictly on the following reference material.
+
+{bloom_instruction}
+
+The reference material is divided into two parts:
+1. The syllabus objectives and competencies.
+2. The actual course content (RAG Context).
+
+CRITICAL INSTRUCTION: Ensure that every generated question aligns perfectly with the syllabus objectives, while extracting the specific factual answers from the course content.
+
+The questions in the quiz can be one of two types: Multiple Choice or True/False.
+
+The questions MUST be in spanish
+
+DO NOT include in the questions frases like "according to the reference material" or "based on the text". Just ask the question directly.
 
 Reference material (RAG Context):
 ---
 {context_text}
 ---
-
-Main Instruction:
-{prompt_instruction}
 
 Generate the output strictly following the requested JSON schema.
 """

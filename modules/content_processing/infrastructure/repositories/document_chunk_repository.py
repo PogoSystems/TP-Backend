@@ -62,7 +62,72 @@ class DocumentChunkRepository:
 
         result = await self._session.execute(stmt)
         return list(result.scalars().all())
+
+    async def find_by_document_ids(
+        self,
+        document_ids: list[int],
+    ) -> list[DocumentChunkModel]:
+        """Retrieve all chunks belonging to the given document IDs."""
+        stmt = (
+            select(DocumentChunkModel)
+            .where(DocumentChunkModel.document_id.in_(document_ids))
+            .order_by(DocumentChunkModel.document_id, DocumentChunkModel.chunk_index)
+        )
+        result = await self._session.execute(stmt)
+        return list(result.scalars().all())
+
+    async def similarity_search_by_document_ids(
+        self,
+        *,
+        query_vector: list[float],
+        document_ids: list[int],
+        limit: int = 5,
+    ) -> list[DocumentChunkModel]:
+        """
+        Retrieves the top K chunks most similar to the query_vector,
+        filtered to only include chunks from the given document IDs.
+        Filters at the DB level with WHERE document_id IN (...) for scalability.
+        """
+        stmt = (
+            select(DocumentChunkModel)
+            .where(DocumentChunkModel.document_id.in_(document_ids))
+            .order_by(DocumentChunkModel.embedding.cosine_distance(query_vector))
+            .limit(limit)
+        )
+        result = await self._session.execute(stmt)
+        return list(result.scalars().all())
+
+    async def check_topic_in_syllabus(
+        self,
+        query_vector: list[float],
+        course_id:int,
+        distance_threshold: float,
+        limit: int,
+        query_text: str,
+        )->list[DocumentChunkModel]:
+        """
+        Verifica si el topic (representado por query_vector) es semánticamente 
+        cercano a algún documento marcado como syllabus dentro del curso.
+        Retorna True si existe al menos un chunk cuya distancia sea menor al umbral.
+        """
+        distance_expr = DocumentChunkModel.embedding.cosine_distance(query_vector)
+        stmt = (
+            select(DocumentChunkModel)
+            .join(ContentDocumentModel)
+            .where(
+                ContentDocumentModel.course_id == course_id,
+                ContentDocumentModel.syllabus == True,
+            )
+        )
         
+        if query_text != "Resumen principal, conceptos clave y temas principales.":
+            stmt = stmt.where(distance_expr < distance_threshold)
+            
+        stmt = stmt.order_by(distance_expr).limit(limit)
+        
+        result = await self._session.execute(stmt)
+        return list(result.scalars().all()) # Devuelve una lista de chunks (o vacía)
+
 """
 Falta implementar la busqueda lexica (BM25)
 """

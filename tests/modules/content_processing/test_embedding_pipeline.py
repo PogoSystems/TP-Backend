@@ -1,6 +1,7 @@
 import dataclasses
 import json
 from pathlib import Path
+import uuid
 
 import pytest
 from sqlalchemy import select
@@ -23,7 +24,7 @@ from modules.course_management.infrastructure.models import CourseModel
 from modules.iam.infrastructure.user_model import UserModel
 from modules.llm_adapter.infrastructure.providers.gemini_embedding_provider import GeminiEmbeddingProvider
 
-from modules.content_processing.infrastructure.repositories.content_document_repository import ContentDocumentRepository
+from modules.content_processing.infrastructure.repositories.document_repository import DocumentRepository
 from modules.content_processing.infrastructure.repositories.document_chunk_repository import DocumentChunkRepository
 
 from modules.content_processing.infrastructure.models.content_document_model import ContentDocumentModel
@@ -50,11 +51,12 @@ async def test_full_embedding_persistence_pipeline(tmp_path: Path) -> None:
     # -------------------------------
     async for session in get_db():
         # -------------------------------
-        # STEP 1: Create user
+        # STEP 1: Create user with unique email
         # -------------------------------
+        unique_suffix = uuid.uuid4().hex[:8]
         user = UserModel(
-            username="test_user",
-            email="test@test.com",
+            username=f"test_user_{unique_suffix}",
+            email=f"test_{unique_suffix}@test.com",
         )
         session.add(user)
         await session.flush()
@@ -94,14 +96,15 @@ async def test_full_embedding_persistence_pipeline(tmp_path: Path) -> None:
         # -------------------------------
         # STEP 4: Save content document
         # -------------------------------
-        doc_repo = ContentDocumentRepository(session)
+        doc_repo = DocumentRepository(session)
 
-        saved_doc = await doc_repo.save_document(
+        saved_doc = await doc_repo.save(
             ContentDocumentAggregate(
                 course_id=course.id,
                 user_id=user.id,
                 title=prepared_doc.raw.title,
                 storage_key=prepared_doc.raw.storage_key,
+                document_type=prepared_doc.raw.document_type,
             )
         )
 
@@ -162,6 +165,7 @@ async def test_full_embedding_persistence_pipeline(tmp_path: Path) -> None:
         # -------------------------------
         # STEP 7: Save chunks + embeddings
         # -------------------------------
+        assert saved_doc.id is not None
         chunk_repo = DocumentChunkRepository(session)
 
         await chunk_repo.save_all(
@@ -169,8 +173,7 @@ async def test_full_embedding_persistence_pipeline(tmp_path: Path) -> None:
             chunks=embedded_chunks,
         )
 
-        await session.commit()
-
+        await session.flush()
         # -------------------------------
         # STEP 8: Verification
         # -------------------------------
@@ -187,3 +190,9 @@ async def test_full_embedding_persistence_pipeline(tmp_path: Path) -> None:
         print("\nPIPELINE COMPLETED SUCCESSFULLY")
         print(f"Document ID: {db_doc.id}")
         print(f"Title: {db_doc.title}")
+
+        await session.rollback()
+
+    # Clean up the database engine pool to prevent "Event loop is closed" errors during teardown
+    from core.db.database import engine
+    await engine.dispose()

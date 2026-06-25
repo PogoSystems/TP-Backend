@@ -1,6 +1,5 @@
 from pydantic import BaseModel, Field, field_validator
-
-ALLOWED_BLOOM_LEVELS = {"remember", "understand", "apply", "analyze", "evaluate", "create"}
+from modules.quiz_generation.domain.aggregates.question import BloomLevel
 
 
 class GeneratedAnswer(BaseModel):
@@ -10,18 +9,10 @@ class GeneratedAnswer(BaseModel):
 
 class GeneratedQuestion(BaseModel):
     text: str = Field(description="The text content of the question.")
-    bloom_level: str = Field(description="The cognitive level of the question according to Bloom's Taxonomy (remember, understand, apply, analyze, evaluate, create).")
-    score: int = Field(description="The weight or score points allocated to this question (must be positive).")
+    bloom_level: BloomLevel = Field(description="The cognitive level of the question according to Bloom's Taxonomy.")
+    score: int = Field(description="The weight or score points allocated to this question according to the complexity of the question (must be positive).")
     explanation: str = Field(description="Explanation or feedback about why the correct answer is right and why others are wrong.")
     answers: list[GeneratedAnswer] = Field(description="List of answer choices for this question.")
-
-    @field_validator("bloom_level")
-    @classmethod
-    def validate_bloom_level(cls, val: str) -> str:
-        cleaned = val.strip().lower()
-        if cleaned not in ALLOWED_BLOOM_LEVELS:
-            raise ValueError(f"bloom_level must be one of {sorted(ALLOWED_BLOOM_LEVELS)}")
-        return cleaned
 
     @field_validator("score")
     @classmethod

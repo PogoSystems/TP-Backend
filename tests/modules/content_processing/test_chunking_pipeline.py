@@ -77,6 +77,7 @@ def test_chunking_service_with_real_pdf(tmp_path: Path) -> None:
         # Use a small value during testing
         # so chunk splitting is easier to verify
         max_chunk_tokens=100,
+        chunk_overlap=20,
     )
 
     chunked_doc = chunking_service.chunk_document(
@@ -102,8 +103,6 @@ def test_chunking_service_with_real_pdf(tmp_path: Path) -> None:
 
         print("\n")
         print("-" * 80)
-
-        print(f"Chunk ID: {chunk.chunk_id}")
 
         print(
             f"Heading Path: "

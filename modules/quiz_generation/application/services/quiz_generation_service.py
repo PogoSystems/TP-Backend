@@ -1,74 +1,161 @@
-from sqlalchemy.ext.asyncio import AsyncSession
+from shared.value_objects.Bloom import BloomLevel
+from modules.quiz_generation.domain.aggregates.answer import AnswerAggregate
+from modules.quiz_generation.domain.aggregates.question import QuestionAggregate
+from modules.quiz_generation.domain.aggregates.quiz import QuizAggregate
+import logging
+
 from core.settings import settings
-from modules.content_processing.domain.ports.embedding_provider import EmbeddingProvider
-from modules.content_processing.infrastructure.repositories.document_chunk_repository import DocumentChunkRepository
+from modules.quiz_generation.domain.ports.context_retrieval_port import ContextRetrievalPort
 from modules.quiz_generation.domain.ports.quiz_generator_port import QuizGeneratorPort
 from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz
+
+from modules.quiz_generation.domain.ports.quiz_persistance_port import QuizPersistencePort
+
+logger = logging.getLogger(__name__)
 
 
 class QuizGenerationService:
     """
     Application Service responsible for orchestrating the RAG Quiz Generation.
-    Retrieves relevant database chunks using query embedding and requests
-    Gemini to generate the quiz.
+    It retrieves textual context via ContextRetrievalPort and delegates the
+    quiz generation to the LLM via QuizGeneratorPort.
     """
 
     def __init__(
         self,
         *,
-        session: AsyncSession,
-        embedding_provider: EmbeddingProvider,
+        context_retriever: ContextRetrievalPort,
         quiz_generator: QuizGeneratorPort,
+        quiz_repository: QuizPersistencePort,
     ) -> None:
-        self._session = session
-        self._embedding_provider = embedding_provider
+        self._context_retriever = context_retriever
         self._quiz_generator = quiz_generator
-        self._chunk_repo = DocumentChunkRepository(session)
+        self._quiz_repository = quiz_repository
 
-    async def generate_quiz(
+    async def generate_quiz_from_course(
         self,
         *,
         course_id: int,
-        query_text: str,
+        query_text: str | None = None,
         num_questions: int,
-        prompt_instruction: str,
+        user_id: int,
+        bloom_levels: list[BloomLevel]
     ) -> GeneratedQuiz:
         """
-        Executes RAG Quiz Generation:
-        1. Generates embedding for the search query.
-        2. Retrieves the top relevant chunks for the course.
-        3. Prepares context text by concatenating retrieved content.
-        4. Calls LLM adapter to generate the quiz structured JSON.
+        Generates a quiz using context retrieved by course_id.
         """
-        # Step 1: Generate embeddings for query text
-        query_embeddings = await self._embedding_provider.generate_embeddings([query_text])
-        if not query_embeddings:
-            raise ValueError("Failed to generate embedding for query text")
-        query_vector = query_embeddings[0]
+        effective_query = query_text.strip() if query_text and query_text.strip() else (
+            "Resumen principal, conceptos clave y temas principales."
+        )
 
-        # Step 2: Similarity search in database
-        chunks = await self._chunk_repo.similarity_search(
-            query_vector=query_vector,
+        context_text = await self._context_retriever.get_context_from_course(
             course_id=course_id,
+            query_text=effective_query,
             limit=settings.TOP_K_RETRIEVAL,
         )
 
-        if not chunks:
-            raise ValueError(f"No relevant chunks found in database for course {course_id} and query '{query_text}'")
+        generated_quiz = await self._generate_quiz_with_llm(
+            context_text=context_text,
+            num_questions=num_questions,
+            bloom_levels = bloom_levels,
+        )
 
-        # Step 3: Combine retrieved context
-        context_parts = []
-        for chunk in chunks:
-            # We use enriched_content because it contains context injection (Title + heading path)
-            context_parts.append(chunk.enriched_content)
+        # Map GeneratedQuiz (LLM schema) → QuizAggregate (domain)
+        quiz = QuizAggregate(
+            user_id=user_id,
+            course_id=course_id,
+            title=generated_quiz.title,
+            questions=[
+                QuestionAggregate(
+                    text=q.text,
+                    bloom_level=q.bloom_level,
+                    score=q.score,
+                    explanation=q.explanation,
+                    answers=[
+                        AnswerAggregate(
+                            text=a.text,
+                            is_correct=a.is_correct,
+                        )
+                        for a in q.answers
+                    ],
+                )
+                for q in generated_quiz.questions
+            ],
+        )
 
-        context_text = "\n\n=== FRAGMENT ===\n".join(context_parts)
+        await self._quiz_repository.save(quiz)
+        return generated_quiz
 
-        # Step 4: Call LLM adapter using the port
+    async def generate_quiz_from_documents(
+        self,
+        *,
+        document_ids: list[int],
+        query_text: str | None = None,
+        num_questions: int,
+        user_id: int,
+        course_id: int,
+        bloom_levels: list[BloomLevel]
+    ) -> GeneratedQuiz:
+        """
+        Generates a quiz using context retrieved only from specific documents.
+        """
+        effective_query = query_text.strip() if query_text and query_text.strip() else (
+            "Resumen principal, conceptos clave y temas principales."
+        )
+
+        context_text = await self._context_retriever.get_context_from_documents(
+            document_ids=document_ids,
+            query_text=effective_query,
+            limit=settings.TOP_K_RETRIEVAL,
+            course_id=course_id,
+        )
+
+        generated_quiz = await self._generate_quiz_with_llm(
+            context_text=context_text,
+            num_questions=num_questions,
+            bloom_levels = bloom_levels,
+        )
+
+        # Map GeneratedQuiz (LLM schema) → QuizAggregate (domain)
+        quiz = QuizAggregate(
+            user_id=user_id,
+            course_id=course_id,
+            title=generated_quiz.title,
+            questions=[
+                QuestionAggregate(
+                    text=q.text,
+                    bloom_level=q.bloom_level,
+                    score=q.score,
+                    explanation=q.explanation,
+                    answers=[
+                        AnswerAggregate(
+                            text=a.text,
+                            is_correct=a.is_correct,
+                        )
+                        for a in q.answers
+                    ],
+                )
+                for q in generated_quiz.questions
+            ],
+        )
+
+        await self._quiz_repository.save(quiz)
+        return generated_quiz
+
+    async def _generate_quiz_with_llm(
+        self,
+        *,
+        context_text: str,
+        num_questions: int,
+        bloom_levels: list[BloomLevel],
+    ) -> GeneratedQuiz:
+        """
+        Helper method to call the LLM adapter.
+        """
         generated_quiz = await self._quiz_generator.generate_quiz_from_context(
             context_text=context_text,
             num_questions=num_questions,
-            prompt_instruction=prompt_instruction,
+            bloom_levels = bloom_levels,
         )
 
         return generated_quiz

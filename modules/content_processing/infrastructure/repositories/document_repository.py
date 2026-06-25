@@ -1,4 +1,6 @@
-from sqlalchemy import select, delete
+from datetime import datetime, timezone
+
+from sqlalchemy import select, delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from modules.content_processing.domain.aggregates import ContentDocumentAggregate
@@ -31,6 +33,44 @@ class DocumentRepository:
         result= await self._session.execute(smtm)
         return [self._to_aggregate(m) for m in result.scalars().all()]
 
+    async def find_syllabus_by_course(self, course_id: int) -> ContentDocumentAggregate | None:
+        """Retrieve the syllabus document for a specific course."""
+        stmt = (
+            select(ContentDocumentModel)
+            .where(
+                ContentDocumentModel.course_id == course_id, 
+                ContentDocumentModel.syllabus == True
+            )
+            .limit(1)
+        )
+        result = await self._session.execute(stmt)
+        model = result.scalar()
+        return self._to_aggregate(model) if model else None
+
+    async def find_by_ids(self, document_ids: list[int]) -> list[ContentDocumentAggregate]:
+        """Retrieve multiple documents by a list of IDs in a single query."""
+        stmt = ( #select statements
+            select(ContentDocumentModel)
+            .where(ContentDocumentModel.id.in_(document_ids))
+        )
+        result = await self._session.execute(stmt)
+        return [self._to_aggregate(m) for m in result.scalars().all()]
+
+    async def update_status(self, document_id: int, status: ProcessingStatus) -> None:
+        """Update the processing status (and processed_at if COMPLETED) of a document."""
+        values: dict = {"processing_status": status.value}
+        if status == ProcessingStatus.COMPLETED:
+            # Usamos replace(tzinfo=None) para crear un naive datetime en UTC
+            # y así evitar el error de asyncpg con TIMESTAMP WITHOUT TIME ZONE
+            values["processed_at"] = datetime.now(timezone.utc).replace(tzinfo=None)
+        stmt = (
+            update(ContentDocumentModel)
+            .where(ContentDocumentModel.id == document_id)
+            .values(**values)
+        )
+        await self._session.execute(stmt)
+        await self._session.flush()
+
     async def delete_by_id(self, document_id:int) -> None:
         smtm= delete(ContentDocumentModel).where(ContentDocumentModel.id==document_id)
         await self._session.execute(smtm)
@@ -45,6 +85,7 @@ class DocumentRepository:
             title=model.title,
             document_type=model.document_type,
             storage_key=model.storage_key,
+            syllabus=model.syllabus,
             processing_status=ProcessingStatus(model.processing_status), # to make the convertion of value to processing status object
             processed_at=model.processed_at,
             created_at=model.created_at,
@@ -58,5 +99,6 @@ class DocumentRepository:
             title=aggregate.title,
             document_type=aggregate.document_type,
             storage_key=aggregate.storage_key,
+            syllabus=aggregate.syllabus,
             processing_status=aggregate.processing_status.value, # to extract the value of the enum
         )
