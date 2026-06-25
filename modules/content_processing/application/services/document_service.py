@@ -27,6 +27,7 @@ class DocumentService:
         content_type: str,
         file_data: bytes,
         course_id: int,
+        syllabus: bool,
         current_user_id: int, # this comes from the JWT token of the authentication
     ) -> ContentDocumentAggregate:
 
@@ -46,6 +47,7 @@ class DocumentService:
             document_type=doc_type,
             storage_key=key,
             user_id=current_user_id,
+            syllabus=syllabus,
         )
         return await self._repository.save(document)
 

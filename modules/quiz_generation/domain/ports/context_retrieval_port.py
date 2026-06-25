@@ -24,6 +24,7 @@ class ContextRetrievalPort(Protocol):
         document_ids: list[int],
         query_text: str,
         limit: int,
+        course_id:int,
     ) -> str:
         """
         Retrieves relevant context by searching only within the specified documents.

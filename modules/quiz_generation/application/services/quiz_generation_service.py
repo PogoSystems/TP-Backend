@@ -103,6 +103,7 @@ class QuizGenerationService:
             document_ids=document_ids,
             query_text=effective_query,
             limit=settings.TOP_K_RETRIEVAL,
+            course_id=course_id,
         )
 
         generated_quiz = await self._generate_quiz_with_llm(

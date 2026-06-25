@@ -59,7 +59,7 @@ class ContentRetrievalFacade:
         context_parts = [chunk.enriched_content for chunk in chunks]
         return "\n\n=== FRAGMENT ===\n".join(context_parts)
 
-    async def get_context_from_documents(self, document_ids: list[int], query_text: str, limit: int) -> str:
+    async def get_context_from_documents(self, document_ids: list[int], query_text: str, limit: int, course_id:int,) -> str:
         """
         1. Fetches documents from DB and validates existence.
         2. Processes PENDING/FAILED documents.
@@ -76,13 +76,50 @@ class ContentRetrievalFacade:
             raise DocumentNotFoundError(missing_ids)
 
         # Classify and process documents by status
+        syllabus_doc = await self._doc_repo.find_syllabus_by_course(course_id)
+        if syllabus_doc:
+            await self._ensure_documents_processed([syllabus_doc])
+        else:
+            from shared.exceptions import NoSyllabusError
+            raise NoSyllabusError()
+
         await self._ensure_documents_processed(documents)
 
-        # Generate embedding for the query
-        query_embeddings = await self._embedding_provider.generate_embeddings([query_text])
-        if not query_embeddings:
-            raise ValueError("Failed to generate embedding for query text")
+        # Generate embedding for the query in batch
+        syllabus_query = f"{query_text} objetivos competencias resultados de aprendizaje temario"
+        
+        query_embeddings = await self._embedding_provider.generate_embeddings([
+            query_text,      # Vector 0
+            syllabus_query   # Vector 1
+        ])
+        
+        if not query_embeddings or len(query_embeddings) < 2:
+            raise ValueError("Failed to generate embeddings for queries")
+            
         query_vector = query_embeddings[0]
+        syllabus_query_vector = query_embeddings[1]
+
+        # Validate that the topic is valid for the course
+        syllabus_chunks = await self._chunk_repo.check_topic_in_syllabus(
+            query_vector=query_vector,
+            course_id=course_id,
+            distance_threshold=0.38,
+            limit=3
+        )
+
+        # DEPURACIÓN: Ver qué está devolviendo el syllabus
+        print("\n\n--- DEPURACIÓN DE SÍLABO ---")
+        for i, chunk in enumerate(syllabus_chunks):
+            print(f"Chunk {i+1}: {chunk.enriched_content[:200]}...") # Imprime los primeros 200 caracteres
+        print("----------------------------\n\n")
+        
+        # If no syllabus chunks are found, raise an error
+        if not syllabus_chunks:
+            from shared.exceptions import TopicNotInSyllabusError
+            raise TopicNotInSyllabusError()
+
+        # Extract the syllabus text
+        syllabus_text = "\n\n".join([chunk.enriched_content for chunk in syllabus_chunks])
 
         # Similarity search filtered by document_ids
         chunks = await self._chunk_repo.similarity_search_by_document_ids(
@@ -98,7 +135,16 @@ class ContentRetrievalFacade:
 
         # Build context from retrieved chunks
         context_parts = [chunk.enriched_content for chunk in chunks]
-        return "\n\n=== FRAGMENT ===\n".join(context_parts)
+        rag_text= "\n\n=== FRAGMENT ===\n".join(context_parts)
+
+        final_context = (
+            f"=== OBJETIVOS Y COMPETENCIAS DEL SÍLABO ===\n"
+            f"{syllabus_text}\n\n"
+            f"=== MATERIAL DE REFERENCIA PARA LAS PREGUNTAS ===\n"
+            f"{rag_text}"
+        )
+        
+        return final_context
 
     async def _ensure_documents_processed(
         self,
@@ -131,3 +177,4 @@ class ContentRetrievalFacade:
                 embedding_provider=self._embedding_provider,
             )
             await processing_service.process_document(doc)
+            await self._session.commit()

@@ -32,9 +32,17 @@ class GeminiQuizGenerator():
         prompt = f"""
 You are an expert educator. Generate a quiz containing exactly {num_questions} questions based strictly on the following reference material.
 
+The reference material is divided into two parts:
+1. The syllabus objectives and competencies.
+2. The actual course content (RAG Context).
+
+CRITICAL INSTRUCTION: Ensure that every generated question aligns perfectly with the syllabus objectives, while extracting the specific factual answers from the course content.
+
 The questions in the quiz can be one of two types: Multiple Choice or True/False.
 
-The default language for the questions is Spanish.
+The questions MUST be in spanish
+
+DO NOT include in the questions frases like "according to the reference material" or "based on the text". Just ask the question directly.
 
 Reference material (RAG Context):
 ---

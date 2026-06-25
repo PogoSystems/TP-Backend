@@ -20,3 +20,12 @@ class DocumentProcessingError(Exception):
     def __init__(self, document_id: int, reason: str) -> None:
         super().__init__(f"Failed to process document id={document_id}: {reason}")
         self.document_id = document_id
+
+class TopicNotInSyllabusError(ValueError):
+    """Excepción lanzada cuando el tema no se encuentra en el sílabo del curso."""
+    def __init__(self, message="El tema solicitado no se encuentra dentro del sílabo del curso."):
+        super().__init__(message)
+
+class NoSyllabusError(ValueError):
+    def __init__(self, message="No se encontró un silabo para el curso"):
+        super().__init__(message)

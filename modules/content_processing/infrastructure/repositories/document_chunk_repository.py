@@ -97,6 +97,34 @@ class DocumentChunkRepository:
         result = await self._session.execute(stmt)
         return list(result.scalars().all())
 
+    async def check_topic_in_syllabus(
+        self,
+        query_vector: list[float],
+        course_id:int,
+        distance_threshold: float,
+        limit: int,
+        )->list[DocumentChunkModel]:
+        """
+        Verifica si el topic (representado por query_vector) es semánticamente 
+        cercano a algún documento marcado como syllabus dentro del curso.
+        Retorna True si existe al menos un chunk cuya distancia sea menor al umbral.
+        """
+        distance_expr = DocumentChunkModel.embedding.cosine_distance(query_vector)
+        stmt = (
+            select(DocumentChunkModel)
+            .join(ContentDocumentModel)
+            .where(
+                ContentDocumentModel.course_id == course_id,
+                ContentDocumentModel.syllabus == True,
+                distance_expr < distance_threshold
+            )
+            .order_by(distance_expr)
+            .limit(limit)
+        )
+        
+        result = await self._session.execute(stmt)
+        return list(result.scalars().all()) # Devuelve una lista de chunks (o vacía)
+
 """
 Falta implementar la busqueda lexica (BM25)
 """

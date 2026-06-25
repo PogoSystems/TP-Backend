@@ -33,6 +33,20 @@ class DocumentRepository:
         result= await self._session.execute(smtm)
         return [self._to_aggregate(m) for m in result.scalars().all()]
 
+    async def find_syllabus_by_course(self, course_id: int) -> ContentDocumentAggregate | None:
+        """Retrieve the syllabus document for a specific course."""
+        stmt = (
+            select(ContentDocumentModel)
+            .where(
+                ContentDocumentModel.course_id == course_id, 
+                ContentDocumentModel.syllabus == True
+            )
+            .limit(1)
+        )
+        result = await self._session.execute(stmt)
+        model = result.scalar()
+        return self._to_aggregate(model) if model else None
+
     async def find_by_ids(self, document_ids: list[int]) -> list[ContentDocumentAggregate]:
         """Retrieve multiple documents by a list of IDs in a single query."""
         stmt = ( #select statements

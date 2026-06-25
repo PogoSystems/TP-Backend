@@ -2,121 +2,113 @@
     "title": "Quiz sobre User Stories y Criterios de Aceptación",
     "questions": [
         {
-            "text": "¿Cuál es el propósito principal de las User Stories según el material de referencia?",
+            "text": "¿Cuál es el propósito principal de las User Stories para los equipos ágiles?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "El material indica que 'Para los equipos ágiles, User Stories son el primer método para identificar necesidades de los usuarios.'",
+            "explanation": "Las User Stories son el método principal para que los equipos ágiles identifiquen las necesidades y requisitos de los usuarios, sirviendo como una herramienta fundamental para comprender lo que el usuario desea lograr.",
             "answers": [
-                {
-                    "text": "Documentar el código fuente.",
-                    "is_correct": false
-                },
                 {
                     "text": "Identificar las necesidades de los usuarios.",
                     "is_correct": true
                 },
                 {
-                    "text": "Crear diagramas de flujo.",
+                    "text": "Definir la arquitectura técnica del software.",
                     "is_correct": false
                 },
                 {
-                    "text": "Realizar pruebas de rendimiento.",
+                    "text": "Gestionar el presupuesto del proyecto.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Monitorear el rendimiento del equipo.",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "Según el escenario 'usuario visualiza formulario “Brindar feedback”', ¿cuáles son los campos requeridos en el formulario de feedback?",
-            "bloom_level": "remember",
-            "score": 2,
-            "explanation": "El escenario establece que el formulario 'contiene los campos “Email”, “Nombre” y “Comentario” los cuales son requeridos.'",
-            "answers": [
-                {
-                    "text": "Email, Contraseña y Comentario.",
-                    "is_correct": false
-                },
-                {
-                    "text": "Nombre, Apellido y Email.",
-                    "is_correct": false
-                },
-                {
-                    "text": "Email, Nombre y Comentario.",
-                    "is_correct": true
-                },
-                {
-                    "text": "Teléfono, Dirección y Comentario.",
-                    "is_correct": false
-                }
-            ]
-        },
-        {
-            "text": "Después de que un usuario envía el formulario de feedback con datos válidos, ¿qué acciones realiza el sistema?",
+            "text": "¿Qué función cumplen los Criterios de Aceptación en relación con las User Stories?",
             "bloom_level": "understand",
-            "score": 3,
-            "explanation": "El escenario 'usuario envía el formulario de feedback con datos válidos' especifica que 'el sistema envía mi feedback Y el sistema muestra el mensaje “Su feedback fue enviado con éxito” Y el sistema limpia los campos del formulario “Brindar feedback”.'",
-            "answers": [
-                {
-                    "text": "Envía el feedback, muestra un mensaje de éxito y limpia los campos.",
-                    "is_correct": true
-                },
-                {
-                    "text": "Envía el feedback y redirige al usuario a la página principal.",
-                    "is_correct": false
-                },
-                {
-                    "text": "Muestra un mensaje de error y mantiene los campos llenos.",
-                    "is_correct": false
-                },
-                {
-                    "text": "Guarda el feedback en borrador y cierra la sesión del usuario.",
-                    "is_correct": false
-                }
-            ]
-        },
-        {
-            "text": "Según los principios de Behavior-Driven Development (BDD) mencionados en el documento, ¿qué tipo de palabras se deben evitar en los títulos de los escenarios?",
-            "bloom_level": "remember",
             "score": 2,
-            "explanation": "El material indica: 'Evita palabras “verify”, “assert” o “should” en títulos de escenarios.'",
+            "explanation": "Los Criterios de Aceptación son esenciales para asegurar que las User Stories se han completado correctamente y cumplen con las demandas y expectativas de los clientes, sirviendo como una medida de éxito.",
             "answers": [
                 {
-                    "text": "Palabras que describen acciones del usuario.",
-                    "is_correct": false
-                },
-                {
-                    "text": "Palabras como 'verify', 'assert' o 'should'.",
+                    "text": "Asegurar que las User Stories se completen correctamente.",
                     "is_correct": true
                 },
                 {
-                    "text": "Nombres de usuarios o roles.",
+                    "text": "Establecer el cronograma de desarrollo del proyecto.",
                     "is_correct": false
                 },
                 {
-                    "text": "Verbos en infinitivo.",
+                    "text": "Asignar tareas específicas a los desarrolladores.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Documentar los errores o bugs del sistema.",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "¿Qué es Behavior-Driven Development (BDD) según la definición proporcionada?",
+            "text": "En el escenario de 'usuario visualiza formulario “Brindar feedback”', ¿cuáles son los campos requeridos que debe contener el formulario?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "El documento define BDD como 'un proceso de desarrollo de software que coloca en primer lugar al comportamiento.'",
+            "explanation": "El escenario de visualización del formulario 'Brindar feedback' especifica que debe contener los campos 'Email', 'Nombre' y 'Comentario', y que todos ellos son requeridos para su envío.",
             "answers": [
                 {
-                    "text": "Un método para diseñar interfaces de usuario.",
-                    "is_correct": false
-                },
-                {
-                    "text": "Un proceso de desarrollo de software que coloca en primer lugar al comportamiento.",
+                    "text": "\"Email\", \"Nombre\" y \"Comentario\".",
                     "is_correct": true
                 },
                 {
-                    "text": "Una técnica para optimizar bases de datos.",
+                    "text": "\"Email\", \"Teléfono\" y \"Dirección\".",
                     "is_correct": false
                 },
                 {
-                    "text": "Un lenguaje de programación.",
+                    "text": "\"Nombre\", \"Apellido\" y \"Ciudad\".",
+                    "is_correct": false
+                },
+                {
+                    "text": "\"Comentario\", \"Fecha\" y \"Hora\".",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Según las directrices de Behavior-Driven Development (BDD) para los títulos de escenarios, ¿cuál de los siguientes es un título correcto?",
+            "bloom_level": "apply",
+            "score": 3,
+            "explanation": "Las directrices de BDD aconsejan evitar palabras como 'verify', 'assert' o 'should' en los títulos de los escenarios, ya que estas palabras enfatizan la aseveración en lugar del comportamiento. 'Cambio de dirección en la página de perfil' es un ejemplo de un título que se enfoca en el comportamiento de manera concisa.",
+            "answers": [
+                {
+                    "text": "Verificar que el usuario puede cambiar su dirección en la página de perfil.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Cambio de dirección en la página de perfil.",
+                    "is_correct": true
+                },
+                {
+                    "text": "Asegurar que una cotización de acciones se muestra en verde.",
+                    "is_correct": false
+                },
+                {
+                    "text": "La página de despedida debería mostrarse después de un cierre de sesión exitoso.",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Después de que un usuario envía el formulario de feedback con datos válidos, el sistema realiza las siguientes acciones: envía el feedback, muestra el mensaje 'Su feedback fue enviado con éxito' y limpia los campos del formulario 'Brindar feedback'.",
+            "bloom_level": "understand",
+            "score": 2,
+            "explanation": "El escenario 'usuario envía el formulario de feedback con datos válidos' describe que, al completar y enviar el formulario correctamente, el sistema procesa el feedback, notifica al usuario del éxito y restablece el formulario para futuras entradas.",
+            "answers": [
+                {
+                    "text": "Verdadero.",
+                    "is_correct": true
+                },
+                {
+                    "text": "Falso.",
                     "is_correct": false
                 }
             ]
