@@ -1,5 +1,3 @@
-import dataclasses
-import json
 from pathlib import Path
 import uuid
 
@@ -21,7 +19,7 @@ from modules.content_processing.infrastructure.tokenizers.token_counter import T
 
 from modules.content_processing.application.services.embedding.embedding_generation_service import EmbeddingGenerationService
 from modules.course_management.infrastructure.models import CourseModel
-from modules.iam.infrastructure.user_model import UserModel
+from modules.iam.infrastructure.models.user_model import UserModel
 from modules.llm_adapter.infrastructure.providers.gemini_embedding_provider import GeminiEmbeddingProvider
 
 from modules.content_processing.infrastructure.repositories.document_repository import DocumentRepository
