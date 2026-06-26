@@ -2,6 +2,9 @@ from modules.content_processing.domain.aggregates.content_document import Conten
 from modules.content_processing.domain.ports.document_repository import DocumentRepositoryPort
 from modules.content_processing.domain.ports.storage_port import StoragePort
 from modules.content_processing.infrastructure.storage.storage_key_builder import StorageKeyBuilder
+from modules.course_management.domain.ports.course_port import CourseRepositoryPort
+from shared.exceptions import InvalidFileTypeError, FileTooLargeError, DocumentNotFoundError, DocumentForbiddenError, \
+    SingleDocumentNotFoundError, CourseNotFoundError, CourseForbiddenError
 
 ALLOWED_CONTENT_TYPES = {
     "application/pdf": "pdf",
@@ -15,8 +18,10 @@ class DocumentService:
     def __init__(
         self,
         repository: DocumentRepositoryPort,
+        course_repository: CourseRepositoryPort,
         storage: StoragePort,
     ) -> None:
+        self._course_repository = course_repository
         self._repository = repository
         self._storage = storage
 
@@ -30,13 +35,20 @@ class DocumentService:
         syllabus: bool,
         current_user_id: int, # this comes from the JWT token of the authentication
     ) -> ContentDocumentAggregate:
-
+    
         # Validations
         doc_type = ALLOWED_CONTENT_TYPES.get(content_type)
         if not doc_type:
-            raise ValueError(f"Incorrect type file : {content_type}")
+            raise InvalidFileTypeError(content_type)
         if len(file_data) > MAX_FILE_SIZE:
-            raise ValueError("The file size is too large. Maximum allowed size is 10 MB.")
+            raise FileTooLargeError(len(file_data))
+
+        course = await self._course_repository.find_by_id(course_id)
+        if course is None:
+            raise CourseNotFoundError(course_id)
+
+        if course.user_id != current_user_id:
+            raise CourseForbiddenError(course_id,current_user_id)
 
         key = StorageKeyBuilder.build(current_user_id,course_id, filename) # Build the storage_key of the document
         await self._storage.upload(key, file_data, content_type)
@@ -56,7 +68,12 @@ class DocumentService:
 
     async def delete_document(self, document_id: int, user_id: int) -> None:
         document = await self._repository.find_by_id(document_id)
-        if document is None or document.user_id != user_id:
-            raise ValueError("Document doesn't exist or you don't have permission to delete it")
+
+        if document is None:
+            raise SingleDocumentNotFoundError(document_id)
+
+        if document.user_id != user_id:
+            raise DocumentForbiddenError()
+
         await self._storage.delete(document.storage_key)
         await self._repository.delete_by_id(document_id)

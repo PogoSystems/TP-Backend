@@ -8,7 +8,6 @@ class CourseCreate(BaseModel):
 
     name: str = Field(..., min_length=1, max_length=255, description="Nombre del curso")
     description: str | None = Field(None, description="Descripción opcional del curso")
-    user_id: int = Field(..., gt=0, description="ID del usuario propietario del curso")
     max_score: int | None = Field(None, ge=0, description="Puntuación máxima alcanzable")
 
 

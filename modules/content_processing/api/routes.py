@@ -10,7 +10,10 @@ from modules.content_processing.application.services.document_service import Doc
 from modules.content_processing.infrastructure.repositories.document_repository import DocumentRepository
 from modules.content_processing.infrastructure.storage.supabase_storage import SupabaseStorageAdapter
 from modules.content_processing.schemas import DocumentResponse
+from modules.course_management.infrastructure.repositories.course_repository import CourseRepository
 from modules.iam.api.dependencies import CurrentUserId
+from shared.exceptions import InvalidFileTypeError, FileTooLargeError, SingleDocumentNotFoundError, \
+    DocumentForbiddenError, CourseForbiddenError, CourseNotFoundError
 
 router = APIRouter(prefix="/documents", tags=["documents"])
 
@@ -18,6 +21,7 @@ def get_document_service(session: Annotated[AsyncSession, Depends(get_db)], supa
     return DocumentService(
         repository=DocumentRepository(session),
         storage=SupabaseStorageAdapter(supabase),
+        course_repository=CourseRepository(session),
     )
 
 DocSvc = Annotated[DocumentService, Depends(get_document_service)]
@@ -40,8 +44,15 @@ async def upload_document(service: DocSvc, current_user_id: CurrentUserId, file:
             current_user_id=current_user_id,
             syllabus=syllabus,
         )
-    except ValueError as exc:
+    except InvalidFileTypeError as exc:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=str(exc))
+    except FileTooLargeError as exc:
+        raise HTTPException(status_code=status.HTTP_413_CONTENT_TOO_LARGE, detail=str(exc))
+
+    except CourseForbiddenError as exc:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(exc))
+    except CourseNotFoundError as exc:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc))
 
     assert doc.id is not None
     return DocumentResponse(
@@ -85,5 +96,7 @@ async def list_documents(course_id: int,current_user_id: CurrentUserId, service:
 async def delete_document(document_id:int, current_user_id: CurrentUserId, service:DocSvc) -> None:
     try:
         await service.delete_document(document_id, current_user_id)
-    except ValueError as exc:
+    except SingleDocumentNotFoundError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc))
+    except DocumentForbiddenError as exc:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(exc))

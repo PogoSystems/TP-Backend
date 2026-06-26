@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 
 from modules.course_management.api import router as course_router
 from modules.content_processing.api import router as document_router
@@ -15,6 +16,14 @@ app = FastAPI(
     version="1.0.0",
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(course_router, prefix="/api/v1")
 
 
@@ -27,3 +36,4 @@ app.include_router(quiz_router, prefix="/api/v1")
 @app.get("/")
 def read_root():
     return {"message": "fast api funca"}
+

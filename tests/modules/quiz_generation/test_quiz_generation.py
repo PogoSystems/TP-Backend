@@ -37,9 +37,14 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
         # 1. Create a dummy user
         unique_suffix = uuid.uuid4().hex[:8]
         user = UserModel(
-            username=f"rag_tester_{unique_suffix}",
+            auth_id=uuid.uuid4(),
+            name=f"RAG_{unique_suffix}",
+            last_name="Tester",
+            college="Test University",
+            major="Software Engineering",
             email=f"tester_{unique_suffix}@rag.com",
         )
+
         session.add(user)
         await session.flush()
 

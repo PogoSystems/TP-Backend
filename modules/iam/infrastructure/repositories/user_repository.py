@@ -4,12 +4,13 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from modules.iam.domain.aggregates import UserAggregate
+from modules.iam.domain.ports.user_repository_port import UserRepositoryPort
 from modules.iam.infrastructure.models.user_model import UserModel
 
 
-class UserRepository:
+class UserRepository(UserRepositoryPort):
     def __init__(self, session: AsyncSession) -> None:
-        self._session=session
+        self._session = session
 
     async def find_by_auth_id(self, auth_id:UUID) -> UserAggregate | None:
         stmt= select(UserModel).where(UserModel.auth_id == auth_id) # build the query
@@ -20,7 +21,7 @@ class UserRepository:
             return None
         return self._to_aggregate(model)
 
-    async def create_from_auth(self, user: UserAggregate) -> UserAggregate:
+    async def save_from_auth(self, user: UserAggregate) -> UserAggregate:
         model = self._to_model(user)
         self._session.add(model)
         await self._session.flush()
