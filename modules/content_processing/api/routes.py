@@ -10,7 +10,7 @@ from modules.content_processing.application.services.document_service import Doc
 from modules.content_processing.infrastructure.repositories.document_repository import DocumentRepository
 from modules.content_processing.infrastructure.storage.supabase_storage import SupabaseStorageAdapter
 from modules.content_processing.schemas import DocumentResponse
-
+from modules.iam.api.dependencies import CurrentUserId
 
 router = APIRouter(prefix="/documents", tags=["documents"])
 
@@ -22,8 +22,6 @@ def get_document_service(session: Annotated[AsyncSession, Depends(get_db)], supa
 
 DocSvc = Annotated[DocumentService, Depends(get_document_service)]
 
-# TODO: REPLACE THE TEMP_USER_ID IN UPLOAD_DOCUMENT, LIST_DOCUMENTS AND DELETE DOCUMENTS WHEN AUTHENTICATION IS IMPLEMENTED, IT SHOULD RECEIVE THE JWT TOKEN AND EXTRACT THE USER ID FROM IT
-TEMP_USER_ID=1
 @router.post(
     "",
     response_model=DocumentResponse,
@@ -31,7 +29,7 @@ TEMP_USER_ID=1
     summary="Subir un nuevo documento para un curso")
 
 
-async def upload_document(service: DocSvc, file: UploadFile = File(...), course_id: int = Form(...), syllabus: bool = Form(...)) -> DocumentResponse:
+async def upload_document(service: DocSvc, current_user_id: CurrentUserId, file: UploadFile = File(...), course_id: int = Form(...), syllabus: bool = Form(...)) -> DocumentResponse:
     data = await file.read()
     try:
         doc = await service.upload_document(
@@ -39,7 +37,7 @@ async def upload_document(service: DocSvc, file: UploadFile = File(...), course_
             content_type=file.content_type or "application/octet-stream",
             file_data=data,
             course_id=course_id,
-            current_user_id=TEMP_USER_ID,
+            current_user_id=current_user_id,
             syllabus=syllabus,
         )
     except ValueError as exc:
@@ -63,8 +61,8 @@ async def upload_document(service: DocSvc, file: UploadFile = File(...), course_
     status_code=status.HTTP_200_OK,
     summary="Listar documentos por curso"
 )
-async def list_documents(course_id: int, service:DocSvc) -> list[DocumentResponse]:
-    documents = await service.list_documents(course_id, TEMP_USER_ID)
+async def list_documents(course_id: int,current_user_id: CurrentUserId, service:DocSvc) -> list[DocumentResponse]:
+    documents = await service.list_documents(course_id, current_user_id)
     return [
         DocumentResponse(
             id=d.id,
@@ -84,8 +82,8 @@ async def list_documents(course_id: int, service:DocSvc) -> list[DocumentRespons
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Eliminar un documento"
 )
-async def delete_document(document_id:int, service:DocSvc) -> None:
+async def delete_document(document_id:int, current_user_id: CurrentUserId, service:DocSvc) -> None:
     try:
-        await service.delete_document(document_id, TEMP_USER_ID)
+        await service.delete_document(document_id, current_user_id)
     except ValueError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc))
