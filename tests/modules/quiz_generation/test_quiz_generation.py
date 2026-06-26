@@ -2,7 +2,6 @@ from enum import Enum
 from pathlib import Path
 import uuid
 import pytest
-from sqlalchemy import select
 from google import genai
 
 from core.db.database import get_db
@@ -18,7 +17,7 @@ from modules.content_processing.infrastructure.repositories.document_repository 
 from modules.content_processing.infrastructure.repositories.document_chunk_repository import DocumentChunkRepository
 
 from modules.course_management.infrastructure.models import CourseModel
-from modules.iam.infrastructure.user_model import UserModel
+from modules.iam.infrastructure.models.user_model import UserModel
 from modules.llm_adapter.infrastructure.providers.gemini_embedding_provider import GeminiEmbeddingProvider
 from modules.llm_adapter.infrastructure.providers.gemini_quiz_generator import GeminiQuizGenerator
 from modules.quiz_generation.application.services.quiz_generation_service import QuizGenerationService

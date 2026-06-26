@@ -4,19 +4,14 @@ from core.settings import settings
 from core.db.base import Base
 from alembic import context
 
-from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 from sqlalchemy import create_engine
 
 # import models EXAMPLE
-from modules.analytics.infrastructure.models import UserBloomStatsModel
-from modules.bloom_taxonomy.infrastructure.models import BloomLevelModel
-from modules.content_processing.infrastructure.models import (ContentDocumentModel,
-                                                              DocumentChunkModel)
 
 from modules.course_management.infrastructure.models import CourseModel
 from modules.gamification.infrastructure.models import AchievementModel, UserAchievementModel
-from modules.iam.infrastructure.user_model import UserModel
+from modules.iam.infrastructure.models.user_model import UserModel
 from modules.quiz_generation.infrastructure.models.answer_model import AnswerModel
 from modules.quiz_generation.infrastructure.models.question_model import QuestionModel
 from modules.quiz_generation.infrastructure.models.quiz_model import QuizModel
