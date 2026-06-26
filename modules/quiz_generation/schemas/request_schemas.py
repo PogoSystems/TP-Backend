@@ -10,6 +10,13 @@ class QuizGenerationRequest(BaseModel):
         description="ID of the course from which to generate the quiz.",
     )
 
+    title: str = Field(
+        ...,
+        min_length=1,
+        max_length=100,
+        description="Title of the quiz.",
+    )
+
     document_ids: list[int] = Field(
         ...,
         min_length=1,

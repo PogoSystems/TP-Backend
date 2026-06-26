@@ -41,8 +41,18 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(b
 
 
     # get the identity of the user in the SUPABASE AUTH, not the DB. Who's the owner of the token
-    auth_id=payload.get("sub") # sub is the ID of supabase auth
+    auth_id = payload.get("sub") # sub is the ID of supabase auth
     if auth_id is None:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token: missing 'sub' claim. The token doesn't have the identity of the user")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token: missing 'sub' claim. The token doesn't have the identity of the user"
+        )
 
-    return AuthenticatedUser(auth_id=auth_id, email=payload.get("email")) # the request if from this user
+    email = payload.get("email")
+    if email is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token: missing 'email' claim."
+        )
+
+    return AuthenticatedUser(auth_id=auth_id, email=email) # the request is from this user

@@ -16,7 +16,7 @@ from modules.llm_adapter.infrastructure.providers.gemini_embedding_provider impo
 from modules.llm_adapter.infrastructure.providers.gemini_quiz_generator import GeminiQuizGenerator
 from modules.quiz_generation.infrastructure.repositories.quiz_persistence_repository import QuizPersistenceRepository
 from modules.quiz_generation.application.services.quiz_generation_service import QuizGenerationService
-from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz
+from modules.quiz_generation.schemas.response_schemas import QuizResponse, QuestionResponse, AnswerResponse
 from modules.quiz_generation.schemas.request_schemas import QuizGenerationRequest
 from shared.exceptions import DocumentNotFoundError, DocumentProcessingError
 
@@ -57,7 +57,7 @@ QuizSvc = Annotated[QuizGenerationService, Depends(get_quiz_generation_service)]
 
 @router.post(
     "",
-    response_model=GeneratedQuiz,
+    response_model=QuizResponse,
     status_code=status.HTTP_200_OK,
     summary="Generar un cuestionario a partir de documentos",
     description=(
@@ -69,9 +69,10 @@ async def generate_quiz(
     request: QuizGenerationRequest,
     service: QuizSvc,
     current_user_id: CurrentUserId
-) -> GeneratedQuiz:
+) -> QuizResponse:
     try:
-        generated_quiz = await service.generate_quiz_from_documents(
+        quiz = await service.generate_quiz_from_documents(
+            title=request.title,
             document_ids=request.document_ids,
             query_text=request.query_text,
             num_questions=request.num_questions,
@@ -79,7 +80,33 @@ async def generate_quiz(
             course_id=request.course_id,
             bloom_levels = request.bloom_levels,
         )
-        return generated_quiz
+        assert quiz.id is not None
+        assert quiz.title is not None
+        assert quiz.questions is not None
+ 
+        return QuizResponse(
+            id=quiz.id,
+            title=quiz.title,
+            user_id=quiz.user_id,
+            course_id=quiz.course_id,
+            created_at=quiz.created_at,
+            questions=[
+                QuestionResponse(
+                    id=q.id,
+                    text=q.text,
+                    bloom_level=q.bloom_level,
+                    score=q.score,
+                    explanation=q.explanation,
+                    answers=[
+                        AnswerResponse(
+                            id=a.id,
+                            text=a.text,
+                            is_correct=a.is_correct
+                        ) for a in q.answers
+                    ]
+                ) for q in quiz.questions
+            ]
+        )
 
     except DocumentNotFoundError as exc:
         raise HTTPException(

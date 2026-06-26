@@ -34,20 +34,22 @@ class QuizPersistenceRepository:
         model = self._to_quiz_model(quiz)
         self._session.add(model)
         await self._session.flush()
+        quiz.id = model.id
 
         # Persistencia de las preguntas
         for q in quiz.questions:
             question_model = self._to_question_model(q, model.id)
             self._session.add(question_model)
             await self._session.flush()
+            q.id = question_model.id
             # Persistencia de las respuestas
             for a in q.answers:
                 answer_model = self._to_answer_model(a, question_model.id)
                 self._session.add(answer_model)
-                await self._session.flush()   
+                await self._session.flush()
+                a.id = answer_model.id
 
-        await self._session.refresh(model)
-        return self._to_aggregate(model)
+        return quiz
 
     # ------------------------------------------------------------------
     # Private mappers
