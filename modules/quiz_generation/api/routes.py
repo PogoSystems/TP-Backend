@@ -11,6 +11,7 @@ from core.settings import settings
 from core.supabase import get_supabase_client
 from modules.content_processing.application.services.content_retrieval_facade import ContentRetrievalFacade
 from modules.content_processing.infrastructure.storage.supabase_storage import SupabaseStorageAdapter
+from modules.iam.api.dependencies import CurrentUserId
 from modules.llm_adapter.infrastructure.providers.gemini_embedding_provider import GeminiEmbeddingProvider
 from modules.llm_adapter.infrastructure.providers.gemini_quiz_generator import GeminiQuizGenerator
 from modules.quiz_generation.infrastructure.repositories.quiz_persistence_repository import QuizPersistenceRepository
@@ -67,13 +68,14 @@ QuizSvc = Annotated[QuizGenerationService, Depends(get_quiz_generation_service)]
 async def generate_quiz(
     request: QuizGenerationRequest,
     service: QuizSvc,
+    current_user_id: CurrentUserId
 ) -> GeneratedQuiz:
     try:
         generated_quiz = await service.generate_quiz_from_documents(
             document_ids=request.document_ids,
             query_text=request.query_text,
             num_questions=request.num_questions,
-            user_id= request.user_id,
+            user_id= current_user_id,
             course_id=request.course_id,
             bloom_levels = request.bloom_levels,
         )

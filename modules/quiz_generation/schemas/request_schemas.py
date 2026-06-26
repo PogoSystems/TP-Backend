@@ -4,13 +4,6 @@ from shared.value_objects.Bloom import BloomLevel
 class QuizGenerationRequest(BaseModel):
     """Request body for the POST /quizzes endpoint."""
 
-    #TODO: change user_id to user_id from the token
-    user_id: int = Field(
-        ...,
-        gt=0,
-        description="ID of the user who owns the course.",
-    )
-
     course_id: int = Field(
         ...,
         gt=0,
