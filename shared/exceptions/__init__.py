@@ -36,3 +36,25 @@ class TopicNotInSyllabusError(ValueError):
 class NoSyllabusError(ValueError):
     def __init__(self, message="No se encontró un silabo para el curso"):
         super().__init__(message)
+
+
+class InvalidFileTypeError(Exception):
+    def __init__(self, content_type: str):
+        super().__init__(f"File type not allowed: {content_type}")
+        self.content_type = content_type
+
+
+class FileTooLargeError(Exception):
+    def __init__(self, size: int):
+        super().__init__(f"File too large: {size} bytes")
+        self.size = size
+
+class DocumentForbiddenError(Exception):
+    def __init__(self):
+        super().__init__("You are not allowed to access this document")
+
+
+class SingleDocumentNotFoundError(Exception):
+    def __init__(self, document_id: int):
+        super().__init__(f"Document {document_id} not found")
+        self.document_id = document_id

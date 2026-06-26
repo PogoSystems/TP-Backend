@@ -98,7 +98,7 @@ async def get_course(course_id: int, current_user_id: CurrentUserId, service: Co
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
 
     except CourseForbiddenError as exc:
-        raise HTTPException(403, str(exc))
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(exc))
 
     assert course.id is not None
     return CourseResponse(
@@ -128,7 +128,7 @@ async def update_course(
     except CourseNotFoundError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
     except CourseForbiddenError as exc:
-        raise HTTPException(403, str(exc))
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(exc))
 
     assert course.id is not None
     return CourseResponse(
@@ -153,4 +153,4 @@ async def delete_course(course_id: int, service: CourseSvc, current_user_id: Cur
     except CourseNotFoundError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
     except CourseForbiddenError as exc:
-        raise HTTPException(403, str(exc))
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(exc))
