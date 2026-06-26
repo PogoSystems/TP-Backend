@@ -5,6 +5,13 @@ class CourseNotFoundError(Exception):
         super().__init__(f"Course with id={course_id} was not found.")
         self.course_id = course_id
 
+class CourseForbiddenError(Exception):
+    """Se lanza cuando el curso no está asociado al usuario"""
+
+    def __init__(self, course_id: int, user_id: int) -> None:
+        self.course_id = course_id
+        self.user_id = user_id
+        super().__init__(f"User {user_id} is not allowed to access course {course_id}.")
 
 class DocumentNotFoundError(Exception):
     """Se lanza cuando uno o más documentos no existen en el sistema."""
