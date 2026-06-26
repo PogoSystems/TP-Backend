@@ -3,8 +3,8 @@ from fastapi import FastAPI
 
 from modules.course_management.api import router as course_router
 from modules.content_processing.api import router as document_router
-from modules.iam.api import router as auth_router
 from modules.quiz_generation.api import router as quiz_router
+from modules.iam.api import router as auth_router
 
 # search .env file in the project
 load_dotenv()
