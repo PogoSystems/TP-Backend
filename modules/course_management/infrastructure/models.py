@@ -7,7 +7,6 @@ from core.db.base import Base
 
 # Importar el UserModel para que SQLAlchemy registre la tabla 'user' 
 # en Base.metadata antes de resolver la ForeignKey
-from modules.iam.infrastructure.user_model import UserModel
 
 
 class CourseModel(Base):
