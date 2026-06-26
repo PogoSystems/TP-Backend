@@ -27,4 +27,3 @@ app.include_router(quiz_router, prefix="/api/v1")
 @app.get("/")
 def read_root():
     return {"message": "fast api funca"}
-
