@@ -62,7 +62,7 @@ class TestCreateCourse:
         service = CourseService(repo)
 
         result = await service.create_course(
-            CourseCreate(name="Cálculo I", user_id=10)
+            CourseCreate(name="Cálculo I"), current_user_id=10
         )
 
         repo.save.assert_called_once()
@@ -79,10 +79,10 @@ class TestCreateCourse:
         result = await service.create_course(
             CourseCreate(
                 name="Cálculo I",
-                user_id=10,
                 description="Intro al cálculo",
                 max_score=100,
-            )
+            ),
+            current_user_id=10,
         )
 
         assert result.description == "Intro al cálculo"
@@ -102,7 +102,7 @@ class TestGetCourse:
         repo = make_repository(find_by_id=expected)
         service = CourseService(repo)
 
-        result = await service.get_course(5)
+        result = await service.get_course(5, current_user_id=10)
 
         repo.find_by_id.assert_awaited_once_with(5)
         assert result.id == 5
@@ -114,7 +114,7 @@ class TestGetCourse:
         service = CourseService(repo)
 
         with pytest.raises(CourseNotFoundError) as exc_info:
-            await service.get_course(99)
+            await service.get_course(99, current_user_id=10)
 
         assert exc_info.value.course_id == 99
 
@@ -131,7 +131,7 @@ class TestListCourses:
         repo = make_repository(find_all_by_user=[make_course(), make_course(course_id=2)])
         service = CourseService(repo)
 
-        results = await service.list_courses(user_id=10, page=2, page_size=5)
+        results = await service.list_courses(current_user_id=10, page=2, page_size=5)
 
         # page=2, page_size=5 => offset=5, limit=5
         repo.find_all_by_user.assert_awaited_once_with(user_id=10, offset=5, limit=5)
@@ -143,7 +143,7 @@ class TestListCourses:
         repo = make_repository(find_all_by_user=[])
         service = CourseService(repo)
 
-        results = await service.list_courses(user_id=99, page=1, page_size=20)
+        results = await service.list_courses(current_user_id=99, page=1, page_size=20)
 
         assert results == []
 
@@ -163,7 +163,7 @@ class TestUpdateCourse:
         repo = make_repository(find_by_id=original, update=updated_aggregate)
         service = CourseService(repo)
 
-        result = await service.update_course(1, CourseUpdate(name="Cálculo II"))
+        result = await service.update_course(1, CourseUpdate(name="Cálculo II"), current_user_id=10)
 
         # Verificar que el aggregate pasado al repositorio tiene el nombre actualizado
         saved_aggregate: CourseAggregate = repo.update.call_args[0][0]
@@ -178,7 +178,7 @@ class TestUpdateCourse:
         service = CourseService(repo)
 
         with pytest.raises(CourseNotFoundError):
-            await service.update_course(999, CourseUpdate(name="Nuevo nombre"))
+            await service.update_course(999, CourseUpdate(name="Nuevo nombre"), current_user_id=10)
 
         repo.update.assert_not_called()
 
@@ -196,7 +196,7 @@ class TestDeleteCourse:
         repo = make_repository(find_by_id=existing)
         service = CourseService(repo)
 
-        await service.delete_course(3)
+        await service.delete_course(3, current_user_id=10)
 
         repo.delete.assert_awaited_once_with(3)
 
@@ -207,7 +207,7 @@ class TestDeleteCourse:
         service = CourseService(repo)
 
         with pytest.raises(CourseNotFoundError) as exc_info:
-            await service.delete_course(42)
+            await service.delete_course(42, current_user_id=10)
 
         assert exc_info.value.course_id == 42
         repo.delete.assert_not_called()
