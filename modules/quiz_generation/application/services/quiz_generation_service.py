@@ -89,13 +89,14 @@ class QuizGenerationService:
     async def generate_quiz_from_documents(
         self,
         *,
+        title: str,
         document_ids: list[int],
         query_text: str | None = None,
         num_questions: int,
         user_id: int,
         course_id: int,
         bloom_levels: list[BloomLevel]
-    ) -> GeneratedQuiz:
+    ) -> QuizAggregate:
         """
         Generates a quiz using context retrieved only from specific documents.
         """
@@ -120,7 +121,7 @@ class QuizGenerationService:
         quiz = QuizAggregate(
             user_id=user_id,
             course_id=course_id,
-            title=generated_quiz.title,
+            title=title,
             questions=[
                 QuestionAggregate(
                     text=q.text,
@@ -140,7 +141,7 @@ class QuizGenerationService:
         )
 
         await self._quiz_repository.save(quiz)
-        return generated_quiz
+        return quiz
 
     async def _generate_quiz_with_llm(
         self,

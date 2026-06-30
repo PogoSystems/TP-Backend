@@ -9,6 +9,7 @@ from shared.value_objects.Bloom import BloomLevel
 
 @dataclass(slots=True)
 class QuestionAggregate:
+    id: int | None = None
     text: str = ""
     bloom_level: str = ""
     score: int = 0

@@ -1,8 +1,9 @@
-﻿from dataclasses import dataclass
+from dataclasses import dataclass
 
 
 @dataclass(slots=True)
 class AnswerAggregate:
+    id: int | None = None
     text: str = ""
     is_correct: bool = False
 

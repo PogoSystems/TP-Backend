@@ -53,7 +53,11 @@ async def test_full_embedding_persistence_pipeline(tmp_path: Path) -> None:
         # -------------------------------
         unique_suffix = uuid.uuid4().hex[:8]
         user = UserModel(
-            username=f"test_user_{unique_suffix}",
+            auth_id=uuid.uuid4(),
+            name=f"test_user_{unique_suffix}",
+            last_name="TestLastName",
+            college="Test College",
+            major="Test Major",
             email=f"test_{unique_suffix}@test.com",
         )
         session.add(user)
