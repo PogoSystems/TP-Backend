@@ -1,7 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from modules.analytics.domain.ports.stats_command_repository import StatsCommandRepository
-from modules.analytics.infrastructure.repositories.stats_repository import StatsRepository
+from modules.analytics.infrastructure.repositories.stats_command_repository import StatsCommandRepository
 from modules.quiz_management.domain.ports.stats_update_port import QuestionAttemptSummary
 
 
