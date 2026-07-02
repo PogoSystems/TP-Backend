@@ -1,9 +1,11 @@
+import asyncio
+
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from modules.analytics.infrastructure.repositories.stats_query_repository import StatsQueryRepository
-from modules.analytics.schemas.response_schemas import UserDashboardResponse, BloomLevelStatsResponse, \
+from modules.analytics.schemas.response_schemas import UserDashboardResponse, BloomStatsResponse, \
     CoursePerformanceResponse
-
+from modules.analytics.application.utils import pct
 
 class AnalyticsService:
 
@@ -14,17 +16,22 @@ class AnalyticsService:
         """
         Use the stats from a specific user to calculate the metrics
         """
-        totals=await self._repo.get_user_totals(user_id)
-        bloom_rows=await self._repo.get_bloom_breakdown(user_id)
-        course_rows=await self._repo.get_course_performance(user_id)
 
-        # from each row (bloom level), create a BloomLevelStatsResponse object with the stats from that level
+        # asyncio execute all the queries at the same time
+        # this helps to reduce the time of execution, since the queries are independent
+        totals, bloom_rows, course_rows = await asyncio.gather(
+            self._repo.get_user_totals(user_id),
+            self._repo.get_bloom_breakdown(user_id),
+            self._repo.get_course_performance(user_id),
+        )
+
+        # from each row (bloom level), create a BloomStatsResponse object with the stats from that level
         bloom_breakdown = [
-            BloomLevelStatsResponse(
+            BloomStatsResponse(
                 bloom_level=row.bloom_level,
                 questions_attempted=row.questions_attempted,
                 questions_correct=row.questions_correct,
-                percentage=self._pct(row.questions_correct, row.questions_attempted),
+                percentage=pct(row.questions_correct, row.questions_attempted),
             )
             for row in bloom_rows
         ]
@@ -37,13 +44,13 @@ class AnalyticsService:
         weak_level = min(active, key=lambda b: b.percentage, default=None)
         most_practiced = max(active, key=lambda b: b.questions_attempted, default=None)
 
-        # course performance
+        # course performance (global)
         course_performance = [
             CoursePerformanceResponse(
                 course_id=row.course_id,
                 course_name=row.course_name,
                 quizzes_completed=row.quizzes_completed,
-                accuracy_percentage=self._pct(row.questions_correct, row.questions_attempted,
+                accuracy_percentage=pct(row.questions_correct, row.questions_attempted,
                 )
             )
             for row in course_rows
@@ -52,7 +59,7 @@ class AnalyticsService:
         total_attempted = totals["questions_attempted"]
         total_correct = totals["questions_correct"]
         quizzes_completed = totals["quizzes_completed"]
-        overall_accuracy = self._pct(total_correct, total_attempted)
+        overall_accuracy = pct(total_correct, total_attempted)
         return UserDashboardResponse(
             quizzes_completed=quizzes_completed,
             questions_attempted=total_attempted,
@@ -70,11 +77,3 @@ class AnalyticsService:
             most_practiced_attempted=most_practiced.questions_attempted if most_practiced else 0,
         )
 
-    @staticmethod
-    def _pct(correct: int, total: int) -> float:
-        """
-        Auxiliary method to calculate the percentage of correct answers over total questions attempted.
-        """
-        if total == 0:
-            return 0.0
-        return round((correct / total) * 100, 1)

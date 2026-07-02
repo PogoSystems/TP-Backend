@@ -70,7 +70,7 @@ class QuizAttemptService:
         #update the metrics of analytics
         course_id= await self._quiz_read.get_course_id_for_quiz(quiz_id)
         if course_id is not None:
-            summaries=[
+            summaries = [
                 QuestionAttemptSummary(
                     bloom_level=validations[s.selected_answer_id].bloom_level,
                     is_correct=validations[s.selected_answer_id].is_correct,

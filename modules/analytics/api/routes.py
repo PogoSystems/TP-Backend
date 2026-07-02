@@ -5,7 +5,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.db.database import get_db
 from modules.analytics.application.analytics_service import AnalyticsService
-from modules.analytics.schemas.response_schemas import UserDashboardResponse, BloomLevelStatsResponse
+from modules.analytics.application.course_analytics_service import CourseAnalyticsService
+from modules.analytics.schemas.response_schemas import UserDashboardResponse, \
+    CourseAnalyticsResponse
 from modules.iam.api.dependencies import CurrentUserId
 
 router = APIRouter(prefix="/analytics", tags=["analytics"])
@@ -15,9 +17,13 @@ def get_analytics_service(session: Annotated[AsyncSession, Depends(get_db)]
                           ) -> AnalyticsService:
     return AnalyticsService(session)
 
+def get_course_analytics_service(session: Annotated[AsyncSession, Depends(get_db)]
+                             ) -> CourseAnalyticsService:
+    return CourseAnalyticsService(session)
+
 
 AnalyticsSvc = Annotated[AnalyticsService, Depends(get_analytics_service)]
-
+CourseAnalyticsSvc= Annotated[CourseAnalyticsService, Depends(get_course_analytics_service)]
 
 @router.get(
     "/me",
@@ -28,3 +34,12 @@ AnalyticsSvc = Annotated[AnalyticsService, Depends(get_analytics_service)]
 async def get_user_dashboard(service: AnalyticsSvc,current_user_id: CurrentUserId
                              ) -> UserDashboardResponse:
     return await service.get_user_dashboard(current_user_id)
+
+@router.get(
+    "/course/{course_id}",
+    response_model=CourseAnalyticsResponse,
+    summary="Analytics detallado por curso",
+)
+async def get_course_analytics(course_id: int, service: CourseAnalyticsSvc, current_user_id: CurrentUserId
+                               ) -> CourseAnalyticsResponse:
+    return await service.get_course_dashboard(course_id, current_user_id)

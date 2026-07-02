@@ -64,3 +64,24 @@ class StatsQueryRepository:
         )
         result = await self._session.execute(stmt)
         return list(result.all())
+
+
+    async def get_bloom_stats_by_course(self, user_id: int, course_id: int) -> list:
+        """
+        Get the bloom_stats for a single course of the user
+        """
+        stmt = (
+            select(
+                BloomStatsModel.bloom_level,
+                func.sum(BloomStatsModel.questions_attempted).label("questions_attempted"),
+                func.sum(BloomStatsModel.questions_correct).label("questions_correct"),
+            )
+            .join(CourseModel, CourseModel.id == BloomStatsModel.course_id)
+            .where(
+                CourseModel.user_id == user_id,
+                CourseModel.id == course_id
+            )
+            .group_by(BloomStatsModel.bloom_level)
+        )
+        result = await self._session.execute(stmt)
+        return list(result.all())
