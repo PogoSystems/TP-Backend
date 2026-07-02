@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 @dataclass(slots=True)
@@ -16,3 +16,14 @@ class BloomStatsAggregate:
             raise ValueError("course_id is required")
         if not self.bloom_level:
             raise ValueError("bloom_level is required")
+        if self.updated_at is None:
+            self.updated_at = datetime.now(timezone.utc)
+
+    def increment(self, correct: bool) -> None:
+        """
+        Increment the bloom stats counter after every submit for the actual Bloom level
+        """
+        self.questions_attempted += 1
+        if correct:
+            self.questions_correct += 1
+        self.updated_at = datetime.now(timezone.utc)

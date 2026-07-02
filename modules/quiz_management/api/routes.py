@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.db.database import get_db
+from modules.analytics.infrastructure.facades.stats_update_facade import StatsUpdateFacade
 from modules.iam.api.dependencies import CurrentUserId
 from modules.quiz_management.application.services.quiz_attempt_service import QuizAttemptService
 from modules.quiz_management.infrastructure.facades.quiz_read_facade import QuizReadFacade
@@ -19,6 +20,7 @@ def get_quiz_attempt_service(session: Annotated[AsyncSession, Depends(get_db)],
     return QuizAttemptService(
         quiz_read=QuizReadFacade(session),
         attempt_repository=QuizAttemptRepository(session),
+        stats_updater=StatsUpdateFacade(session)
     )
 
 

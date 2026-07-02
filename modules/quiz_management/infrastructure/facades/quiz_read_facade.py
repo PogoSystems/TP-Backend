@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from modules.quiz_generation.infrastructure.models.answer_model import AnswerModel
 from modules.quiz_generation.infrastructure.models.question_model import QuestionModel
+from modules.quiz_generation.infrastructure.models.quiz_model import QuizModel
 from modules.quiz_management.domain.ports.quiz_read_port import AnswerValidation
 
 
@@ -22,7 +23,7 @@ class QuizReadFacade:
         is_correct and score in only one query
         """
         stmt=(
-            select(AnswerModel.id, AnswerModel.is_correct,QuestionModel.score)
+            select(AnswerModel.id, AnswerModel.is_correct,QuestionModel.score, QuestionModel.bloom_level)
             .join(QuestionModel, AnswerModel.question_id == QuestionModel.id)
             .where(
         QuestionModel.quiz_id == quiz_id,
@@ -37,7 +38,13 @@ class QuizReadFacade:
             row.id: AnswerValidation(
                 answer_id=row.id,
                 is_correct=row.is_correct,
-                question_score=row.score
+                question_score=row.score,
+                bloom_level=row.bloom_level
             )
             for row in rows
         }
+
+    async def get_course_id_for_quiz(self, quiz_id: int) -> int | None:
+        stmt = select(QuizModel.course_id).where(QuizModel.id == quiz_id)
+        result = await self._session.execute(stmt)
+        return result.scalar_one_or_none()
