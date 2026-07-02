@@ -4,7 +4,7 @@ from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from modules.quiz_generation.domain.aggregates.quiz import QuizAggregate
-from modules.quiz_management.infrastructure.models import QuizModel
+from modules.quiz_generation.infrastructure.models.quiz_model import QuizModel
 
 
 class QuizRepository:

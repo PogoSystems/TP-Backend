@@ -5,7 +5,6 @@ from modules.quiz_generation.domain.aggregates.question import BloomLevel
 class AnswerResponse(BaseModel):
     id: int = Field(description="The unique identifier of the answer.")
     text: str = Field(description="The text content of the answer choice.")
-    is_correct: bool = Field(description="True if this is the correct answer, False otherwise.")
 
 class QuestionResponse(BaseModel):
     id: int = Field(description="The unique identifier of the question.")
