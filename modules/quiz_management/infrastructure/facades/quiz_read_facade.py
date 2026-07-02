@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from modules.quiz_generation.infrastructure.models.answer_model import AnswerModel
 from modules.quiz_generation.infrastructure.models.question_model import QuestionModel
+from modules.quiz_generation.infrastructure.models.quiz_model import QuizModel
 from modules.quiz_management.domain.ports.quiz_read_port import AnswerValidation
 
 
@@ -12,7 +13,7 @@ class QuizReadFacade:
     It is used to validate the answers of a quiz.
     """
     def __init__(self, session: AsyncSession) -> None:
-        self.session = session
+        self._session = session
 
     async def get_answer_validations(self, quiz_id:int,answer_ids:list[int]
                                      ) -> dict[int, AnswerValidation]:
@@ -22,14 +23,14 @@ class QuizReadFacade:
         is_correct and score in only one query
         """
         stmt=(
-            select(AnswerModel.id, AnswerModel.is_correct,QuestionModel.score)
+            select(AnswerModel.id, AnswerModel.is_correct,QuestionModel.score, QuestionModel.bloom_level)
             .join(QuestionModel, AnswerModel.question_id == QuestionModel.id)
             .where(
         QuestionModel.quiz_id == quiz_id,
                    AnswerModel.id.in_(answer_ids))
         )
 
-        result = await self.session.execute(stmt)
+        result = await self._session.execute(stmt)
         rows = result.all()
 
         # Return a dictionary to have a O(1)
@@ -37,7 +38,13 @@ class QuizReadFacade:
             row.id: AnswerValidation(
                 answer_id=row.id,
                 is_correct=row.is_correct,
-                question_score=row.score
+                question_score=row.score,
+                bloom_level=row.bloom_level
             )
             for row in rows
         }
+
+    async def get_course_id_for_quiz(self, quiz_id: int) -> int | None:
+        stmt = select(QuizModel.course_id).where(QuizModel.id == quiz_id)
+        result = await self._session.execute(stmt)
+        return result.scalar_one_or_none()

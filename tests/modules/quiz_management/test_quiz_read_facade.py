@@ -12,8 +12,8 @@ class TestQuizReadFacade:
         session = MagicMock()
         result = MagicMock()
         result.all.return_value = [
-            SimpleNamespace(id=214, is_correct=True, score=1),
-            SimpleNamespace(id=216, is_correct=False, score=2),
+            SimpleNamespace(id=214, is_correct=True, score=1, bloom_level="remember"),
+            SimpleNamespace(id=216, is_correct=False, score=2, bloom_level="remember"),
         ]
         session.execute = AsyncMock(return_value=result)
 
