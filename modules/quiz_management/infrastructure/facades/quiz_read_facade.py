@@ -13,7 +13,7 @@ class QuizReadFacade:
     It is used to validate the answers of a quiz.
     """
     def __init__(self, session: AsyncSession) -> None:
-        self.session = session
+        self._session = session
 
     async def get_answer_validations(self, quiz_id:int,answer_ids:list[int]
                                      ) -> dict[int, AnswerValidation]:
@@ -30,7 +30,7 @@ class QuizReadFacade:
                    AnswerModel.id.in_(answer_ids))
         )
 
-        result = await self.session.execute(stmt)
+        result = await self._session.execute(stmt)
         rows = result.all()
 
         # Return a dictionary to have a O(1)

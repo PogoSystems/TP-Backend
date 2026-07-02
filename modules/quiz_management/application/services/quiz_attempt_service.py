@@ -17,6 +17,7 @@ class QuizAttemptService:
                  stats_updater: StatsUpdatePort) -> None:
         self._quiz_read = quiz_read
         self._attempt_repository = attempt_repository
+        self._stats_updater = stats_updater
 
 
     async def submit_quiz(self,*, quiz_id:int, user_id:int, request:SubmitQuizRequest
