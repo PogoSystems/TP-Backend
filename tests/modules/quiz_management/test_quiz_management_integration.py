@@ -12,6 +12,7 @@ from modules.quiz_generation.domain.aggregates.question import QuestionAggregate
 from modules.quiz_generation.domain.aggregates.quiz import QuizAggregate
 from modules.quiz_generation.infrastructure.repositories.quiz_persistence_repository import QuizPersistenceRepository
 from modules.quiz_management.application.services.quiz_attempt_service import QuizAttemptService
+from modules.analytics.infrastructure.facades.stats_update_facade import StatsUpdateFacade
 from modules.quiz_management.infrastructure.repositories.quiz_attempt_repository import QuizAttemptRepository
 from modules.quiz_management.schemas.request_schemas import AnswerSubmission, SubmitQuizRequest
 from modules.quiz_management.infrastructure.facades.quiz_read_facade import QuizReadFacade
@@ -74,6 +75,7 @@ async def test_quiz_management_submit_flow_persists_attempt_and_question_attempt
         service = QuizAttemptService(
             quiz_read=QuizReadFacade(session),
             attempt_repository=QuizAttemptRepository(session),
+            stats_updater=StatsUpdateFacade(session),
         )
 
         result = await service.submit_quiz(

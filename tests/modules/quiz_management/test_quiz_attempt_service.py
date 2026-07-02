@@ -26,16 +26,20 @@ class TestQuizAttemptService:
         quiz_read = MagicMock()
         quiz_read.get_answer_validations = AsyncMock(
             return_value={
-                214: AnswerValidation(answer_id=214, is_correct=True, question_score=1),
-                216: AnswerValidation(answer_id=216, is_correct=False, question_score=2),
+                214: AnswerValidation(answer_id=214, is_correct=True, question_score=1, bloom_level="remember"),
+                216: AnswerValidation(answer_id=216, is_correct=False, question_score=2, bloom_level="remember"),
             }
         )
+        quiz_read.get_course_id_for_quiz = AsyncMock(return_value=1)
 
         saved_attempt = QuizAttemptAggregate(id=99, user_id=2, quiz_id=16, total_score=1)
         repo = MagicMock()
         repo.save_attempt = AsyncMock(return_value=saved_attempt)
 
-        service = QuizAttemptService(quiz_read=quiz_read, attempt_repository=repo)
+        stats_updater = MagicMock()
+        stats_updater.update_stats_after_submit = AsyncMock()
+
+        service = QuizAttemptService(quiz_read=quiz_read, attempt_repository=repo, stats_updater=stats_updater)
 
         result = await service.submit_quiz(quiz_id=16, user_id=2, request=make_request())
 
@@ -67,11 +71,14 @@ class TestQuizAttemptService:
     async def test_submit_quiz_rejects_answers_not_belonging_to_quiz(self) -> None:
         quiz_read = MagicMock()
         quiz_read.get_answer_validations = AsyncMock(
-            return_value={214: AnswerValidation(answer_id=214, is_correct=True, question_score=1)}
+                return_value={214: AnswerValidation(answer_id=214, is_correct=True, question_score=1, bloom_level="remember")}
         )
+        quiz_read.get_course_id_for_quiz = AsyncMock(return_value=1)
         repo = MagicMock()
         repo.save_attempt = AsyncMock()
-        service = QuizAttemptService(quiz_read=quiz_read, attempt_repository=repo)
+        stats_updater = MagicMock()
+        stats_updater.update_stats_after_submit = AsyncMock()
+        service = QuizAttemptService(quiz_read=quiz_read, attempt_repository=repo, stats_updater=stats_updater)
 
         request = SubmitQuizRequest(
             started_at=datetime(2026, 7, 1, 3, 23, 3, 474000, tzinfo=timezone.utc),
@@ -88,11 +95,14 @@ class TestQuizAttemptService:
     async def test_submit_quiz_uses_current_time_for_submitted_at_and_results(self) -> None:
         quiz_read = MagicMock()
         quiz_read.get_answer_validations = AsyncMock(
-            return_value={214: AnswerValidation(answer_id=214, is_correct=True, question_score=3)}
+            return_value={214: AnswerValidation(answer_id=214, is_correct=True, question_score=3, bloom_level="remember")}
         )
+        quiz_read.get_course_id_for_quiz = AsyncMock(return_value=1)
         repo = MagicMock()
         repo.save_attempt = AsyncMock(return_value=QuizAttemptAggregate(id=1, user_id=2, quiz_id=16, total_score=3))
-        service = QuizAttemptService(quiz_read=quiz_read, attempt_repository=repo)
+        stats_updater = MagicMock()
+        stats_updater.update_stats_after_submit = AsyncMock()
+        service = QuizAttemptService(quiz_read=quiz_read, attempt_repository=repo, stats_updater=stats_updater)
 
         request = SubmitQuizRequest(
             started_at=datetime(2026, 7, 1, 3, 23, 3, 474000, tzinfo=timezone.utc),
