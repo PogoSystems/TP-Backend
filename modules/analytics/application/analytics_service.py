@@ -1,7 +1,8 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from modules.analytics.domain.ports.stats_query_repository import StatsQueryRepository
-from modules.analytics.schemas.response_schemas import UserDashboardResponse, BloomLevelStatsResponse
+from modules.analytics.infrastructure.repositories.stats_query_repository import StatsQueryRepository
+from modules.analytics.schemas.response_schemas import UserDashboardResponse, BloomLevelStatsResponse, \
+    CoursePerformanceResponse
 
 
 class AnalyticsService:
@@ -13,16 +14,9 @@ class AnalyticsService:
         """
         Use the stats from a specific user to calculate the metrics
         """
-        data = await self._repo.get_aggregated_stats_by_user(user_id)
-        totals = data["totals"] # stats of all the courses
-        bloom_rows = data["bloom"] # stats for each bloom level
-
-        total_attempted = totals.questions_attempted or 0
-        total_correct = totals.questions_correct or 0
-        quizzes_completed = totals.quizzes_completed or 0
-
-        # the global accuracy percentage from all the courses
-        accuracy = self._pct(total_correct, total_attempted)
+        totals=await self._repo.get_user_totals(user_id)
+        bloom_rows=await self._repo.get_bloom_breakdown(user_id)
+        course_rows=await self._repo.get_course_performance(user_id)
 
         # from each row (bloom level), create a BloomLevelStatsResponse object with the stats from that level
         bloom_breakdown = [
@@ -38,14 +32,31 @@ class AnalyticsService:
         # if a level doesn't have any questions
         active = [b for b in bloom_breakdown if b.questions_attempted > 0]
 
+        # levels with more/less correct answers
         dominant_level = max(active, key=lambda b: b.percentage, default=None)
         weak_level = min(active, key=lambda b: b.percentage, default=None)
+        most_practiced = max(active, key=lambda b: b.questions_attempted, default=None)
 
+        # course performance
+        course_performance = [
+            CoursePerformanceResponse(
+                course_id=row.course_id,
+                course_name=row.course_name,
+                quizzes_completed=row.quizzes_completed,
+                accuracy_percentage=self._pct(row.questions_correct, row.questions_attempted,
+                )
+            )
+            for row in course_rows
+        ]
+
+        total_attempted = totals["questions_attempted"]
+        total_correct = totals["questions_correct"]
+        quizzes_completed = totals["quizzes_completed"]
+        overall_accuracy = self._pct(total_correct, total_attempted)
         return UserDashboardResponse(
             quizzes_completed=quizzes_completed,
             questions_attempted=total_attempted,
             questions_correct=total_correct,
-            accuracy_percentage=accuracy,
             dominant_level=dominant_level.bloom_level if dominant_level else None,
             dominant_percentage=dominant_level.percentage if dominant_level else 0.0,
             dominant_correct=dominant_level.questions_correct if dominant_level else 0,
@@ -53,6 +64,10 @@ class AnalyticsService:
             weak_percentage=weak_level.percentage if weak_level else 0.0,
             weak_correct=weak_level.questions_correct if weak_level else 0,
             bloom_breakdown=bloom_breakdown,
+            course_performance=course_performance,
+            overall_accuracy=overall_accuracy,
+            most_practiced_level=most_practiced.bloom_level if most_practiced else None,
+            most_practiced_attempted=most_practiced.questions_attempted if most_practiced else 0,
         )
 
     @staticmethod

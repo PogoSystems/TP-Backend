@@ -7,12 +7,16 @@ class BloomLevelStatsResponse(BaseModel):
     questions_correct: int
     percentage: float
 
+class CoursePerformanceResponse(BaseModel):
+    course_id: int
+    course_name: str
+    quizzes_completed: int
+    accuracy_percentage: float
 
 class UserDashboardResponse(BaseModel):
     quizzes_completed: int
     questions_attempted: int
     questions_correct: int
-    accuracy_percentage: float
     dominant_level: str | None
     dominant_percentage: float
     dominant_correct: int
@@ -20,3 +24,7 @@ class UserDashboardResponse(BaseModel):
     weak_percentage: float
     weak_correct: int
     bloom_breakdown: list[BloomLevelStatsResponse]
+    course_performance: list[CoursePerformanceResponse]
+    overall_accuracy:float
+    most_practiced_level: str | None
+    most_practiced_attempted: int

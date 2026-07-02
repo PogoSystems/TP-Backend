@@ -7,22 +7,19 @@ from modules.analytics.infrastructure.models import CourseStatsModel, BloomStats
 
 class StatsCommandRepository:
     """
-    Repository for only write operations in the database
+    Repository for write operations in the database
     """
-
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
 
-    async def increment_course_stats(self, course_id: int, attempted: int, correct: int,
+    async def increment_course_stats(self, course_id: int, attempted: int, correct: int
                                      ) -> None:
         """
-        on_conflict_do_update == UPSERT
-        This validates if the course stats table already exists.
-        If not, creates one.
-        If yes, updates the counters.
-        Makes only one query
+        Upsert (INSERT + ON CONFLICT DO UPDATE)
+        If there's not a value, it creates it. If there is, it increments the counters.
+        One single query vs 3 queries (SELECT from, INSERT if it doesn't exist and UDATE if it exists)
         """
-        now = datetime.now(timezone.utc)
+        now = datetime.now(timezone.utc).replace(tzinfo=None)
         stmt = (
             insert(CourseStatsModel)
             .values(
@@ -32,9 +29,9 @@ class StatsCommandRepository:
                 questions_correct=correct,
                 updated_at=now,
             )
-            .on_conflict_do_update(
+            .on_conflict_do_update( # if a row with the same unique key already exists, update its counters instead of raising an error
                 constraint="uq_course_stats_course_id",
-                set_={
+                set_={ #what to do when the conflict occur
                     "quizzes_completed": CourseStatsModel.quizzes_completed + 1,
                     "questions_attempted": CourseStatsModel.questions_attempted + attempted,
                     "questions_correct": CourseStatsModel.questions_correct + correct,
@@ -42,16 +39,17 @@ class StatsCommandRepository:
                 },
             )
         )
+
+        #send the query to the database to execution
         await self._session.execute(stmt)
 
     async def increment_bloom_stats_bulk(self, course_id: int, bloom_counts: dict[str, tuple[int, int]],  # bloom_level → (attempted, correct)
-                                         ) -> None:
+                                          ) -> None:
         """
-        UPSERT for multiple bloom levels.
-        It groups multiple levels and makes the upsert (SELECT+UPDATE)
-        in a single query per level, maximum 6 queries (one per Bloom level).
+        Group the bloom levels and makes an upsert for one unique level.
+        Maximum 6 queries (one per Bloom level).
         """
-        now = datetime.now(timezone.utc)
+        now = datetime.now(timezone.utc).replace(tzinfo=None)
         for bloom_level, (attempted, correct) in bloom_counts.items():
             stmt = (
                 insert(BloomStatsModel)
