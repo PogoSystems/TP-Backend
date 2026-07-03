@@ -1,10 +1,12 @@
+from collections import defaultdict
 from datetime import datetime, timezone
 
 from modules.quiz_management.domain.aggregates import QuestionAttemptAggregate, QuizAttemptAggregate
 from modules.quiz_management.domain.ports.quiz_attempt_repository_port import QuizAttemptRepositoryPort
 from modules.quiz_management.domain.ports.quiz_read_port import QuizReadPort
 from modules.quiz_management.schemas.request_schemas import SubmitQuizRequest
-from modules.quiz_management.schemas.response_schemas import AttemptResultResponse, QuestionAttemptResult
+from modules.quiz_management.schemas.response_schemas import AttemptResultResponse, QuestionAttemptResult, \
+    BloomBreakdownResult
 
 
 class QuizAttemptService:
@@ -36,11 +38,21 @@ class QuizAttemptService:
         now = datetime.now(timezone.utc).replace(tzinfo=None)
         question_attempts: list[QuestionAttemptAggregate] = []
         total_score = 0
+        correct_count = 0
+        bloom_map: dict[str, dict[str, int]] = defaultdict(lambda: {"correct": 0, "total": 0})
 
         for submission in request.answers:
             validation = validations[submission.selected_answer_id]
             score_obtained = validation.question_score if validation.is_correct else 0
             total_score += score_obtained
+
+            if validation.is_correct:
+                correct_count += 1
+
+            lvl = validation.bloom_level
+            bloom_map[lvl]["total"] += 1
+            if validation.is_correct:
+                bloom_map[lvl]["correct"] += 1
 
             question_attempts.append(
                 QuestionAttemptAggregate(
@@ -64,19 +76,31 @@ class QuizAttemptService:
         #save the attempt in the database
         saved_attempt = await self._attempt_repository.save_attempt(attempt, question_attempts)
 
+        bloom_breakdown = [
+            BloomBreakdownResult(
+                bloom_level=lvl,
+                correct=counts["correct"],
+                total_attempted_questions=counts["total"],
+            )
+            for lvl, counts in bloom_map.items()
+        ]
+
         # build the response
         return AttemptResultResponse(
             attempt_id=saved_attempt.id,
             quiz_id=quiz_id,
             total_score=total_score,
             submitted_at=now,
+            bloom_breakdown=bloom_breakdown,
             question_results=[
                 QuestionAttemptResult(
                     question_id=qa.question_id,
                     selected_answer_id=qa.selected_answer_id,
                     is_correct=qa.is_correct,
                     score_obtained=qa.score_obtained,
+                    bloom_level=validation.bloom_level,
                 )
                 for qa in question_attempts
             ],
+
         )

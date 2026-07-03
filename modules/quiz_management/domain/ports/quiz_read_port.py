@@ -10,6 +10,7 @@ class AnswerValidation:
     answer_id:int
     is_correct:bool
     question_score:int
+    bloom_level:str
 
 
 class QuizReadPort(Protocol):

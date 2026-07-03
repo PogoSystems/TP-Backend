@@ -21,6 +21,7 @@ from modules.quiz_management.infrastructure.models import (
     QuizSourceDocumentModel,
 )
 ##from modules.course.infrastructure.models import Course
+from modules.content_processing.infrastructure.models.content_document_model import ContentDocumentModel
 
 # ALEMBIC CONFIG
 config = context.config
