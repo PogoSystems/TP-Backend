@@ -1,3 +1,7 @@
-from .user_bloom_stats import UserBloomStatsAggregate
+from .bloom_stats import BloomStatsAggregate
+from .course_stats import CourseStatsAggregate
 
-__all__ = ["UserBloomStatsAggregate"]
+__all__ = [
+    "BloomStatsAggregate",
+    "CourseStatsAggregate",
+]

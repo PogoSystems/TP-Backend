@@ -20,6 +20,10 @@ from modules.quiz_management.infrastructure.models import (
     QuizAttemptModel,
     QuizSourceDocumentModel,
 )
+from modules.analytics.infrastructure.models import BloomStatsModel, CourseStatsModel
+from modules.content_processing.infrastructure.models.content_document_model import ContentDocumentModel
+from modules.content_processing.infrastructure.models.document_chunk_model import DocumentChunkModel
+from modules.bloom_taxonomy.infrastructure.models import BloomLevelModel
 ##from modules.course.infrastructure.models import Course
 from modules.content_processing.infrastructure.models.content_document_model import ContentDocumentModel
 

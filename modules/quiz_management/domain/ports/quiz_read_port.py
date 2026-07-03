@@ -21,3 +21,10 @@ class QuizReadPort(Protocol):
     async def get_answer_validations(self, quiz_id:int, answer_ids:list[int]
                                      )-> dict[int,AnswerValidation]:
         ... # it asks for the quiz_id to validate if the answers are from that specific quiz
+
+
+    async def get_course_id_for_quiz(self, quiz_id: int) -> int | None:
+        """
+        Get the course_id for a given quiz_id to update the stats
+        """
+        ...

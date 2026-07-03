@@ -43,3 +43,8 @@ class QuizReadFacade:
             )
             for row in rows
         }
+
+    async def get_course_id_for_quiz(self, quiz_id: int) -> int | None:
+        stmt = select(QuizModel.course_id).where(QuizModel.id == quiz_id)
+        result = await self._session.execute(stmt)
+        return result.scalar_one_or_none()

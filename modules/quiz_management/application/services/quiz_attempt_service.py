@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 from modules.quiz_management.domain.aggregates import QuestionAttemptAggregate, QuizAttemptAggregate
 from modules.quiz_management.domain.ports.quiz_attempt_repository_port import QuizAttemptRepositoryPort
 from modules.quiz_management.domain.ports.quiz_read_port import QuizReadPort
+from modules.quiz_management.domain.ports.stats_update_port import StatsUpdatePort, QuestionAttemptSummary
 from modules.quiz_management.schemas.request_schemas import SubmitQuizRequest
 from modules.quiz_management.schemas.response_schemas import AttemptResultResponse, QuestionAttemptResult, \
     BloomBreakdownResult
@@ -13,10 +14,12 @@ class QuizAttemptService:
     """
     Define the pipeline of to submit of a quiz attempt
     """
-    def __init__(self,*, quiz_read: QuizReadPort, attempt_repository: QuizAttemptRepositoryPort
-                 ) -> None:
+    def __init__(self,*, quiz_read: QuizReadPort,
+                 attempt_repository: QuizAttemptRepositoryPort,
+                 stats_updater: StatsUpdatePort) -> None:
         self._quiz_read = quiz_read
         self._attempt_repository = attempt_repository
+        self._stats_updater = stats_updater
 
 
     async def submit_quiz(self,*, quiz_id:int, user_id:int, request:SubmitQuizRequest
