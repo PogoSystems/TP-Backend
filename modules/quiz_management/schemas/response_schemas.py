@@ -2,6 +2,14 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
+class BloomBreakdownResult(BaseModel):
+    """
+    The model of the bloom breakdown
+    what's the performance for each bloom level inside a specific attempt
+    """
+    bloom_level: str
+    correct: int
+    total_attempted_questions: int
 
 class QuestionAttemptResult(BaseModel):
     """
@@ -11,6 +19,7 @@ class QuestionAttemptResult(BaseModel):
     selected_answer_id: int
     is_correct: bool
     score_obtained:int
+    bloom_level:str
 
 class AttemptResultResponse(BaseModel):
     """
@@ -21,3 +30,4 @@ class AttemptResultResponse(BaseModel):
     total_score: int
     submitted_at: datetime
     question_results: list[QuestionAttemptResult]
+    bloom_breakdown: list[BloomBreakdownResult]

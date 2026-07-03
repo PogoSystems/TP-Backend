@@ -25,6 +25,7 @@ from modules.content_processing.infrastructure.models.content_document_model imp
 from modules.content_processing.infrastructure.models.document_chunk_model import DocumentChunkModel
 from modules.bloom_taxonomy.infrastructure.models import BloomLevelModel
 ##from modules.course.infrastructure.models import Course
+from modules.content_processing.infrastructure.models.content_document_model import ContentDocumentModel
 
 # ALEMBIC CONFIG
 config = context.config

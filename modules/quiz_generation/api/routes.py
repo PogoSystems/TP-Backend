@@ -101,6 +101,7 @@ async def generate_quiz(
                         AnswerResponse(
                             id=a.id,
                             text=a.text,
+                            is_correct=a.is_correct
                         ) for a in q.answers
                     ]
                 ) for q in quiz.questions
