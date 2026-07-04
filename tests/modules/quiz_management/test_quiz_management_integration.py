@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 from uuid import uuid4
+from unittest.mock import MagicMock, AsyncMock
 
 import pytest
 from sqlalchemy import select
@@ -72,10 +73,14 @@ async def test_quiz_management_submit_flow_persists_attempt_and_question_attempt
             ],
         )
 
+        gamification_updater = MagicMock()
+        gamification_updater.update_gamification = AsyncMock()
+
         service = QuizAttemptService(
             quiz_read=QuizReadFacade(session),
             attempt_repository=QuizAttemptRepository(session),
             stats_updater=StatsUpdateFacade(session),
+            gamification_updater=gamification_updater
         )
 
         result = await service.submit_quiz(
