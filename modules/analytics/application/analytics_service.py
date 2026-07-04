@@ -2,15 +2,17 @@ import asyncio
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from modules.analytics.infrastructure.repositories.progress_query_repository import ProgressQueryRepository
 from modules.analytics.infrastructure.repositories.stats_query_repository import StatsQueryRepository
 from modules.analytics.schemas.response_schemas import UserDashboardResponse, BloomStatsResponse, \
-    CoursePerformanceResponse
+    CoursePerformanceResponse, ProgressResponse, ProgressPoint
 from modules.analytics.application.utils import pct
 
 class AnalyticsService:
 
     def __init__(self, session: AsyncSession) -> None:
         self._repo = StatsQueryRepository(session)
+        self._progress_repo = ProgressQueryRepository(session)
 
     async def get_user_dashboard(self, user_id: int) -> UserDashboardResponse:
         """
@@ -77,3 +79,17 @@ class AnalyticsService:
             most_practiced_attempted=most_practiced.questions_attempted if most_practiced else 0,
         )
 
+    async def get_user_progress(self, user_id: int, granularity: str, course_id: int | None = None
+                                ) -> ProgressResponse:
+        rows = await self._progress_repo.get_progress(user_id=user_id,granularity=granularity,course_id=course_id)
+
+        return ProgressResponse(
+            granularity=granularity,
+            points=[
+                ProgressPoint(
+                    label=row.period.date().isoformat(),
+                    accuracy=round(float(row.accuracy), 1) if row.accuracy is not None else 0.0,
+                )
+                for row in rows
+            ],
+        )

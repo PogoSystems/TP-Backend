@@ -12,4 +12,5 @@ class QuizModel(Base):
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("user.id"), index=True)
     course_id: Mapped[int] = mapped_column(Integer, nullable=False, index=True)
     title: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    max_score: Mapped[int | None] = mapped_column(Integer, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)

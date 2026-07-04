@@ -53,3 +53,11 @@ class CourseAnalyticsResponse(BaseModel):
     weak_percentage: float
     weak_correct: int
     bloom_breakdown: list[BloomStatsResponse]
+
+class ProgressPoint(BaseModel):
+    label: str
+    accuracy: float
+
+class ProgressResponse(BaseModel):
+    granularity: str
+    points: list[ProgressPoint]

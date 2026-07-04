@@ -30,11 +30,15 @@ class QuizPersistenceRepository:
     async def save(self, quiz: QuizAggregate) -> QuizAggregate:
         """Persiste un quiz generado y retorna el aggregate con el ID asignado."""
 
+        # get the max score
+        max_score = sum(q.score for q in quiz.questions)
+
         # Persistencia del quiz
-        model = self._to_quiz_model(quiz)
+        model = self._to_quiz_model(quiz, max_score=max_score)
         self._session.add(model)
         await self._session.flush()
         quiz.id = model.id
+        quiz.max_score = max_score
 
         # Persistencia de las preguntas
         for q in quiz.questions:
@@ -66,11 +70,12 @@ class QuizPersistenceRepository:
         )
 
     @staticmethod
-    def _to_quiz_model(aggregate: QuizAggregate) -> QuizModel:
+    def _to_quiz_model(aggregate: QuizAggregate, max_score: int) -> QuizModel:
         return QuizModel(
             user_id=aggregate.user_id,
             course_id=aggregate.course_id,
             title=aggregate.title,
+            max_score = max_score
         )
 
     @staticmethod

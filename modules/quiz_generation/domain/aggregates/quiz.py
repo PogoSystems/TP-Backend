@@ -13,6 +13,7 @@ class QuizAggregate:
     default_factory=lambda: datetime.now(timezone.utc)
     )
     questions: list["QuestionAggregate"] = field(default_factory=list)
+    max_score: int| None = None #the max points that the user can achieve.
 
     def __post_init__(self) -> None:
         if self.user_id <= 0:
