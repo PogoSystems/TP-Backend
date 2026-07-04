@@ -10,3 +10,6 @@ class UserRepositoryPort(Protocol):
 
     async def save_from_auth(self, user: UserAggregate) -> UserAggregate:
         ...
+
+    async def update(self, user: UserAggregate) -> UserAggregate:
+        ...

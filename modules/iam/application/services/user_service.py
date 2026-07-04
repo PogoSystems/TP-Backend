@@ -25,3 +25,20 @@ class UserService:
             major=major
         )
         return await self._repository.save_from_auth(user)
+
+    async def edit_profile(self, *, auth_id: str, name: str | None = None, last_name: str | None = None, college: str | None = None, major: str | None = None) -> UserAggregate:
+        auth_uuid = UUID(auth_id)
+        existing_profile = await self._repository.find_by_auth_id(auth_uuid)
+        
+        if existing_profile is None:
+            raise ValueError("User profile not found")
+            
+        existing_profile.update_profile(name=name, last_name=last_name, college=college, major=major)
+        return await self._repository.update(existing_profile)
+
+    async def get_profile(self, auth_id: str) -> UserAggregate:
+        auth_uuid = UUID(auth_id)
+        profile = await self._repository.find_by_auth_id(auth_uuid)
+        if profile is None:
+            raise ValueError("User profile not found")
+        return profile
