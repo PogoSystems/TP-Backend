@@ -22,7 +22,7 @@ class QuestionAggregate:
     def __post_init__(self) -> None:
         if not self.text:
             raise ValueError("text is required")
-        if self.bloom_level not in BloomLevel:
-            raise ValueError(f"bloom_level must be one of {sorted(BloomLevel)}")
+        if self.bloom_level not in [item.value for item in BloomLevel]:
+            raise ValueError(f"bloom_level must be one of {[item.value for item in BloomLevel]}")
         if self.score <= 0:
             raise ValueError("score must be positive")

@@ -1,0 +1,3 @@
+from modules.gamification.api.routes import router
+
+__all__ = ["router"]
