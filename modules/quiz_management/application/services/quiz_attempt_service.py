@@ -79,6 +79,20 @@ class QuizAttemptService:
         #save the attempt in the database
         saved_attempt = await self._attempt_repository.save_attempt(attempt, question_attempts)
 
+        course_id = await self._quiz_read.get_course_id_for_quiz(quiz_id)
+        if course_id is not None:
+            summaries = [
+                QuestionAttemptSummary(
+                    bloom_level=validations[s.selected_answer_id].bloom_level,
+                    is_correct=validations[s.selected_answer_id].is_correct,
+                )
+                for s in request.answers
+            ]
+            await self._stats_updater.update_stats_after_submit(
+                course_id=course_id,
+                question_summaries=summaries,
+            )
+
         bloom_breakdown = [
             BloomBreakdownResult(
                 bloom_level=lvl,
