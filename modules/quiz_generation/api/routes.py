@@ -16,6 +16,7 @@ from modules.iam.api.dependencies import CurrentUserId
 from modules.llm_adapter.infrastructure.providers.gemini_embedding_provider import GeminiEmbeddingProvider
 from modules.llm_adapter.infrastructure.providers.gemini_quiz_generator import GeminiQuizGenerator
 from modules.quiz_generation.infrastructure.repositories.quiz_persistence_repository import QuizPersistenceRepository
+from modules.analytics.infrastructure.repositories.stats_query_repository import StatsQueryRepository
 from modules.quiz_generation.application.services.quiz_generation_service import QuizGenerationService
 from modules.quiz_generation.schemas.response_schemas import QuizResponse, QuestionResponse, AnswerResponse, QuizzesByCourseResponse, QuizSummaryResponse
 from modules.quiz_generation.schemas.request_schemas import QuizGenerationRequest
@@ -44,12 +45,13 @@ def get_quiz_generation_service(
     )
 
     quiz_repository = QuizPersistenceRepository(session)
+    stats_repository = StatsQueryRepository(session)
 
     return QuizGenerationService(
         context_retriever=context_retriever,
         quiz_generator=quiz_generator,
         quiz_repository=quiz_repository,
-
+        stats_repository=stats_repository,
     )
 
 
