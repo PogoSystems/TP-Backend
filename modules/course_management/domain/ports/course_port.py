@@ -24,6 +24,10 @@ class CourseRepositoryPort(Protocol):
         """Lista cursos de un usuario con soporte de paginación por offset/limit."""
         ...
 
+    async def count_by_user(self, user_id: int) -> int:
+        """Retorna el conteo de cursos de un usuario."""
+        ...
+
     async def update(self, course: CourseAggregate) -> CourseAggregate:
         """Actualiza un curso existente y retorna el aggregate actualizado."""
         ...
