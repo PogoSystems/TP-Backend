@@ -1,15 +1,12 @@
-from tokenizers import Tokenizer
+import re
 
 class TokenCounter:
-    def __init__(self) -> None:
-        # Call the tokenizer
-        self._tokenizer = Tokenizer.from_pretrained("bert-base-uncased")
-
     def count_tokens(self,text: str) -> int:
         """Calculate the number of tokens in a given text"""
         if not text:
             return 0
-        return len(self._tokenizer.encode(text, add_special_tokens=False).ids)
+        tokens = re.findall(r"\w+|[^\w\s]", text)
+        return len(tokens)
 
     def tokenize(self,text: str) -> list[str]:
         """
@@ -19,5 +16,4 @@ class TokenCounter:
         if not text:
             return []
 
-        encoding= self._tokenizer.encode(text, add_special_tokens=False)
-        return encoding.tokens
+        return re.findall(r"\w+|[^\w\s]", text)

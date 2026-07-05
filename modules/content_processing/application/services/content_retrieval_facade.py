@@ -2,6 +2,8 @@ import logging
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from core.settings import settings
+from modules.content_processing.application.services.chunking.chunking_service import ChunkingService
 from modules.content_processing.application.services.document_processing_service import DocumentProcessingService
 from modules.content_processing.domain.aggregates.content_document import ContentDocumentAggregate
 from modules.content_processing.domain.ports.embedding_provider import EmbeddingProvider
@@ -9,10 +11,17 @@ from modules.content_processing.domain.ports.storage_port import StoragePort
 from modules.content_processing.domain.value_objects.processing_status import ProcessingStatus
 from modules.content_processing.infrastructure.repositories.document_chunk_repository import DocumentChunkRepository
 from modules.content_processing.infrastructure.repositories.document_repository import DocumentRepository
+from modules.content_processing.infrastructure.tokenizers.token_counter import TokenCounter
 from shared.exceptions import DocumentNotFoundError
 
 logger = logging.getLogger(__name__)
+_token_counter = TokenCounter()
 
+_chunking_service = ChunkingService(
+    token_counter=_token_counter,
+    max_chunk_tokens=settings.CHUNK_SIZE,
+    chunk_overlap=settings.CHUNK_OVERLAP,
+)
 
 class ContentRetrievalFacade:
     """
@@ -33,6 +42,12 @@ class ContentRetrievalFacade:
         self._storage = storage
         self._chunk_repo = DocumentChunkRepository(session)
         self._doc_repo = DocumentRepository(session)
+        self._processing_service = DocumentProcessingService(
+            session=session,
+            storage=storage,
+            embedding_provider=embedding_provider,
+            chunking_service=_chunking_service,
+        )
 
     async def get_context_from_course(self, course_id: int, query_text: str, limit: int) -> str:
         """
@@ -148,22 +163,7 @@ class ContentRetrievalFacade:
         for doc in documents:
             if doc.processing_status == ProcessingStatus.COMPLETED:
                 continue
-
             if doc.processing_status == ProcessingStatus.PROCESSING:
-                raise ValueError(
-                    f"Document id={doc.id} is currently being processed. Please try again later."
-                )
-
-            # PENDING or FAILED → process the document
-            if self._storage is None:
-                raise ValueError(
-                    "Storage adapter is required to process PENDING documents."
-                )
-
-            processing_service = DocumentProcessingService(
-                session=self._session,
-                storage=self._storage,
-                embedding_provider=self._embedding_provider,
-            )
-            await processing_service.process_document(doc)
-            await self._session.commit()
+                raise ValueError(f"Document id={doc.id} is currently being processed.")
+            await self._processing_service.process_document(doc)
+        await self._session.commit()
