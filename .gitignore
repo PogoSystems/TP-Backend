@@ -11,9 +11,16 @@
 *.sln.docstates
 *.env
 *venv/
+docs/
+.worktrees/
+tests/modules/content_processing/fixtures/*
+tests/modules/quiz_generation/fixtures/*
+AI-instructions.md
+project_context.md
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-
+pyrefly.toml
 # Mono auto generated files
 mono_crash.*
 
@@ -427,3 +434,6 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+tests/modules/content_processing/fixtures/muestra.json
+tests/modules/content_processing/fixtures/muestra_chunks.json
+tests/modules/quiz_generation/fixtures/generated_quiz.json

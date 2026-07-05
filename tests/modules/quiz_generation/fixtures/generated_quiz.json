@@ -1,0 +1,109 @@
+{
+    "title": "Quiz sobre User Stories, Criterios de Aceptación y BDD",
+    "questions": [
+        {
+            "text": "Para los equipos ágiles, las User Stories son el primer método para identificar las necesidades de los usuarios.",
+            "bloom_level": "remember",
+            "score": 1,
+            "explanation": "El material de referencia establece explícitamente que 'Para los equipos ágiles, User Stories son el primer método para identificar necesidades de los usuarios.'",
+            "answers": [
+                {
+                    "text": "Verdadero",
+                    "is_correct": true
+                },
+                {
+                    "text": "Falso",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "¿Cuál es el formato correcto de una User Story?",
+            "bloom_level": "remember",
+            "score": 1,
+            "explanation": "El documento de referencia indica claramente el formato: 'As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).' La opción A es la traducción directa de este formato.",
+            "answers": [
+                {
+                    "text": "Como (tipo de usuario), quiero (realizar alguna acción) para que (pueda lograr algún objetivo/resultado/valor).",
+                    "is_correct": true
+                },
+                {
+                    "text": "El sistema debe (realizar alguna acción) cuando (el usuario hace algo).",
+                    "is_correct": false
+                },
+                {
+                    "text": "Dado que (condición inicial), cuando (evento), entonces (resultado).",
+                    "is_correct": false
+                },
+                {
+                    "text": "El usuario (hace algo) y el sistema (responde).",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Los Criterios de Aceptación (Acceptance criteria) se utilizan para asegurar que las User Stories se han completado correctamente.",
+            "bloom_level": "remember",
+            "score": 1,
+            "explanation": "El material de referencia afirma que los Criterios de Aceptación se usan para 'asegurarnos de que las User Stories se han completado correctamente y conforme a las demandas de los clientes'.",
+            "answers": [
+                {
+                    "text": "Verdadero",
+                    "is_correct": true
+                },
+                {
+                    "text": "Falso",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "¿Qué proceso de desarrollo de software coloca en primer lugar al comportamiento?",
+            "bloom_level": "remember",
+            "score": 1,
+            "explanation": "El documento define BDD como 'un proceso de desarrollo de software que coloca en primer lugar al comportamiento.'",
+            "answers": [
+                {
+                    "text": "Behavior-Driven Development (BDD)",
+                    "is_correct": true
+                },
+                {
+                    "text": "Test-Driven Development (TDD)",
+                    "is_correct": false
+                },
+                {
+                    "text": "Waterfall Model",
+                    "is_correct": false
+                },
+                {
+                    "text": "Agile Scrum",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "En los títulos de escenarios de BDD, ¿qué tipo de palabras se deben evitar?",
+            "bloom_level": "remember",
+            "score": 1,
+            "explanation": "El material de referencia especifica: 'Evita palabras “verify”, “assert” o “should” en títulos de escenarios.'",
+            "answers": [
+                {
+                    "text": "Palabras que describen acciones del usuario.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Palabras como 'verify', 'assert' o 'should'.",
+                    "is_correct": true
+                },
+                {
+                    "text": "Nombres de los campos del formulario.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Verbos en infinitivo.",
+                    "is_correct": false
+                }
+            ]
+        }
+    ]
+}

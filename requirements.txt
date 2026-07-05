@@ -7,6 +7,12 @@ pydantic-settings==2.14.1
 python-dotenv==1.2.2
 pgvector==0.4.2
 llama-index==0.14.22
-google-generativeai==0.8.6
+google-genai==2.7.0
 python-multipart==0.0.29
 httpx==0.28.1
+psycopg2-binary == 2.9.12
+pymupdf4llm == 1.27.2.3
+pytest==9.0.3
+pytest-asyncio==1.4.0
+tokenizers==0.23.1
+supabase == 2.31.0
