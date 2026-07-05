@@ -22,3 +22,11 @@ class QuizResponse(BaseModel):
     course_id: int = Field(description="ID of the course the quiz belongs to.")
     created_at: datetime = Field(description="Timestamp when the quiz was generated.")
     questions: list[QuestionResponse] = Field(description="List of questions included in the quiz.")
+
+class QuizSummaryResponse(BaseModel):
+    id: int = Field(description="The unique identifier of the quiz.")
+    title: str = Field(description="The title of the generated quiz.")
+    created_at: datetime = Field(description="Timestamp when the quiz was generated.")
+
+class QuizzesByCourseResponse(BaseModel):
+    quizzes: list[QuizSummaryResponse] = Field(description="List of quizzes belonging to the course.")

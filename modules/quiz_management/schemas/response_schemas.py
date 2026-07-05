@@ -24,10 +24,10 @@ class QuestionAttemptResult(BaseModel):
     The model of the questions after the correction of the answer to the quiz.
     """
     question_id: int
-    selected_answer_id: int
-    is_correct: bool
-    score_obtained:int
-    bloom_level:str
+    selected_answer_id: int | None
+    is_correct: bool | None
+    score_obtained:int | None
+    bloom_level:str | None
 
 class AttemptResultResponse(BaseModel):
     """

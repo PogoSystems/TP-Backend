@@ -37,9 +37,9 @@ app.include_router(document_router, prefix="/api/v1")
 
 app.include_router(auth_router, prefix="/api/v1")
 
-app.include_router(quiz_router, prefix="/api/v1")
-
 app.include_router(quiz_management_router, prefix="/api/v1")
+
+app.include_router(quiz_router, prefix="/api/v1")
 
 app.include_router(analytics_router, prefix="/api/v1")
 

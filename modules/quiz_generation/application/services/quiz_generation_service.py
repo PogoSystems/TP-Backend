@@ -111,6 +111,7 @@ class QuizGenerationService:
             course_id=course_id,
         )
 
+
         generated_quiz = await self._generate_quiz_with_llm(
             context_text=context_text,
             num_questions=num_questions,
@@ -160,3 +161,23 @@ class QuizGenerationService:
         )
 
         return generated_quiz
+
+    async def get_quiz_by_id(
+        self,
+        *,
+        quiz_id: int,
+    ) -> QuizAggregate:
+        """
+        Retrieves a quiz by its ID.
+        """
+        return await self._quiz_repository.get_quiz_by_id(quiz_id)
+
+    async def get_quizzes_by_course_id(
+        self,
+        *,
+        course_id: int,
+    ) -> list[QuizAggregate]:
+        """
+        Retrieves all quizzes for a given course ID.
+        """
+        return await self._quiz_repository.get_quizzes_by_course_id(course_id)

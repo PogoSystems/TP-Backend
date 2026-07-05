@@ -128,6 +128,7 @@ class QuizAttemptService:
         ]
 
         # build the response
+        assert saved_attempt.id is not None
         return AttemptResultResponse(
             attempt_id=saved_attempt.id,
             quiz_id=quiz_id,
