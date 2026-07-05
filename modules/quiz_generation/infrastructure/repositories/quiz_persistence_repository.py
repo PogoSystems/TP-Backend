@@ -1,5 +1,9 @@
+from sqlalchemy import Sequence
+from modules.quiz_generation.infrastructure.models import question_model
+from shared.exceptions import DocumentNotFoundError
 from datetime import timezone
 
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from modules.quiz_generation.domain.aggregates.quiz import QuizAggregate
@@ -55,6 +59,32 @@ class QuizPersistenceRepository:
 
         return quiz
 
+    async def get_quiz_by_id(self, quiz_id: int) -> QuizAggregate:
+        """Retorna un quiz por su ID."""
+        
+        quiz_query = select(QuizModel).where(QuizModel.id == quiz_id)
+
+        quiz = await self._session.execute(quiz_query)
+        quiz_model = quiz.scalar_one_or_none()
+        if quiz_model is None:
+            raise ValueError(f"Quiz with ID {quiz_id} not found")
+        questions_query = select(QuestionModel).where(QuestionModel.quiz_id == quiz_id)
+        questions = await self._session.execute(questions_query)
+        questions_models = questions.scalars().all()
+
+        answers_query = select(AnswerModel).where(AnswerModel.question_id.in_([q.id for q in questions_models]))
+        answers = await self._session.execute(answers_query)
+        answers_models = answers.scalars().all()
+
+        return self._to_quiz_aggregate(quiz_model, questions_models, answers_models)
+
+    async def get_quizzes_by_course_id(self, course_id: int) -> list[QuizAggregate]:
+        """Retorna todos los quizes de un curso."""
+        query = select(QuizModel).where(QuizModel.course_id == course_id)
+        result = await self._session.execute(query)
+        models = result.scalars().all()
+        return [self._to_aggregate(model) for model in models]
+
     # ------------------------------------------------------------------
     # Private mappers
     # ------------------------------------------------------------------
@@ -68,6 +98,37 @@ class QuizPersistenceRepository:
             title=model.title,
             created_at=model.created_at.replace(tzinfo=timezone.utc),
         )
+
+    @staticmethod
+    def _to_quiz_aggregate(model: QuizModel, questions:Sequence[QuestionModel], answers:Sequence[AnswerModel]) -> QuizAggregate:
+        return QuizAggregate(
+            id=model.id,
+            user_id=model.user_id,
+            course_id=model.course_id,
+            title=model.title,
+            created_at=model.created_at.replace(tzinfo=timezone.utc),
+            questions = [QuizPersistenceRepository._to_question_aggregate(q, answers) for q in questions],
+        )
+    
+    @staticmethod
+    def _to_question_aggregate(model:QuestionModel, answers:Sequence[AnswerModel]) -> QuestionAggregate:
+        return QuestionAggregate(
+            id=model.id,
+            text=model.text,
+            bloom_level=model.bloom_level,
+            score=model.score,
+            explanation=model.explanation,
+            answers = [QuizPersistenceRepository._to_answer_aggregate(a) for a in answers if a.question_id == model.id]
+        )
+    
+    @staticmethod
+    def _to_answer_aggregate(model:AnswerModel) -> AnswerAggregate:
+        return AnswerAggregate(
+            id=model.id,
+            text=model.text,
+            is_correct=model.is_correct,
+        )
+
 
     @staticmethod
     def _to_quiz_model(aggregate: QuizAggregate, max_score: int) -> QuizModel:
@@ -95,3 +156,4 @@ class QuizPersistenceRepository:
             text=aggregate.text,
             is_correct=aggregate.is_correct,
         )
+    

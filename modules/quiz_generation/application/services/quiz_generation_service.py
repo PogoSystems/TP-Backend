@@ -10,6 +10,7 @@ from modules.quiz_generation.domain.ports.quiz_generator_port import QuizGenerat
 from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz
 
 from modules.quiz_generation.domain.ports.quiz_persistance_port import QuizPersistencePort
+from modules.analytics.infrastructure.repositories.stats_query_repository import StatsQueryRepository
 
 logger = logging.getLogger(__name__)
 
@@ -27,10 +28,12 @@ class QuizGenerationService:
         context_retriever: ContextRetrievalPort,
         quiz_generator: QuizGeneratorPort,
         quiz_repository: QuizPersistencePort,
+        stats_repository: StatsQueryRepository,
     ) -> None:
         self._context_retriever = context_retriever
         self._quiz_generator = quiz_generator
         self._quiz_repository = quiz_repository
+        self._stats_repository = stats_repository
 
     async def generate_quiz_from_course(
         self,
@@ -53,6 +56,9 @@ class QuizGenerationService:
             query_text=effective_query,
             limit=settings.TOP_K_RETRIEVAL,
         )
+
+        if not bloom_levels:
+            bloom_levels = await self._get_weakest_bloom_levels(user_id, course_id)
 
         generated_quiz = await self._generate_quiz_with_llm(
             context_text=context_text,
@@ -111,6 +117,10 @@ class QuizGenerationService:
             course_id=course_id,
         )
 
+        if not bloom_levels:
+            bloom_levels = await self._get_weakest_bloom_levels(user_id, course_id)
+
+
         generated_quiz = await self._generate_quiz_with_llm(
             context_text=context_text,
             num_questions=num_questions,
@@ -160,3 +170,45 @@ class QuizGenerationService:
         )
 
         return generated_quiz
+
+    async def get_quiz_by_id(
+        self,
+        *,
+        quiz_id: int,
+    ) -> QuizAggregate:
+        """
+        Retrieves a quiz by its ID.
+        """
+        return await self._quiz_repository.get_quiz_by_id(quiz_id)
+
+    async def get_quizzes_by_course_id(
+        self,
+        *,
+        course_id: int,
+    ) -> list[QuizAggregate]:
+        """
+        Retrieves all quizzes for a given course ID.
+        """
+        return await self._quiz_repository.get_quizzes_by_course_id(course_id)
+
+    async def _get_weakest_bloom_levels(
+        self, user_id: int, course_id: int, count: int = 1
+    ) -> list[BloomLevel]:
+        """
+        Returns the `count` bloom levels with the lowest performance for
+        the given user and course. If no stats exist, returns an empty list
+        so the LLM can decide freely.
+        """
+        bloom_rows = await self._stats_repository.get_bloom_stats_by_course(
+            user_id, course_id
+        )
+        if not bloom_rows:
+            return []
+
+        def pct(row: object) -> float:
+            attempted = getattr(row, "questions_attempted", 0) or 0
+            correct = getattr(row, "questions_correct", 0) or 0
+            return (correct / attempted * 100) if attempted > 0 else 0.0
+
+        sorted_rows = sorted(bloom_rows, key=pct)
+        return [BloomLevel(getattr(r, "bloom_level")) for r in sorted_rows[:count]]
