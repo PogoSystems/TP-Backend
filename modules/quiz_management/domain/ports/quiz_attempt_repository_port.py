@@ -12,3 +12,6 @@ class QuizAttemptRepositoryPort(Protocol):
         Returns the saved QuizAttemptAggregate with updated IDs.
         """
         ...
+
+    async def get_recent_attempt(self, user_id: int) -> dict | None:
+        ...

@@ -51,6 +51,12 @@ class CourseRepository:
         result = await self._session.execute(stmt)
         return [self._to_aggregate(m) for m in result.scalars().all()]
 
+    async def count_by_user(self, user_id: int) -> int:
+        from sqlalchemy import func
+        stmt = select(func.count(CourseModel.id)).where(CourseModel.user_id == user_id)
+        result = await self._session.execute(stmt)
+        return result.scalar() or 0
+
     async def update(self, course: CourseAggregate) -> CourseAggregate:
         """Actualiza un curso existente y retorna el aggregate actualizado."""
         model = await self._session.get(CourseModel, course.id)

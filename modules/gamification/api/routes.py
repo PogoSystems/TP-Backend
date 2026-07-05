@@ -5,7 +5,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.db.database import get_db
 from modules.gamification.application.gamification_service import GamificationService
-from modules.gamification.schemas.response_schemas import GamificationResponse
+from modules.gamification.schemas.response_schemas import (
+    GamificationResponse,
+    AchievementResponse,
+    RecentAchievementResponse,
+)
 from modules.iam.api.dependencies import CurrentUserId
 
 router = APIRouter(prefix="/gamification", tags=["gamification"])
@@ -30,3 +34,14 @@ async def get_user_gamification(
     service: GamificationSvc, current_user_id: CurrentUserId
 ) -> GamificationResponse:
     return await service.get_user_gamification_data(current_user_id)
+
+@router.get(
+    "/achievements/recent",
+    response_model=RecentAchievementResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Obtiene el último logro desbloqueado y la racha actual",
+)
+async def get_recent_achievement(
+    service: GamificationSvc, current_user_id: CurrentUserId
+) -> RecentAchievementResponse:
+    return await service.get_recent_achievement(current_user_id)

@@ -38,6 +38,9 @@ class CourseService:
 
         return course
 
+    async def count_courses(self, current_user_id: int) -> int:
+        return await self._repository.count_by_user(current_user_id)
+
     async def list_courses(
         self, current_user_id:int, page: int, page_size: int
     ) -> list[CourseAggregate]:

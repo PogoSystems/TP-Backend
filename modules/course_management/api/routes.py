@@ -8,7 +8,7 @@ from modules.course_management.application.services.course_service import Course
 from modules.course_management.infrastructure.repositories.course_repository import (
     CourseRepository,
 )
-from modules.course_management.schemas import CourseCreate, CourseResponse, CourseUpdate
+from modules.course_management.schemas import CourseCreate, CourseResponse, CourseUpdate, TopCoursesResponse
 from modules.iam.api.dependencies import CurrentUserId
 from shared.exceptions import CourseNotFoundError, CourseForbiddenError
 
@@ -83,6 +83,29 @@ async def list_courses(
         )
     return response_courses
 
+@router.get(
+    "/summary",
+    response_model=TopCoursesResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Top 2 cursos del usuario",
+)
+async def get_top_courses(
+    service: CourseSvc, current_user_id: CurrentUserId
+) -> TopCoursesResponse:
+    courses = await service.list_courses(current_user_id=current_user_id, page=1, page_size=2)
+    total_courses = await service.count_courses(current_user_id)
+    response_courses = [
+        CourseResponse(
+            id=c.id,
+            name=c.name,
+            description=c.description,
+            user_id=current_user_id,
+            max_score=c.max_score,
+            created_at=c.created_at,
+        )
+        for c in courses if c.id is not None
+    ]
+    return TopCoursesResponse(courses=response_courses, total_courses=total_courses)
 
 @router.get(
     "/{course_id}",

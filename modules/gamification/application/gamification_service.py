@@ -1,3 +1,4 @@
+from modules.gamification.schemas.response_schemas import RecentAchievementResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from modules.gamification.infrastructure.repositories.gamification_query_repository import GamificationQueryRepository
@@ -35,3 +36,11 @@ class GamificationService:
             weekly_activity=None,
             achievements=achievements_response,
         )
+
+    async def get_recent_achievement(self, user_id: int) -> "RecentAchievementResponse":
+        data = await self._repo.get_recent_achievement(user_id)
+        if data:
+            streak = data.pop("current_streak", 0)
+            ach_response = AchievementResponse(**data) if "id" in data else None
+            return RecentAchievementResponse(achievement=ach_response, current_streak=streak)
+        return RecentAchievementResponse(achievement=None, current_streak=0)

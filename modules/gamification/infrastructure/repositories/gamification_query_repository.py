@@ -89,3 +89,40 @@ class GamificationQueryRepository:
             }
             for row in res.all()
         ]
+
+    async def get_recent_achievement(self, user_id: int) -> dict | None:
+        from modules.iam.infrastructure.models.user_model import UserModel
+        
+        user_stmt = select(UserModel.current_streak).where(UserModel.id == user_id)
+        user_res = await self._session.execute(user_stmt)
+        user_row = user_res.first()
+        streak = user_row.current_streak if user_row else 0
+
+        stmt = (
+            select(
+                AchievementModel.id,
+                AchievementModel.name,
+                AchievementModel.description,
+                AchievementModel.img_url,
+                UserAchievementModel.unlocked_at
+            )
+            .join(UserAchievementModel, AchievementModel.id == UserAchievementModel.achievement_id)
+            .where(UserAchievementModel.user_id == user_id, UserAchievementModel.unlocked_at.isnot(None))
+            .order_by(UserAchievementModel.unlocked_at.desc())
+            .limit(1)
+        )
+        res = await self._session.execute(stmt)
+        row = res.first()
+        if row:
+            return {
+                "id": row.id,
+                "name": row.name,
+                "description": row.description,
+                "img_url": row.img_url,
+                "unlocked": True,
+                "unlocked_at": row.unlocked_at,
+                "progress_current": None,
+                "progress_target": None,
+                "current_streak": streak
+            }
+        return {"current_streak": streak}

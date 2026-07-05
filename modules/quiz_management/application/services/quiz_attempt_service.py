@@ -146,3 +146,6 @@ class QuizAttemptService:
             ],
 
         )
+
+    async def get_recent_attempt(self, user_id: int) -> dict | None:
+        return await self._attempt_repository.get_recent_attempt(user_id)

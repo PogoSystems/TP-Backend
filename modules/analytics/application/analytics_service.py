@@ -93,3 +93,15 @@ class AnalyticsService:
                 for row in rows
             ],
         )
+
+    async def get_bloom_summary(self, user_id: int) -> list[BloomStatsResponse]:
+        bloom_rows = await self._repo.get_bloom_breakdown(user_id)
+        return [
+            BloomStatsResponse(
+                bloom_level=row.bloom_level,
+                questions_attempted=row.questions_attempted,
+                questions_correct=row.questions_correct,
+                percentage=pct(row.questions_correct, row.questions_attempted),
+            )
+            for row in bloom_rows
+        ]

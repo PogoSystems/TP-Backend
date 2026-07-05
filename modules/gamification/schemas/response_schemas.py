@@ -25,3 +25,7 @@ class GamificationResponse(BaseModel):
     stats: StatsResponse
     weekly_activity: list[bool] | None
     achievements: list[AchievementResponse]
+
+class RecentAchievementResponse(BaseModel):
+    achievement: AchievementResponse | None
+    current_streak: int

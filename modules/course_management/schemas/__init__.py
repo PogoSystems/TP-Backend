@@ -32,3 +32,7 @@ class CourseResponse(BaseModel):
     created_at: datetime
 
     model_config = {"from_attributes": True}
+
+class TopCoursesResponse(BaseModel):
+    courses: list[CourseResponse]
+    total_courses: int
