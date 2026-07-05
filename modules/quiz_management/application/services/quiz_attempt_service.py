@@ -8,6 +8,10 @@ from modules.quiz_management.domain.ports.stats_update_port import StatsUpdatePo
 from modules.quiz_management.schemas.request_schemas import SubmitQuizRequest
 from modules.quiz_management.schemas.response_schemas import AttemptResultResponse, QuestionAttemptResult, \
     BloomBreakdownResult
+from modules.quiz_management.domain.ports.gamification_update_port import GamificationUpdatePort
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class QuizAttemptService:
@@ -16,10 +20,12 @@ class QuizAttemptService:
     """
     def __init__(self,*, quiz_read: QuizReadPort,
                  attempt_repository: QuizAttemptRepositoryPort,
-                 stats_updater: StatsUpdatePort) -> None:
+                 stats_updater: StatsUpdatePort,
+                 gamification_updater: GamificationUpdatePort) -> None:
         self._quiz_read = quiz_read
         self._attempt_repository = attempt_repository
         self._stats_updater = stats_updater
+        self._gamification_updater = gamification_updater
 
 
     async def submit_quiz(self,*, quiz_id:int, user_id:int, request:SubmitQuizRequest
@@ -93,6 +99,25 @@ class QuizAttemptService:
                 question_summaries=summaries,
             )
 
+        # Gamification update
+        gamification_context = {
+            "quiz_id": quiz_id,
+            "course_id": course_id,
+            "total_score": total_score,
+            "correct_count": correct_count,
+            "total_questions": len(request.answers)
+        }
+        
+        try:
+            await self._gamification_updater.update_gamification(
+                user_id=user_id,
+                action_type="quiz_submitted",
+                context=gamification_context
+            )
+        except Exception as e:
+            logger.error(f"Error updating gamification for user {user_id} on quiz {quiz_id}: {e}")
+
+
         bloom_breakdown = [
             BloomBreakdownResult(
                 bloom_level=lvl,
@@ -121,3 +146,6 @@ class QuizAttemptService:
             ],
 
         )
+
+    async def get_recent_attempt(self, user_id: int) -> dict | None:
+        return await self._attempt_repository.get_recent_attempt(user_id)

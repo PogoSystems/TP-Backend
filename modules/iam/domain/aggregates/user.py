@@ -25,3 +25,17 @@ class UserAggregate:
             raise ValueError("college is required")
         if not self.major:
             raise ValueError("major is required")
+
+    def update_profile(self, name: str | None = None, last_name: str | None = None, college: str | None = None, major: str | None = None) -> None:
+        if name is not None:
+            self.name = name
+        if last_name is not None:
+            self.last_name = last_name
+        if college is not None:
+            if not college:
+                raise ValueError("college is required")
+            self.college = college
+        if major is not None:
+            if not major:
+                raise ValueError("major is required")
+            self.major = major

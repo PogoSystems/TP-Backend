@@ -39,7 +39,15 @@ class TestQuizAttemptService:
         stats_updater = MagicMock()
         stats_updater.update_stats_after_submit = AsyncMock()
 
-        service = QuizAttemptService(quiz_read=quiz_read, attempt_repository=repo, stats_updater=stats_updater)
+        gamification_updater = MagicMock()
+        gamification_updater.update_gamification = AsyncMock()
+
+        service = QuizAttemptService(
+            quiz_read=quiz_read, 
+            attempt_repository=repo, 
+            stats_updater=stats_updater,
+            gamification_updater=gamification_updater
+        )
 
         result = await service.submit_quiz(quiz_id=16, user_id=2, request=make_request())
 
@@ -78,7 +86,14 @@ class TestQuizAttemptService:
         repo.save_attempt = AsyncMock()
         stats_updater = MagicMock()
         stats_updater.update_stats_after_submit = AsyncMock()
-        service = QuizAttemptService(quiz_read=quiz_read, attempt_repository=repo, stats_updater=stats_updater)
+        gamification_updater = MagicMock()
+        gamification_updater.update_gamification = AsyncMock()
+        service = QuizAttemptService(
+            quiz_read=quiz_read, 
+            attempt_repository=repo, 
+            stats_updater=stats_updater,
+            gamification_updater=gamification_updater
+        )
 
         request = SubmitQuizRequest(
             started_at=datetime(2026, 7, 1, 3, 23, 3, 474000, tzinfo=timezone.utc),
@@ -102,7 +117,14 @@ class TestQuizAttemptService:
         repo.save_attempt = AsyncMock(return_value=QuizAttemptAggregate(id=1, user_id=2, quiz_id=16, total_score=3))
         stats_updater = MagicMock()
         stats_updater.update_stats_after_submit = AsyncMock()
-        service = QuizAttemptService(quiz_read=quiz_read, attempt_repository=repo, stats_updater=stats_updater)
+        gamification_updater = MagicMock()
+        gamification_updater.update_gamification = AsyncMock()
+        service = QuizAttemptService(
+            quiz_read=quiz_read, 
+            attempt_repository=repo, 
+            stats_updater=stats_updater,
+            gamification_updater=gamification_updater
+        )
 
         request = SubmitQuizRequest(
             started_at=datetime(2026, 7, 1, 3, 23, 3, 474000, tzinfo=timezone.utc),

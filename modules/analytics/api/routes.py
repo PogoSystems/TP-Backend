@@ -7,7 +7,7 @@ from core.db.database import get_db
 from modules.analytics.application.analytics_service import AnalyticsService
 from modules.analytics.application.course_analytics_service import CourseAnalyticsService
 from modules.analytics.schemas.response_schemas import UserDashboardResponse, \
-    CourseAnalyticsResponse, ProgressResponse
+    CourseAnalyticsResponse, ProgressResponse, BloomStatsResponse
 from modules.iam.api.dependencies import CurrentUserId
 
 router = APIRouter(prefix="/analytics", tags=["analytics"])
@@ -34,6 +34,15 @@ CourseAnalyticsSvc= Annotated[CourseAnalyticsService, Depends(get_course_analyti
 async def get_user_dashboard(service: AnalyticsSvc,current_user_id: CurrentUserId
                              ) -> UserDashboardResponse:
     return await service.get_user_dashboard(current_user_id)
+
+@router.get(
+    "/summary/bloom",
+    response_model=list[BloomStatsResponse],
+    status_code=status.HTTP_200_OK,
+    summary="Resumen del nivel cognitivo de Bloom",
+)
+async def get_bloom_summary(service: AnalyticsSvc, current_user_id: CurrentUserId) -> list[BloomStatsResponse]:
+    return await service.get_bloom_summary(current_user_id)
 
 @router.get(
     "/course/{course_id}",

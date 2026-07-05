@@ -19,3 +19,7 @@ class UserModel(Base):
     major: Mapped[str] = mapped_column(String(100), nullable=False)
     email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True, index=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
+    streak_updated_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    last_streak_date: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
+    current_streak: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
+    best_streak: Mapped[int] = mapped_column(Integer, default=0, nullable=False)

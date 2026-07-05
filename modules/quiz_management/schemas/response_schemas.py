@@ -2,6 +2,14 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
+class RecentQuizAttemptResponse(BaseModel):
+    id: int | None = None
+    quiz_id: int | None = None
+    quiz_title: str | None = None
+    total_score: int | None = None
+    submitted_at: datetime | None = None
+    total_quizzes_completed: int
+
 class BloomBreakdownResult(BaseModel):
     """
     The model of the bloom breakdown

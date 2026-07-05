@@ -13,6 +13,7 @@ class AchievementModel(Base):
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     img_url: Mapped[str] = mapped_column(String(255), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
+    required_progress: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, nullable=False)
 
 
@@ -21,4 +22,5 @@ class UserAchievementModel(Base):
 
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey("user.id"), primary_key=True, index=True)
     achievement_id: Mapped[int] = mapped_column(Integer, ForeignKey("achievement.id"), primary_key=True, index=True)
+    progress: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     unlocked_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)

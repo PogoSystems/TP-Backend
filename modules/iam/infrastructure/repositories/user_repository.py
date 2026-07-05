@@ -28,6 +28,23 @@ class UserRepository(UserRepositoryPort):
         await self._session.refresh(model)
         return self._to_aggregate(model)
 
+    async def update(self, user: UserAggregate) -> UserAggregate:
+        stmt = select(UserModel).where(UserModel.auth_id == user.auth_id)
+        result = await self._session.execute(stmt)
+        model = result.scalar_one_or_none()
+        
+        if model is None:
+            raise ValueError("User not found")
+            
+        model.name = user.name
+        model.last_name = user.last_name
+        model.college = user.college
+        model.major = user.major
+        
+        await self._session.flush()
+        await self._session.refresh(model)
+        return self._to_aggregate(model)
+
 
     @staticmethod
     def _to_aggregate(model:UserModel) -> UserAggregate:

@@ -41,3 +41,32 @@ class QuizAttemptRepository:
 
         await self._session.flush()
         return attempt
+
+    async def get_recent_attempt(self, user_id: int) -> dict | None:
+        from sqlalchemy import select, func
+        from modules.quiz_generation.infrastructure.models.quiz_model import QuizModel
+
+        count_stmt = select(func.count(QuizAttemptModel.id)).where(QuizAttemptModel.user_id == user_id)
+        count_res = await self._session.execute(count_stmt)
+        total_quizzes = count_res.scalar() or 0
+
+        stmt = (
+            select(QuizAttemptModel, QuizModel.title)
+            .join(QuizModel, QuizAttemptModel.quiz_id == QuizModel.id)
+            .where(QuizAttemptModel.user_id == user_id)
+            .order_by(QuizAttemptModel.submitted_at.desc())
+            .limit(1)
+        )
+        result = await self._session.execute(stmt)
+        row = result.first()
+        if row:
+            attempt, title = row
+            return {
+                "id": attempt.id,
+                "quiz_id": attempt.quiz_id,
+                "quiz_title": title,
+                "total_score": attempt.total_score,
+                "submitted_at": attempt.submitted_at,
+                "total_quizzes_completed": total_quizzes
+            }
+        return {"total_quizzes_completed": total_quizzes}
