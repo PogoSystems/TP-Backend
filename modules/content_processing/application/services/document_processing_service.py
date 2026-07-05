@@ -3,6 +3,8 @@ import tempfile
 from pathlib import Path
 
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from core.settings import settings
 from modules.content_processing.application.services.chunking.chunking_service import ChunkingService
 from modules.content_processing.application.services.embedding.embedding_generation_service import EmbeddingGenerationService
 from modules.content_processing.application.services.parsing.content_metadata import enhance_section_metadata
@@ -16,6 +18,7 @@ from modules.content_processing.domain.value_objects.processing_status import Pr
 from modules.content_processing.infrastructure.extractors.pdf_extractor import PdfContentExtractor
 from modules.content_processing.infrastructure.repositories.document_chunk_repository import DocumentChunkRepository
 from modules.content_processing.infrastructure.repositories.document_repository import DocumentRepository
+from modules.content_processing.infrastructure.tokenizers.token_counter import TokenCounter
 from shared.exceptions import DocumentProcessingError
 
 logger = logging.getLogger(__name__)
@@ -33,7 +36,6 @@ class DocumentProcessingService:
         session: AsyncSession,
         storage: StoragePort,
         embedding_provider: EmbeddingProvider,
-        chunking_service: ChunkingService
     ) -> None:
         self._session = session
         self._storage = storage
@@ -41,7 +43,12 @@ class DocumentProcessingService:
         self._doc_repo = DocumentRepository(session)
         self._chunk_repo = DocumentChunkRepository(session)
         self._extractor = PdfContentExtractor()
-        self._chunking_service = chunking_service
+        self._token_counter = TokenCounter()
+        self._chunking_service = ChunkingService(
+            token_counter=self._token_counter,
+            max_chunk_tokens=settings.CHUNK_SIZE,
+            chunk_overlap=settings.CHUNK_OVERLAP,
+        )
         self._embedding_service = EmbeddingGenerationService(
             embedding_provider=embedding_provider,
         )
