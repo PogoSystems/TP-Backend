@@ -8,6 +8,7 @@ engine = create_async_engine(
     echo=settings.DEBUG,
 
     # Connection pool
+    connect_args={"statement_cache_size": 0},
     pool_size=settings.DB_POOL_SIZE,
     max_overflow=settings.DB_MAX_OVERFLOW,
     pool_pre_ping=True,
