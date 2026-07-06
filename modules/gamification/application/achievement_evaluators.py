@@ -54,7 +54,7 @@ class CorrectAnswers25(AchievementEvaluator):
     async def evaluate(self, user_id: int, context: dict[str, Any], session: AsyncSession) -> tuple[bool, int]:
         correct_answers: int = context.get("correct_count", 0)
         if correct_answers >0:
-            return True, correct_answers
+            return False, correct_answers
         return False, 0
 AchievementRegistry.register(CorrectAnswers25())
 
