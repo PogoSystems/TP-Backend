@@ -20,6 +20,7 @@ class QuizAttemptRepository:
             user_id= attempt.user_id,
             quiz_id = attempt.quiz_id,
             total_score= attempt.total_score,
+            expected_correct_answers=attempt.expected_correct_answers,
             started_at= attempt.started_at,
             submitted_at= attempt.submitted_at,
         )

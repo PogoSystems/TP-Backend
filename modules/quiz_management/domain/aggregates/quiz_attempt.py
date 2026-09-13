@@ -8,6 +8,7 @@ class QuizAttemptAggregate:
     user_id: int = 0
     quiz_id: int = 0
     total_score: int | None = None
+    expected_correct_answers: int | None = None
     started_at: datetime | None = None
     submitted_at: datetime | None = None
     created_at: datetime = field(

@@ -78,6 +78,7 @@ class QuizAttemptService:
             user_id=user_id,
             quiz_id=quiz_id,
             total_score=total_score,
+            expected_correct_answers=request.expected_correct_answers,
             started_at = request.started_at.replace(tzinfo=None),
             submitted_at=now,
         )
@@ -133,6 +134,7 @@ class QuizAttemptService:
             attempt_id=saved_attempt.id,
             quiz_id=quiz_id,
             total_score=total_score,
+            expected_correct_answers=saved_attempt.expected_correct_answers,
             submitted_at=now,
             bloom_breakdown=bloom_breakdown,
             question_results=[

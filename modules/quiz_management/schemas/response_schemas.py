@@ -36,6 +36,7 @@ class AttemptResultResponse(BaseModel):
     attempt_id: int
     quiz_id: int
     total_score: int
+    expected_correct_answers: int | None = None
     submitted_at: datetime
     question_results: list[QuestionAttemptResult]
     bloom_breakdown: list[BloomBreakdownResult]

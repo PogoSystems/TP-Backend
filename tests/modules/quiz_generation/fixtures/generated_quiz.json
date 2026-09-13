@@ -2,121 +2,113 @@
     "title": "Quiz sobre User Stories y Criterios de Aceptación",
     "questions": [
         {
-            "text": "¿Cuál es el formato estándar de una User Story?",
-            "bloom_level": "remember",
-            "score": 1,
-            "explanation": "El formato estándar de una User Story es 'As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).', como se indica en el material de referencia.",
-            "answers": [
-                {
-                    "text": "As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).",
-                    "is_correct": true
-                },
-                {
-                    "text": "Given (context), When (event), Then (outcome).",
-                    "is_correct": false
-                },
-                {
-                    "text": "I need to (action) because (reason).",
-                    "is_correct": false
-                },
-                {
-                    "text": "The system should (function) to (benefit).",
-                    "is_correct": false
-                }
-            ]
-        },
-        {
             "text": "Para los equipos ágiles, ¿cuál es el primer método para identificar las necesidades de los usuarios?",
             "bloom_level": "remember",
-            "score": 1,
-            "explanation": "El material establece claramente que 'Para los equipos ágiles, User Stories son el primer método para identificar necesidades de los usuarios.'",
+            "score": 10,
+            "explanation": "Según el material de referencia, para los equipos ágiles, las User Stories son el primer método para identificar las necesidades de los usuarios.",
             "answers": [
-                {
-                    "text": "User Stories",
-                    "is_correct": true
-                },
-                {
-                    "text": "Criterios de Aceptación",
-                    "is_correct": false
-                },
                 {
                     "text": "Diagramas de flujo",
                     "is_correct": false
                 },
                 {
-                    "text": "Casos de uso",
+                    "text": "User Stories",
+                    "is_correct": true
+                },
+                {
+                    "text": "Entrevistas con stakeholders",
+                    "is_correct": false
+                },
+                {
+                    "text": "Prototipos de interfaz",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "¿Qué aseguran los Criterios de Aceptación respecto a las User Stories?",
+            "text": "¿Cuál es el formato correcto de una User Story?",
             "bloom_level": "remember",
-            "score": 1,
-            "explanation": "Los Criterios de Aceptación aseguran 'que las User Stories se han completado correctamente y conforme a las demandas de los clientes.'",
+            "score": 10,
+            "explanation": "El formato estándar de una User Story es 'As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).'",
             "answers": [
                 {
-                    "text": "Que las User Stories se han completado correctamente y conforme a las demandas de los clientes.",
+                    "text": "\"As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).\"",
                     "is_correct": true
                 },
                 {
-                    "text": "La velocidad de desarrollo del equipo.",
+                    "text": "\"Given (a context), When (an event occurs), Then (an outcome).\"",
                     "is_correct": false
                 },
                 {
-                    "text": "La interfaz de usuario final.",
+                    "text": "\"I need to (do something) because (reason).\"",
                     "is_correct": false
                 },
                 {
-                    "text": "La asignación de tareas a los desarrolladores.",
+                    "text": "\"The system must (perform an action).\"",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "¿Cuál es la característica principal del Behavior-Driven Development (BDD)?",
+            "text": "Los Criterios de Aceptación se utilizan para asegurar que las User Stories se han completado correctamente y conforme a las demandas de los clientes. ¿Verdadero o Falso?",
             "bloom_level": "remember",
-            "score": 1,
-            "explanation": "El material define BDD como 'un proceso de desarrollo de software que coloca en primer lugar al comportamiento.'",
+            "score": 10,
+            "explanation": "Los Criterios de Aceptación son fundamentales para verificar que las User Stories cumplen con los requisitos y expectativas del cliente.",
             "answers": [
                 {
-                    "text": "Coloca en primer lugar al comportamiento.",
+                    "text": "Verdadero",
                     "is_correct": true
                 },
                 {
-                    "text": "Se enfoca exclusivamente en la interfaz de usuario.",
-                    "is_correct": false
-                },
-                {
-                    "text": "Prioriza la documentación técnica sobre el código.",
-                    "is_correct": false
-                },
-                {
-                    "text": "Es un método para estimar el tiempo de desarrollo.",
+                    "text": "Falso",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "En los títulos de escenarios de BDD, ¿qué tipo de palabras se deben evitar?",
+            "text": "¿Qué palabras se deben evitar en los títulos de los escenarios de Behavior-Driven Development (BDD)?",
             "bloom_level": "remember",
-            "score": 1,
-            "explanation": "El material indica explícitamente: 'Evita palabras “verify”, “assert” o “should” en títulos de escenarios.'",
+            "score": 10,
+            "explanation": "En BDD, se recomienda evitar palabras como 'verify', 'assert' o 'should' en los títulos de los escenarios, ya que ponen más énfasis en la aseveración que en el comportamiento y pueden hacer el título repetitivo.",
             "answers": [
                 {
-                    "text": "Palabras como 'verify', 'assert' o 'should'.",
+                    "text": "\"create\", \"delete\", \"update\"",
+                    "is_correct": false
+                },
+                {
+                    "text": "\"verify\", \"assert\", \"should\"",
                     "is_correct": true
                 },
                 {
-                    "text": "Nombres de usuarios o roles.",
+                    "text": "\"user\", \"system\", \"page\"",
                     "is_correct": false
                 },
                 {
-                    "text": "Verbos en infinitivo.",
+                    "text": "\"and\", \"or\", \"but\"",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Según el ejemplo proporcionado, ¿cuáles son los campos requeridos en el formulario “Brindar feedback”?",
+            "bloom_level": "remember",
+            "score": 10,
+            "explanation": "El escenario del formulario 'Brindar feedback' especifica que los campos 'Email', 'Nombre' y 'Comentario' son requeridos.",
+            "answers": [
+                {
+                    "text": "Email, Teléfono y Dirección",
                     "is_correct": false
                 },
                 {
-                    "text": "Adjetivos descriptivos.",
+                    "text": "Usuario, Contraseña y Comentario",
+                    "is_correct": false
+                },
+                {
+                    "text": "Email, Nombre y Comentario",
+                    "is_correct": true
+                },
+                {
+                    "text": "Producto, Cantidad y Precio",
                     "is_correct": false
                 }
             ]
