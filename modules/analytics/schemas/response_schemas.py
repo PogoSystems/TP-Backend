@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel
 
 
@@ -61,3 +62,67 @@ class ProgressPoint(BaseModel):
 class ProgressResponse(BaseModel):
     granularity: str
     points: list[ProgressPoint]
+
+
+# Metacognition Schemas
+
+class MetacognitionCourseSummary(BaseModel):
+    course_id: int
+    course_name: str
+    quizzes_evaluated: int
+    calibration_accuracy_percentage: float
+    bias: str
+
+
+class MetacognitionSummaryResponse(BaseModel):
+    calibration_accuracy_percentage: float
+    average_expected: float
+    average_actual: float
+    bias: str
+    bias_gap: float
+    total_evaluated_quizzes: int
+    course_breakdown: list[MetacognitionCourseSummary]
+
+
+class MetacognitionRecentAttempt(BaseModel):
+    quiz_id: int
+    quiz_title: str
+    submitted_at: datetime
+    total_questions: int
+    expected_correct: int
+    actual_correct: int
+    gap: float
+    calibration_accuracy: float
+
+
+class CourseMetacognitionResponse(BaseModel):
+    course_id: int
+    course_name: str
+    calibration_accuracy_percentage: float
+    average_expected: float
+    average_actual: float
+    bias: str
+    quizzes_evaluated: int
+    recent_attempts: list[MetacognitionRecentAttempt]
+
+
+class BloomMetacognitionResponse(BaseModel):
+    bloom_level: str
+    questions_attempted: int
+    actual_correct: int
+    expected_correct: float
+    calibration_accuracy: float
+    bias: str
+
+
+class MetacognitionProgressPoint(BaseModel):
+    period: str
+    avg_expected: float
+    avg_actual: float
+    calibration_accuracy: float
+    quizzes_count: int
+
+
+class MetacognitionProgressResponse(BaseModel):
+    granularity: str
+    points: list[MetacognitionProgressPoint]
