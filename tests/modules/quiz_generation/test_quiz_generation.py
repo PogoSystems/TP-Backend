@@ -24,6 +24,7 @@ from modules.quiz_generation.application.services.quiz_generation_service import
 from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz
 
 from modules.quiz_generation.infrastructure.repositories.quiz_persistence_repository import QuizPersistenceRepository 
+from modules.analytics.infrastructure.repositories.stats_query_repository import StatsQueryRepository 
 
 from shared.value_objects.Bloom import BloomLevel
 
@@ -127,12 +128,13 @@ async def test_rag_quiz_generation_pipeline(tmp_path: Path) -> None:
         )
 
         repository = QuizPersistenceRepository(session)
+        stats_repository = StatsQueryRepository(session)
         
         quiz_generation_service = QuizGenerationService(
             context_retriever=content_facade,
             quiz_generator=quiz_generator,
             quiz_repository=repository,
-
+            stats_repository=stats_repository,
         )
 
         # 9. Execute Quiz Generation (RAG)
