@@ -133,7 +133,7 @@ class MetacognitionService:
                     a["expected_correct"], a["actual_correct"], a["total_questions"]
                 ),
             )
-            for a in attempts[:10]
+            for a in attempts[:3]
         ]
 
         return CourseMetacognitionResponse(
