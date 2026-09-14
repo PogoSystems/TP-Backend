@@ -39,8 +39,8 @@ def make_generated_quiz() -> GeneratedQuiz:
     )
 
 
-def make_mocks(**kwargs) -> tuple[MagicMock, MagicMock, MagicMock]:
-    """Crea mocks para context_retriever, quiz_generator y quiz_repository."""
+def make_mocks(**kwargs) -> tuple[MagicMock, MagicMock, MagicMock, MagicMock]:
+    """Crea mocks para context_retriever, quiz_generator, quiz_repository y stats_repository."""
     retriever = MagicMock()
     retriever.get_context_from_course = AsyncMock(
         return_value=kwargs.get("course_context", "Texto de contexto académico simulado.")
@@ -57,7 +57,10 @@ def make_mocks(**kwargs) -> tuple[MagicMock, MagicMock, MagicMock]:
     repository = MagicMock()
     repository.save = AsyncMock(return_value=None)
 
-    return retriever, generator, repository
+    stats_repository = MagicMock()
+    stats_repository.get_bloom_stats_by_course = AsyncMock(return_value=[])
+
+    return retriever, generator, repository, stats_repository
 
 
 class TestCU05GenerarCuestionarioPersonalizado:
@@ -66,11 +69,12 @@ class TestCU05GenerarCuestionarioPersonalizado:
     @pytest.mark.asyncio
     async def test_generate_quiz_from_documents_success(self) -> None:
         """Flujo principal CU05: Solicitud de práctica a partir de material indexado."""
-        retriever, generator, repository = make_mocks()
+        retriever, generator, repository, stats_repo = make_mocks()
         service = QuizGenerationService(
             context_retriever=retriever,
             quiz_generator=generator,
             quiz_repository=repository,
+            stats_repository=stats_repo,
         )
 
         quiz = await service.generate_quiz_from_documents(
@@ -101,11 +105,12 @@ class TestCU05GenerarCuestionarioPersonalizado:
     @pytest.mark.asyncio
     async def test_generate_quiz_from_course_success(self) -> None:
         """Generación de cuestionario a nivel del curso con consulta semántica RAG."""
-        retriever, generator, repository = make_mocks()
+        retriever, generator, repository, stats_repo = make_mocks()
         service = QuizGenerationService(
             context_retriever=retriever,
             quiz_generator=generator,
             quiz_repository=repository,
+            stats_repository=stats_repo,
         )
 
         generated_quiz_dto = await service.generate_quiz_from_course(
@@ -123,7 +128,7 @@ class TestCU05GenerarCuestionarioPersonalizado:
     @pytest.mark.asyncio
     async def test_generate_quiz_handles_llm_failure_propagation(self) -> None:
         """Flujo alternativo 5a: Caída o timeout del servicio LLM."""
-        retriever, generator, repository = make_mocks()
+        retriever, generator, repository, stats_repo = make_mocks()
         generator.generate_quiz_from_context = AsyncMock(
             side_effect=RuntimeError("El motor de IA está saturado en este momento.")
         )
@@ -132,6 +137,7 @@ class TestCU05GenerarCuestionarioPersonalizado:
             context_retriever=retriever,
             quiz_generator=generator,
             quiz_repository=repository,
+            stats_repository=stats_repo,
         )
 
         with pytest.raises(RuntimeError, match="saturado"):

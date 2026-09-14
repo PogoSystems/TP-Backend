@@ -190,7 +190,7 @@ class TestCourseAnalyticsService:
         assert result.weak_level == "apply"
         assert result.weak_percentage == 50.0
         assert len(result.bloom_breakdown) == 2
-        await repo_mock.get_bloom_stats_by_course.assert_awaited_once_with(2, 1)
+        repo_mock.get_bloom_stats_by_course.assert_awaited_once_with(2, 1)
 
     @pytest.mark.asyncio
     async def test_get_course_dashboard_handles_no_stats(self) -> None:

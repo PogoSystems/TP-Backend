@@ -65,6 +65,7 @@ async def test_quiz_management_submit_flow_persists_attempt_and_question_attempt
 
         request = SubmitQuizRequest(
             started_at=datetime(2026, 7, 1, 3, 23, 3, 474000, tzinfo=timezone.utc),
+            expected_correct_answers=1,
             answers=[
                 AnswerSubmission(
                     question_id=persisted_quiz.questions[0].id,
@@ -90,6 +91,7 @@ async def test_quiz_management_submit_flow_persists_attempt_and_question_attempt
         )
 
         assert result.total_score == 2
+        assert result.expected_correct_answers == 1
         assert len(result.question_results) == 1
         assert result.question_results[0].is_correct is True
         assert result.question_results[0].score_obtained == 2
@@ -97,6 +99,7 @@ async def test_quiz_management_submit_flow_persists_attempt_and_question_attempt
         attempt_row = await session.get(QuizAttemptModel, result.attempt_id)
         assert attempt_row is not None
         assert attempt_row.total_score == 2
+        assert attempt_row.expected_correct_answers == 1
 
         question_attempt_rows = (
             await session.execute(

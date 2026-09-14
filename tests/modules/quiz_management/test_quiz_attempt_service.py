@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, MagicMock
 
+from pydantic import ValidationError
 import pytest
 
 from modules.quiz_management.application.services.quiz_attempt_service import QuizAttemptService
@@ -13,6 +14,7 @@ from modules.quiz_management.schemas.request_schemas import AnswerSubmission, Su
 def make_request() -> SubmitQuizRequest:
     return SubmitQuizRequest(
         started_at=datetime(2026, 7, 1, 3, 23, 3, 474000, tzinfo=timezone.utc),
+        expected_correct_answers=2,
         answers=[
             AnswerSubmission(question_id=60, selected_answer_id=214),
             AnswerSubmission(question_id=61, selected_answer_id=216),
@@ -32,7 +34,7 @@ class TestQuizAttemptService:
         )
         quiz_read.get_course_id_for_quiz = AsyncMock(return_value=1)
 
-        saved_attempt = QuizAttemptAggregate(id=99, user_id=2, quiz_id=16, total_score=1)
+        saved_attempt = QuizAttemptAggregate(id=99, user_id=2, quiz_id=16, total_score=1, expected_correct_answers=2)
         repo = MagicMock()
         repo.save_attempt = AsyncMock(return_value=saved_attempt)
 
@@ -59,12 +61,14 @@ class TestQuizAttemptService:
         assert saved_attempt_arg.user_id == 2
         assert saved_attempt_arg.quiz_id == 16
         assert saved_attempt_arg.total_score == 1
+        assert saved_attempt_arg.expected_correct_answers == 2
         assert len(question_attempts_arg) == 2
         assert all(isinstance(item, QuestionAttemptAggregate) for item in question_attempts_arg)
 
         assert result.attempt_id == 99
         assert result.quiz_id == 16
         assert result.total_score == 1
+        assert result.expected_correct_answers == 2
         assert len(result.question_results) == 2
         assert result.question_results[0].question_id == 60
         assert result.question_results[0].selected_answer_id == 214
@@ -97,6 +101,7 @@ class TestQuizAttemptService:
 
         request = SubmitQuizRequest(
             started_at=datetime(2026, 7, 1, 3, 23, 3, 474000, tzinfo=timezone.utc),
+            expected_correct_answers=1,
             answers=[AnswerSubmission(question_id=60, selected_answer_id=999)],
         )
 
@@ -114,7 +119,7 @@ class TestQuizAttemptService:
         )
         quiz_read.get_course_id_for_quiz = AsyncMock(return_value=1)
         repo = MagicMock()
-        repo.save_attempt = AsyncMock(return_value=QuizAttemptAggregate(id=1, user_id=2, quiz_id=16, total_score=3))
+        repo.save_attempt = AsyncMock(return_value=QuizAttemptAggregate(id=1, user_id=2, quiz_id=16, total_score=3, expected_correct_answers=1))
         stats_updater = MagicMock()
         stats_updater.update_stats_after_submit = AsyncMock()
         gamification_updater = MagicMock()
@@ -128,6 +133,7 @@ class TestQuizAttemptService:
 
         request = SubmitQuizRequest(
             started_at=datetime(2026, 7, 1, 3, 23, 3, 474000, tzinfo=timezone.utc),
+            expected_correct_answers=1,
             answers=[AnswerSubmission(question_id=60, selected_answer_id=214)],
         )
 
@@ -135,8 +141,25 @@ class TestQuizAttemptService:
 
         assert result.attempt_id == 1
         assert result.total_score == 3
+        assert result.expected_correct_answers == 1
         assert len(result.question_results) == 1
         assert result.question_results[0].question_id == 60
         assert result.question_results[0].selected_answer_id == 214
         assert result.question_results[0].is_correct is True
         assert result.question_results[0].score_obtained == 3
+
+    def test_submit_quiz_request_requires_expected_correct_answers(self) -> None:
+        # Fails when expected_correct_answers is missing
+        with pytest.raises(ValidationError):
+            SubmitQuizRequest(
+                started_at=datetime(2026, 7, 1, 3, 23, 3, 474000, tzinfo=timezone.utc),
+                answers=[AnswerSubmission(question_id=60, selected_answer_id=214)],
+            )
+
+        # Fails when expected_correct_answers is negative
+        with pytest.raises(ValidationError):
+            SubmitQuizRequest(
+                started_at=datetime(2026, 7, 1, 3, 23, 3, 474000, tzinfo=timezone.utc),
+                expected_correct_answers=-1,
+                answers=[AnswerSubmission(question_id=60, selected_answer_id=214)],
+            )
