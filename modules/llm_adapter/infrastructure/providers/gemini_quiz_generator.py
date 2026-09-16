@@ -99,8 +99,59 @@ Generate the output strictly following the requested JSON schema.
             return GeneratedQuiz.model_validate_json(response.text)
 
         except APIError as e:
+            is_503 = getattr(e, "code", None) == 503 or "503" in str(e) or "UNAVAILABLE" in str(e).upper() or "HIGH DEMAND" in str(e).upper()
+            if is_503 and settings.GROQ_API_KEY:
+                logger.warning(
+                    f"Gemini API returned 503 UNAVAILABLE. Initiating fallback to Groq ({settings.GROQ_MODEL})..."
+                )
+                return await self._generate_with_groq(prompt)
+
             logger.error(f"Gemini APIError during quiz generation: {e}")
             raise RuntimeError(f"Gemini API error: {e}") from e
         except Exception as e:
             logger.error(f"Unexpected error during quiz generation: {e}")
             raise RuntimeError(f"Quiz generation failed: {e}") from e
+
+    async def _generate_with_groq(self, prompt: str) -> GeneratedQuiz:
+        """
+        Fallback generator using Groq when Gemini is unavailable.
+        """
+        from groq import AsyncGroq
+
+        groq_client = AsyncGroq(api_key=settings.GROQ_API_KEY)
+        schema_json = GeneratedQuiz.model_json_schema()
+        try:
+            completion = await groq_client.chat.completions.create(
+                model=settings.GROQ_MODEL,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": (
+                            "You are an expert educator. Return valid JSON adhering strictly to this JSON Schema:\n"
+                            f"{schema_json}\n"
+                            "Do not include any conversational commentary or markdown code fence blocks."
+                        ),
+                    },
+                    {"role": "user", "content": prompt},
+                ],
+                response_format={"type": "json_object"},
+                temperature=0.1,
+            )
+
+            content = completion.choices[0].message.content
+            if not content:
+                raise ValueError("Groq returned an empty response")
+
+            clean_json = content.strip()
+            if clean_json.startswith("```"):
+                clean_json = clean_json.split("\n", 1)[1]
+            if clean_json.endswith("```"):
+                clean_json = clean_json.rsplit("```", 1)[0]
+            clean_json = clean_json.strip()
+
+            logger.info("Successfully generated quiz via Groq fallback")
+            return GeneratedQuiz.model_validate_json(clean_json)
+        except Exception as err:
+            logger.error(f"Groq fallback failed during quiz generation: {err}")
+            raise RuntimeError(f"Fallback to Groq failed after Gemini 503: {err}") from err
+
