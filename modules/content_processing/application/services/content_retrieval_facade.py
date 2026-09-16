@@ -7,6 +7,8 @@ from modules.content_processing.domain.aggregates.content_document import Conten
 from modules.content_processing.domain.ports.embedding_provider import EmbeddingProvider
 from modules.content_processing.domain.ports.storage_port import StoragePort
 from modules.content_processing.domain.value_objects.processing_status import ProcessingStatus
+from modules.content_processing.domain.services.rrf_fusion_service import RRFFusionService
+from modules.content_processing.infrastructure.models.document_chunk_model import DocumentChunkModel
 from modules.content_processing.infrastructure.repositories.document_chunk_repository import DocumentChunkRepository
 from modules.content_processing.infrastructure.repositories.document_repository import DocumentRepository
 from shared.exceptions import DocumentNotFoundError
@@ -45,9 +47,10 @@ class ContentRetrievalFacade:
             raise ValueError("Failed to generate embedding for query text")
         query_vector = query_embeddings[0]
 
-        # Similarity search in database
-        chunks = await self._chunk_repo.similarity_search(
+        # Hybrid retrieval in database (dense + lexical with RRF fusion)
+        chunks = await self._retrieve_hybrid_for_course(
             query_vector=query_vector,
+            query_text=query_text,
             course_id=course_id,
             limit=limit,
         )
@@ -110,9 +113,10 @@ class ContentRetrievalFacade:
         # Extract the syllabus text
         syllabus_text = "\n\n".join([chunk.enriched_content for chunk in syllabus_chunks])
 
-        # Similarity search filtered by document_ids
-        chunks = await self._chunk_repo.similarity_search_by_document_ids(
+        # Hybrid retrieval filtered by document_ids (dense + lexical with RRF fusion)
+        chunks = await self._retrieve_hybrid_for_documents(
             query_vector=query_vector,
+            query_text=query_text,
             document_ids=document_ids,
             limit=limit,
         )
@@ -167,3 +171,59 @@ class ContentRetrievalFacade:
             )
             await processing_service.process_document(doc)
             await self._session.commit()
+
+    async def _retrieve_hybrid_for_course(
+        self,
+        *,
+        query_vector: list[float],
+        query_text: str,
+        course_id: int,
+        limit: int,
+    ) -> list[DocumentChunkModel]:
+        """
+        Retrieves top dense and lexical chunk candidates and fuses them via RRF.
+        """
+        candidate_limit = limit * 3
+        dense_chunks = await self._chunk_repo.similarity_search(
+            query_vector=query_vector,
+            course_id=course_id,
+            limit=candidate_limit,
+        )
+        lexical_chunks = await self._chunk_repo.lexical_search(
+            query_text=query_text,
+            course_id=course_id,
+            limit=candidate_limit,
+        )
+        return RRFFusionService.fuse(
+            dense_chunks=dense_chunks,
+            lexical_chunks=lexical_chunks,
+            top_k=limit,
+        )
+
+    async def _retrieve_hybrid_for_documents(
+        self,
+        *,
+        query_vector: list[float],
+        query_text: str,
+        document_ids: list[int],
+        limit: int,
+    ) -> list[DocumentChunkModel]:
+        """
+        Retrieves top dense and lexical chunk candidates filtered by document IDs and fuses them via RRF.
+        """
+        candidate_limit = limit * 3
+        dense_chunks = await self._chunk_repo.similarity_search_by_document_ids(
+            query_vector=query_vector,
+            document_ids=document_ids,
+            limit=candidate_limit,
+        )
+        lexical_chunks = await self._chunk_repo.lexical_search_by_document_ids(
+            query_text=query_text,
+            document_ids=document_ids,
+            limit=candidate_limit,
+        )
+        return RRFFusionService.fuse(
+            dense_chunks=dense_chunks,
+            lexical_chunks=lexical_chunks,
+            top_k=limit,
+        )
