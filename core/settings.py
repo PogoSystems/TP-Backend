@@ -26,6 +26,8 @@ class Settings(BaseSettings):
 
     # LLM
     GEMINI_MODEL: str = ""
+    GROQ_API_KEY: str = ""
+    GROQ_MODEL: str = "openai/gpt-oss-120b"
 
     # embeddings
     GEMINI_API_KEY: str = ""

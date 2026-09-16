@@ -32,27 +32,46 @@ class GeminiQuizGenerator():
         Generate structured quiz using Gemini API.
         """
         bloom_instruction = ""
+        focused_bloom_levels = ""
         if bloom_levels:
-            bloom_str = ", ".join([level.value for level in bloom_levels])
-            bloom_instruction = f"\nCRITICAL INSTRUCTION: Focus EXCLUSIVELY on these levels of Bloom's Taxonomy: {bloom_str}\n"
+            for bloom_level in bloom_levels:
+                match bloom_level:
+                    case BloomLevel.REMEMBER:
+                        focused_bloom_levels += "- Remember: retrieve and recognize previously learned information\n"
+                    case BloomLevel.UNDERSTAND:
+                        focused_bloom_levels += "- Understand: explain, interpret, compare, or summarize meaning\n"
+                    case BloomLevel.APPLY:
+                        focused_bloom_levels += "- Apply: use learned knowledge to solve or handle a new but relevant situation\n"
+                    case BloomLevel.ANALYZE:
+                        focused_bloom_levels += "- Analyze: examine information to identify relationships, differences, causes, components, or implications\n"
+                    case BloomLevel.EVALUATE:
+                        focused_bloom_levels += "- Evaluate: make or select a judgment using explicit criteria, evidence, or justification\n"
+            bloom_instruction = f"\nCRITICAL INSTRUCTION: Focus EXCLUSIVELY on these levels of Bloom's Taxonomy: {focused_bloom_levels}\n"
         prompt = f"""
-You are an expert educator. Generate a quiz containing exactly {num_questions} questions using the bloom taxonomy based strictly on the following reference material.
+You are an expert educator. Generate exactly {num_questions} quiz questions in Spanish.
 
+Bloom level:
 {bloom_instruction}
 
-The reference material is divided into two parts:
-1. The syllabus objectives and competencies.
-2. The actual course content (RAG Context).
+The reference material contains:
+1. Syllabus objectives and competencies.
+2. Course content retrieved through RAG.
 
-CRITICAL INSTRUCTION: Ensure that every generated question aligns perfectly with the syllabus objectives, while extracting the specific factual answers from the course content.
+Every question must:
+- Align with at least one syllabus objective or competency.
+- Be answerable from the provided course content.
+- Match the specified Bloom cognitive level. if specified.
+- Test the student's knowledge rather than the ability to recall the wording of the source.
+- Avoid mentioning the reference material, documents, or text.
+- Use only information supported by the provided material.
 
-The questions in the quiz can be one of two types: Multiple Choice or True/False.
+Question types: Multiple Choice or True/False.
 
-The questions MUST be in spanish
+For Multiple Choice questions, provide one unambiguously correct answer and plausible distractors based on common misunderstandings.
+Avoid making the correct choice considerably longer or shorter than the distractors, try to make them similar in length and complexity.
+For True/False questions, ensure the statement is clearly true or false according to the course content.
 
-DO NOT include in the questions frases like "according to the reference material" or "based on the text". Just ask the question directly.
-
-Reference material (RAG Context):
+Reference material:
 ---
 {context_text}
 ---
@@ -80,8 +99,59 @@ Generate the output strictly following the requested JSON schema.
             return GeneratedQuiz.model_validate_json(response.text)
 
         except APIError as e:
+            is_503 = getattr(e, "code", None) == 503 or "503" in str(e) or "UNAVAILABLE" in str(e).upper() or "HIGH DEMAND" in str(e).upper()
+            if is_503 and settings.GROQ_API_KEY:
+                logger.warning(
+                    f"Gemini API returned 503 UNAVAILABLE. Initiating fallback to Groq ({settings.GROQ_MODEL})..."
+                )
+                return await self._generate_with_groq(prompt)
+
             logger.error(f"Gemini APIError during quiz generation: {e}")
             raise RuntimeError(f"Gemini API error: {e}") from e
         except Exception as e:
             logger.error(f"Unexpected error during quiz generation: {e}")
             raise RuntimeError(f"Quiz generation failed: {e}") from e
+
+    async def _generate_with_groq(self, prompt: str) -> GeneratedQuiz:
+        """
+        Fallback generator using Groq when Gemini is unavailable.
+        """
+        from groq import AsyncGroq
+
+        groq_client = AsyncGroq(api_key=settings.GROQ_API_KEY)
+        schema_json = GeneratedQuiz.model_json_schema()
+        try:
+            completion = await groq_client.chat.completions.create(
+                model=settings.GROQ_MODEL,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": (
+                            "You are an expert educator. Return valid JSON adhering strictly to this JSON Schema:\n"
+                            f"{schema_json}\n"
+                            "Do not include any conversational commentary or markdown code fence blocks."
+                        ),
+                    },
+                    {"role": "user", "content": prompt},
+                ],
+                response_format={"type": "json_object"},
+                temperature=0.1,
+            )
+
+            content = completion.choices[0].message.content
+            if not content:
+                raise ValueError("Groq returned an empty response")
+
+            clean_json = content.strip()
+            if clean_json.startswith("```"):
+                clean_json = clean_json.split("\n", 1)[1]
+            if clean_json.endswith("```"):
+                clean_json = clean_json.rsplit("```", 1)[0]
+            clean_json = clean_json.strip()
+
+            logger.info("Successfully generated quiz via Groq fallback")
+            return GeneratedQuiz.model_validate_json(clean_json)
+        except Exception as err:
+            logger.error(f"Groq fallback failed during quiz generation: {err}")
+            raise RuntimeError(f"Fallback to Groq failed after Gemini 503: {err}") from err
+

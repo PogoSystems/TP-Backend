@@ -1,4 +1,4 @@
-from sqlalchemy import select
+from sqlalchemy import select, func, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from modules.content_processing.domain.value_objects.embedded_chunk import EmbeddedChunk
@@ -128,6 +128,64 @@ class DocumentChunkRepository:
         result = await self._session.execute(stmt)
         return list(result.scalars().all()) # Devuelve una lista de chunks (o vacía)
 
-"""
-Falta implementar la busqueda lexica (BM25)
-"""
+    async def lexical_search(
+        self,
+        *,
+        query_text: str,
+        course_id: int | None = None,
+        limit: int = 15,
+    ) -> list[DocumentChunkModel]:
+        """
+        Performs full-text lexical search on enriched_content using PostgreSQL
+        to_tsvector/plainto_tsquery and ts_rank_cd ranking in Spanish.
+        Optionally filters by course_id through ContentDocumentModel.
+        """
+        if not query_text or not query_text.strip():
+            return []
+
+        ts_vector = func.to_tsvector("spanish", DocumentChunkModel.enriched_content)
+        ts_query = func.plainto_tsquery("spanish", query_text)
+        rank_expr = func.ts_rank_cd(ts_vector, ts_query)
+
+        stmt = select(DocumentChunkModel).where(ts_vector.op("@@")(ts_query))
+
+        if course_id is not None:
+            stmt = stmt.join(ContentDocumentModel).where(
+                ContentDocumentModel.course_id == course_id
+            )
+
+        stmt = stmt.order_by(desc(rank_expr)).limit(limit)
+
+        result = await self._session.execute(stmt)
+        return list(result.scalars().all())
+
+    async def lexical_search_by_document_ids(
+        self,
+        *,
+        query_text: str,
+        document_ids: list[int],
+        limit: int = 15,
+    ) -> list[DocumentChunkModel]:
+        """
+        Performs full-text lexical search on enriched_content for specific document IDs
+        using PostgreSQL to_tsvector/plainto_tsquery and ts_rank_cd ranking in Spanish.
+        """
+        if not query_text or not query_text.strip() or not document_ids:
+            return []
+
+        ts_vector = func.to_tsvector("spanish", DocumentChunkModel.enriched_content)
+        ts_query = func.plainto_tsquery("spanish", query_text)
+        rank_expr = func.ts_rank_cd(ts_vector, ts_query)
+
+        stmt = (
+            select(DocumentChunkModel)
+            .where(
+                DocumentChunkModel.document_id.in_(document_ids),
+                ts_vector.op("@@")(ts_query),
+            )
+            .order_by(desc(rank_expr))
+            .limit(limit)
+        )
+
+        result = await self._session.execute(stmt)
+        return list(result.scalars().all())

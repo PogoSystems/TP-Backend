@@ -2,105 +2,113 @@
     "title": "Quiz sobre User Stories y Criterios de Aceptación",
     "questions": [
         {
-            "text": "Las User Stories son el primer método para los equipos ágiles para identificar las necesidades de los usuarios.",
-            "bloom_level": "remember",
-            "score": 1,
-            "explanation": "El material de referencia indica explícitamente que 'Para los equipos ágiles, User Stories son el primer método para identificar necesidades de los usuarios.'",
-            "answers": [
-                {
-                    "text": "Verdadero",
-                    "is_correct": true
-                },
-                {
-                    "text": "Falso",
-                    "is_correct": false
-                }
-            ]
-        },
-        {
             "text": "¿Cuál es el formato estándar de una User Story?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "El formato estándar de una User Story es 'As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).'",
+            "explanation": "El formato estándar de una User Story es 'As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value)', que describe el tipo de usuario, la acción deseada y el valor o resultado esperado.",
             "answers": [
-                {
-                    "text": "\"I want to (perform some action) so that I (can achieve some goal/result/value) as a (type of user).\"",
-                    "is_correct": false
-                },
                 {
                     "text": "\"As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).\"",
                     "is_correct": true
                 },
                 {
-                    "text": "\"When (condition), then (result) for (type of user).\"",
+                    "text": "\"Given (a context), When (an event occurs), Then (an outcome is expected).\"",
                     "is_correct": false
                 },
                 {
-                    "text": "\"Given (context), when (event), then (outcome).\"",
+                    "text": "\"I need (a feature) because (a reason) for (a user).\"",
+                    "is_correct": false
+                },
+                {
+                    "text": "\"The system must (perform an action) to (meet a requirement).\"",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "¿Qué elemento asegura que las User Stories se han completado correctamente y conforme a las demandas de los clientes?",
+            "text": "En equipos ágiles, ¿cuál es la función principal de las User Stories?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "El material establece que los 'Acceptance criteria' (criterios de aceptación) son la forma de asegurar que las User Stories se han completado correctamente y conforme a las demandas de los clientes.",
+            "explanation": "Las User Stories son el método principal para identificar las necesidades de los usuarios, enfocándose en el valor que el usuario final obtendrá.",
             "answers": [
                 {
-                    "text": "Los requisitos funcionales",
-                    "is_correct": false
-                },
-                {
-                    "text": "Los criterios de aceptación",
+                    "text": "Identificar las necesidades de los usuarios.",
                     "is_correct": true
                 },
                 {
-                    "text": "Las pruebas unitarias",
+                    "text": "Documentar los requisitos técnicos del sistema.",
                     "is_correct": false
                 },
                 {
-                    "text": "El plan de proyecto",
+                    "text": "Establecer los plazos de entrega del proyecto.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Definir la arquitectura de software.",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "Behavior-Driven Development (BDD) es un proceso de desarrollo de software que prioriza la interfaz de usuario.",
+            "text": "¿Cuál es el propósito de los Criterios de Aceptación (Acceptance Criteria) en relación con las User Stories?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "El material define BDD como un proceso de desarrollo de software que 'coloca en primer lugar al comportamiento', no la interfaz de usuario.",
+            "explanation": "Los Criterios de Aceptación aseguran que las User Stories se han completado correctamente y cumplen con las expectativas del cliente, sirviendo como una definición de 'hecho'.",
+            "answers": [
+                {
+                    "text": "Asegurar que las User Stories se han completado correctamente y conforme a las demandas de los clientes.",
+                    "is_correct": true
+                },
+                {
+                    "text": "Describir la interfaz de usuario del sistema.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Priorizar las User Stories según su complejidad.",
+                    "is_correct": false
+                },
+                {
+                    "text": "Generar automáticamente el código fuente.",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Al escribir títulos de escenarios en Behavior-Driven Development (BDD), ¿qué tipo de palabras se recomienda evitar para poner énfasis en el comportamiento?",
+            "bloom_level": "remember",
+            "score": 1,
+            "explanation": "En BDD, se recomienda evitar palabras como 'verify', 'assert' o 'should' en los títulos de los escenarios, ya que ponen más énfasis en la aseveración que en el comportamiento.",
+            "answers": [
+                {
+                    "text": "\"verify\", \"assert\", \"should\".",
+                    "is_correct": true
+                },
+                {
+                    "text": "\"Given\", \"When\", \"Then\".",
+                    "is_correct": false
+                },
+                {
+                    "text": "\"and\", \"or\", \"but\".",
+                    "is_correct": false
+                },
+                {
+                    "text": "\"user\", \"system\", \"page\".",
+                    "is_correct": false
+                }
+            ]
+        },
+        {
+            "text": "Verdadero o Falso: El framework SpecFlow es una opción para implementar Behavior-Driven Development (BDD) con C# y .NET.",
+            "bloom_level": "remember",
+            "score": 1,
+            "explanation": "La tabla de referencia indica que SpecFlow es un framework para C# y .NET que utiliza Gherkin separado, lo que lo asocia con BDD.",
             "answers": [
                 {
                     "text": "Verdadero",
-                    "is_correct": false
+                    "is_correct": true
                 },
                 {
                     "text": "Falso",
-                    "is_correct": true
-                }
-            ]
-        },
-        {
-            "text": "Según el ejemplo del formulario 'Brindar feedback', ¿cuáles son los campos requeridos?",
-            "bloom_level": "remember",
-            "score": 1,
-            "explanation": "El escenario del formulario 'Brindar feedback' especifica que los campos 'Email', 'Nombre' y 'Comentario' son requeridos.",
-            "answers": [
-                {
-                    "text": "Email, Contraseña y Comentario",
-                    "is_correct": false
-                },
-                {
-                    "text": "Nombre de Usuario, Email y Comentario",
-                    "is_correct": false
-                },
-                {
-                    "text": "Email, Nombre y Comentario",
-                    "is_correct": true
-                },
-                {
-                    "text": "Nombre, Apellido y Email",
                     "is_correct": false
                 }
             ]
