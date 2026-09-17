@@ -9,6 +9,7 @@ from shared.exceptions import InvalidFileTypeError, FileTooLargeError, DocumentN
 ALLOWED_CONTENT_TYPES = {
     "application/pdf": "pdf",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation": "pptx",
 }
 MAX_FILE_SIZE = 10 * 1024 * 1024 # 10 MB
 

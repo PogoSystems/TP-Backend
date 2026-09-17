@@ -1,35 +1,35 @@
 {
-    "title": "Quiz sobre User Stories y Criterios de Aceptación",
+    "title": "Quiz de User Stories y Criterios de Aceptación",
     "questions": [
         {
             "text": "¿Cuál es el formato estándar de una User Story?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "El formato estándar de una User Story es 'As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value)', que describe el tipo de usuario, la acción deseada y el valor o resultado esperado.",
+            "explanation": "El formato estándar de una User Story es 'Como un (tipo de usuario), quiero (realizar alguna acción) para que yo (pueda lograr algún objetivo/resultado/valor)'.",
             "answers": [
                 {
-                    "text": "\"As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).\"",
+                    "text": "Como un (tipo de usuario), quiero (realizar alguna acción) para que yo (pueda lograr algún objetivo/resultado/valor).",
                     "is_correct": true
                 },
                 {
-                    "text": "\"Given (a context), When (an event occurs), Then (an outcome is expected).\"",
+                    "text": "El sistema debe (realizar una función) cuando (ocurre un evento) para (satisfacer una necesidad).",
                     "is_correct": false
                 },
                 {
-                    "text": "\"I need (a feature) because (a reason) for (a user).\"",
+                    "text": "Dado que (una condición), cuando (una acción), entonces (un resultado).",
                     "is_correct": false
                 },
                 {
-                    "text": "\"The system must (perform an action) to (meet a requirement).\"",
+                    "text": "Yo (como usuario) necesito (una característica) para (un beneficio).",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "En equipos ágiles, ¿cuál es la función principal de las User Stories?",
+            "text": "Para los equipos ágiles, ¿cuál es el propósito principal de las User Stories?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "Las User Stories son el método principal para identificar las necesidades de los usuarios, enfocándose en el valor que el usuario final obtendrá.",
+            "explanation": "Las User Stories son el primer método para identificar las necesidades de los usuarios en equipos ágiles.",
             "answers": [
                 {
                     "text": "Identificar las necesidades de los usuarios.",
@@ -50,13 +50,13 @@
             ]
         },
         {
-            "text": "¿Cuál es el propósito de los Criterios de Aceptación (Acceptance Criteria) en relación con las User Stories?",
+            "text": "¿Qué función cumplen los Criterios de Aceptación en relación con las User Stories?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "Los Criterios de Aceptación aseguran que las User Stories se han completado correctamente y cumplen con las expectativas del cliente, sirviendo como una definición de 'hecho'.",
+            "explanation": "Los Criterios de Aceptación aseguran que las User Stories se han completado correctamente y conforme a las demandas de los clientes.",
             "answers": [
                 {
-                    "text": "Asegurar que las User Stories se han completado correctamente y conforme a las demandas de los clientes.",
+                    "text": "Asegurar que las User Stories se completen correctamente y cumplan las demandas del cliente.",
                     "is_correct": true
                 },
                 {
@@ -74,34 +74,34 @@
             ]
         },
         {
-            "text": "Al escribir títulos de escenarios en Behavior-Driven Development (BDD), ¿qué tipo de palabras se recomienda evitar para poner énfasis en el comportamiento?",
+            "text": "En el contexto del desarrollo guiado por el comportamiento (BDD), ¿qué tipo de palabras se recomienda evitar en los títulos de los escenarios?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "En BDD, se recomienda evitar palabras como 'verify', 'assert' o 'should' en los títulos de los escenarios, ya que ponen más énfasis en la aseveración que en el comportamiento.",
+            "explanation": "En BDD, se deben evitar palabras que expresan aseveración como 'verify', 'assert' o 'should' en los títulos de los escenarios, ya que ponen más énfasis en la aseveración que en el comportamiento.",
             "answers": [
                 {
-                    "text": "\"verify\", \"assert\", \"should\".",
+                    "text": "Palabras que expresan aseveración como 'verify', 'assert' o 'should'.",
                     "is_correct": true
                 },
                 {
-                    "text": "\"Given\", \"When\", \"Then\".",
+                    "text": "Nombres de usuarios o roles.",
                     "is_correct": false
                 },
                 {
-                    "text": "\"and\", \"or\", \"but\".",
+                    "text": "Verbos en infinitivo.",
                     "is_correct": false
                 },
                 {
-                    "text": "\"user\", \"system\", \"page\".",
+                    "text": "Términos técnicos específicos.",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "Verdadero o Falso: El framework SpecFlow es una opción para implementar Behavior-Driven Development (BDD) con C# y .NET.",
+            "text": "La estructura 'Dado que', 'Cuando', 'Entonces' es comúnmente utilizada para definir los Criterios de Aceptación.",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "La tabla de referencia indica que SpecFlow es un framework para C# y .NET que utiliza Gherkin separado, lo que lo asocia con BDD.",
+            "explanation": "El material de referencia muestra ejemplos de Criterios de Aceptación que utilizan la estructura 'Dado que', 'Cuando', 'Entonces' para describir escenarios.",
             "answers": [
                 {
                     "text": "Verdadero",
