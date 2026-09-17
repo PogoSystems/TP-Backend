@@ -1,3 +1,4 @@
+import io
 import re
 
 from modules.content_processing.domain.value_objects.prepared_content import StructuredSection
@@ -26,7 +27,8 @@ def structure_sections(normalized_text: str) -> list[StructuredSection]:
             )
         buffer = []
 
-    for line in normalized_text.splitlines():
+    for line in io.StringIO(normalized_text):
+        line = line.rstrip("\r\n")
         match = HEADING_RE.match(line)
         if match:
             flush()
