@@ -21,4 +21,5 @@ class PptxContentExtractor:
 
         markdown = "\n\n---\n\n".join(slides_text).strip()
         page_count = max(1, len(prs.slides))
+        del prs
         return markdown, page_count
