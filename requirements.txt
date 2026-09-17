@@ -16,4 +16,6 @@ pytest==9.0.3
 pytest-asyncio==1.4.0
 tokenizers==0.23.1
 supabase == 2.31.0
-groq==1.7.0
+groq==1.7.0
+mammoth==1.9.0
+python-pptx==1.0.2

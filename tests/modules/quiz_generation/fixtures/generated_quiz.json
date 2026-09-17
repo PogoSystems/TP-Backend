@@ -2,34 +2,34 @@
     "title": "Quiz sobre User Stories y Criterios de Aceptación",
     "questions": [
         {
-            "text": "¿Cuál es el formato estándar de una User Story?",
+            "text": "¿Cuál es el formato correcto de una User Story?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "El formato estándar de una User Story es 'As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value)', que describe el tipo de usuario, la acción deseada y el valor o resultado esperado.",
+            "explanation": "La estructura estándar de una User Story es 'Como un (tipo de usuario), quiero (realizar alguna acción) para que yo (pueda lograr algún objetivo/resultado/valor)'.",
             "answers": [
                 {
-                    "text": "\"As a (type of user), I want to (perform some action) so that I (can achieve some goal/result/value).\"",
+                    "text": "Como un (tipo de usuario), quiero (realizar alguna acción) para que yo (pueda lograr algún objetivo/resultado/valor).",
                     "is_correct": true
                 },
                 {
-                    "text": "\"Given (a context), When (an event occurs), Then (an outcome is expected).\"",
+                    "text": "El sistema debe (realizar una función) cuando (ocurre un evento) para (satisfacer una necesidad).",
                     "is_correct": false
                 },
                 {
-                    "text": "\"I need (a feature) because (a reason) for (a user).\"",
+                    "text": "Dado que (una condición), cuando (una acción), entonces (un resultado).",
                     "is_correct": false
                 },
                 {
-                    "text": "\"The system must (perform an action) to (meet a requirement).\"",
+                    "text": "Para (un objetivo), el usuario (hace algo) y el sistema (responde).",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "En equipos ágiles, ¿cuál es la función principal de las User Stories?",
+            "text": "¿Cuál es el propósito principal de las User Stories para los equipos ágiles?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "Las User Stories son el método principal para identificar las necesidades de los usuarios, enfocándose en el valor que el usuario final obtendrá.",
+            "explanation": "Las User Stories son el método principal para que los equipos ágiles identifiquen las necesidades de los usuarios.",
             "answers": [
                 {
                     "text": "Identificar las necesidades de los usuarios.",
@@ -40,7 +40,7 @@
                     "is_correct": false
                 },
                 {
-                    "text": "Establecer los plazos de entrega del proyecto.",
+                    "text": "Crear diagramas de flujo de procesos.",
                     "is_correct": false
                 },
                 {
@@ -50,65 +50,65 @@
             ]
         },
         {
-            "text": "¿Cuál es el propósito de los Criterios de Aceptación (Acceptance Criteria) en relación con las User Stories?",
+            "text": "¿Qué aseguran los Criterios de Aceptación (Acceptance Criteria) en relación con las User Stories?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "Los Criterios de Aceptación aseguran que las User Stories se han completado correctamente y cumplen con las expectativas del cliente, sirviendo como una definición de 'hecho'.",
+            "explanation": "Los Criterios de Aceptación garantizan que las User Stories se completen correctamente y cumplan con las demandas de los clientes.",
             "answers": [
                 {
-                    "text": "Asegurar que las User Stories se han completado correctamente y conforme a las demandas de los clientes.",
+                    "text": "Que las User Stories se han completado correctamente y conforme a las demandas de los clientes.",
                     "is_correct": true
                 },
                 {
-                    "text": "Describir la interfaz de usuario del sistema.",
+                    "text": "Que el equipo de desarrollo ha seguido todas las pautas de codificación.",
                     "is_correct": false
                 },
                 {
-                    "text": "Priorizar las User Stories según su complejidad.",
+                    "text": "Que el proyecto se entregará a tiempo y dentro del presupuesto.",
                     "is_correct": false
                 },
                 {
-                    "text": "Generar automáticamente el código fuente.",
+                    "text": "Que todos los errores de software han sido corregidos antes del lanzamiento.",
                     "is_correct": false
                 }
             ]
         },
         {
-            "text": "Al escribir títulos de escenarios en Behavior-Driven Development (BDD), ¿qué tipo de palabras se recomienda evitar para poner énfasis en el comportamiento?",
+            "text": "En el desarrollo guiado por el comportamiento (BDD), ¿es recomendable usar palabras como 'verificar', 'asegurar' o 'debería' en los títulos de los escenarios?",
             "bloom_level": "remember",
             "score": 1,
-            "explanation": "En BDD, se recomienda evitar palabras como 'verify', 'assert' o 'should' en los títulos de los escenarios, ya que ponen más énfasis en la aseveración que en el comportamiento.",
-            "answers": [
-                {
-                    "text": "\"verify\", \"assert\", \"should\".",
-                    "is_correct": true
-                },
-                {
-                    "text": "\"Given\", \"When\", \"Then\".",
-                    "is_correct": false
-                },
-                {
-                    "text": "\"and\", \"or\", \"but\".",
-                    "is_correct": false
-                },
-                {
-                    "text": "\"user\", \"system\", \"page\".",
-                    "is_correct": false
-                }
-            ]
-        },
-        {
-            "text": "Verdadero o Falso: El framework SpecFlow es una opción para implementar Behavior-Driven Development (BDD) con C# y .NET.",
-            "bloom_level": "remember",
-            "score": 1,
-            "explanation": "La tabla de referencia indica que SpecFlow es un framework para C# y .NET que utiliza Gherkin separado, lo que lo asocia con BDD.",
+            "explanation": "En BDD, se debe evitar el lenguaje de aserción como 'verificar', 'asegurar' o 'debería' en los títulos de los escenarios, ya que ponen más énfasis en la aserción que en el comportamiento.",
             "answers": [
                 {
                     "text": "Verdadero",
-                    "is_correct": true
+                    "is_correct": false
                 },
                 {
                     "text": "Falso",
+                    "is_correct": true
+                }
+            ]
+        },
+        {
+            "text": "¿Cuál de los siguientes frameworks se asocia comúnmente con C# y .NET para el desarrollo guiado por el comportamiento (BDD)?",
+            "bloom_level": "remember",
+            "score": 1,
+            "explanation": "SpecFlow es un framework de BDD que se utiliza con C# y .NET.",
+            "answers": [
+                {
+                    "text": "Cucumber-JVM",
+                    "is_correct": false
+                },
+                {
+                    "text": "Behat",
+                    "is_correct": false
+                },
+                {
+                    "text": "SpecFlow",
+                    "is_correct": true
+                },
+                {
+                    "text": "RSpec",
                     "is_correct": false
                 }
             ]
