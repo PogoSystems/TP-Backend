@@ -34,10 +34,4 @@ jobs:
           SUPABASE_SERVICE_KEY: "dummy-service-key"
           ENV: "test"
           DEBUG: "false"
-        run: |
-          pytest tests
-          --ignore=tests/modules/analytics/test_analytics_integration.py
-          --ignore=tests/modules/content_processing/test_embedding_pipeline.py
-          --ignore=tests/modules/quiz_generation/test_quiz_generation.py
-          --ignore=tests/modules/quiz_generation/test_quiz_generation_benchmark.py
-          --ignore=tests/modules/quiz_management/test_quiz_management_integration.py
+        run: pytest tests --ignore=tests/modules/analytics/test_analytics_integration.py --ignore=tests/modules/content_processing/test_embedding_pipeline.py --ignore=tests/modules/quiz_generation/test_quiz_generation.py --ignore=tests/modules/quiz_generation/test_quiz_generation_benchmark.py --ignore=tests/modules/quiz_management/test_quiz_management_integration.py
