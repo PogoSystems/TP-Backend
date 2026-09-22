@@ -29,7 +29,8 @@ class QuizGenerationRequest(BaseModel):
     num_questions: int = Field(
         ...,
         gt=0,
-        description="Number of questions to generate in the quiz.",
+        le=25,
+        description="Number of questions to generate in the quiz (maximum 25).",
     )
 
     bloom_levels: list[BloomLevel] = Field(
