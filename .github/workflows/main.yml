@@ -1,0 +1,37 @@
+name: Backend CI / Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Run Pytest
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip" # Acelera las ejecuciones cacheando dependencias
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Ejecutar pruebas
+        env:
+          # Variables mínimas requeridas por core/settings.py para que pydantic no falle al importar
+          DATABASE_URL: "postgresql+asyncpg://dummy:dummy@localhost:5432/dummy_db"
+          DATABASE_URL_SYNC: "postgresql+psycopg2://dummy:dummy@localhost:5432/dummy_db"
+          SUPABASE_URL: "https://dummy.supabase.co"
+          SUPABASE_SERVICE_KEY: "dummy-service-key"
+          ENV: "test"
+          DEBUG: "false"
+        run: pytest tests --ignore=tests/modules/analytics/test_analytics_integration.py --ignore=tests/modules/content_processing/test_embedding_pipeline.py --ignore=tests/modules/quiz_generation/test_quiz_generation.py --ignore=tests/modules/quiz_generation/test_quiz_generation_benchmark.py --ignore=tests/modules/quiz_management/test_quiz_management_integration.py
