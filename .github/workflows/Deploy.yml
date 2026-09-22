@@ -1,29 +1,17 @@
-name: Deploy Backend to VPS
+name: Deploy prod
 
 on:
   push:
-    branches:
-      - main  # Se dispara al hacer push directo o al mergear un PR a main
+    branches: [main]
 
 jobs:
   deploy:
-    name: Trigger Deploy Script on VPS
     runs-on: ubuntu-latest
-
     steps:
-      - name: Deploy via SSH
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Deploy al VPS
         run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-
-          echo "$SSH_KEY" > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-
-          ssh-keyscan -p "${SSH_PORT:-22}" -H "$SSH_HOST" >> ~/.ssh/known_hosts
-
-          ssh -T -i ~/.ssh/deploy_key -p "${SSH_PORT:-22}" "$SSH_USER@$SSH_HOST"
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
+          printf '%s\n' "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo '187.127.248.194 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHxR1PBNqWiEIbkO0EoFdXclwAOGT17rjnQ2/wDBJ+VL' > ~/.ssh/known_hosts
+          ssh -T -i ~/.ssh/id_ed25519 deploy-tp@187.127.248.194
