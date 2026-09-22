@@ -19,7 +19,7 @@ class ContentDocumentAggregate:
     default_factory=lambda: datetime.now(timezone.utc)
     )
 
-    ALLOWED_TYPES = {"pdf", "docx"}
+    ALLOWED_TYPES = {"pdf", "docx", "pptx"}
 
     def __post_init__(self) -> None:
         if self.course_id <= 0:

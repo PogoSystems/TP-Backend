@@ -4,6 +4,8 @@ from unittest.mock import AsyncMock, MagicMock
 import pytest
 
 from shared.value_objects.Bloom import BloomLevel
+from pydantic import ValidationError
+from modules.quiz_generation.schemas.request_schemas import QuizGenerationRequest
 from modules.quiz_generation.application.services.quiz_generation_service import QuizGenerationService
 from modules.quiz_generation.domain.aggregates.quiz import QuizAggregate
 from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz, GeneratedQuestion, GeneratedAnswer
@@ -152,3 +154,72 @@ class TestCU05GenerarCuestionarioPersonalizado:
             )
 
         repository.save.assert_not_called()
+
+    @pytest.mark.asyncio
+    async def test_generate_quiz_from_documents_exceeds_max_questions_raises_error(self) -> None:
+        """Verifica que al solicitar más de 25 preguntas se lance ValueError sin llamar al LLM ni guardar."""
+        retriever, generator, repository, stats_repo = make_mocks()
+        service = QuizGenerationService(
+            context_retriever=retriever,
+            quiz_generator=generator,
+            quiz_repository=repository,
+            stats_repository=stats_repo,
+        )
+
+        with pytest.raises(ValueError, match="El número de preguntas debe estar entre 1 y 25"):
+            await service.generate_quiz_from_documents(
+                title="Práctica Excesiva",
+                document_ids=[101],
+                query_text="Conceptos",
+                num_questions=26,
+                user_id=5,
+                course_id=1,
+                bloom_levels=[BloomLevel.REMEMBER],
+            )
+
+        generator.generate_quiz_from_context.assert_not_called()
+        repository.save.assert_not_called()
+
+    @pytest.mark.asyncio
+    async def test_generate_quiz_from_course_exceeds_max_questions_raises_error(self) -> None:
+        """Verifica que generate_quiz_from_course con más de 25 preguntas falle sin llamar al LLM ni guardar."""
+        retriever, generator, repository, stats_repo = make_mocks()
+        service = QuizGenerationService(
+            context_retriever=retriever,
+            quiz_generator=generator,
+            quiz_repository=repository,
+            stats_repository=stats_repo,
+        )
+
+        with pytest.raises(ValueError, match="El número de preguntas debe estar entre 1 y 25"):
+            await service.generate_quiz_from_course(
+                course_id=1,
+                query_text="Conceptos",
+                num_questions=26,
+                user_id=5,
+                bloom_levels=[BloomLevel.REMEMBER],
+            )
+
+        generator.generate_quiz_from_context.assert_not_called()
+        repository.save.assert_not_called()
+
+    def test_quiz_generation_request_schema_validation(self) -> None:
+        """Verifica que el schema Pydantic rechace más de 25 preguntas y acepte valores válidos."""
+        with pytest.raises(ValidationError):
+            QuizGenerationRequest(
+                course_id=1,
+                title="Quiz Test",
+                document_ids=[1],
+                num_questions=26,
+                bloom_levels=[BloomLevel.REMEMBER],
+            )
+
+        valid_request = QuizGenerationRequest(
+            course_id=1,
+            title="Quiz Test",
+            document_ids=[1],
+            num_questions=25,
+            bloom_levels=[BloomLevel.REMEMBER],
+        )
+        assert valid_request.num_questions == 25
+

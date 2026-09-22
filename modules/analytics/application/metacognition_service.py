@@ -19,11 +19,13 @@ class MetacognitionService:
         self._repo = MetacognitionQueryRepository(session)
 
     @staticmethod
-    def _determine_bias(gap: float) -> str:
+    def _determine_bias(gap: float, accuracy: float | None = None) -> str:
         if gap > 0.5:
             return "overconfident"
         elif gap < -0.5:
             return "underconfident"
+        if accuracy is not None and accuracy < 75.0:
+            return "variable"
         return "calibrated"
 
     @staticmethod
@@ -52,13 +54,12 @@ class MetacognitionService:
         avg_expected = round(sum_expected / total_quizzes, 1)
         avg_actual = round(sum_actual / total_quizzes, 1)
         bias_gap = round(avg_expected - avg_actual, 1)
-        bias = self._determine_bias(bias_gap)
-
         accuracies = [
             self._calculate_accuracy(a["expected_correct"], a["actual_correct"], a["total_questions"])
             for a in attempts
         ]
         overall_accuracy = round(sum(accuracies) / total_quizzes, 1)
+        bias = self._determine_bias(bias_gap, overall_accuracy)
 
         # Agrupación por curso
         by_course = defaultdict(list)
@@ -72,13 +73,14 @@ class MetacognitionService:
                 for a in c_attempts
             ]
             c_gap = (sum(a["expected_correct"] for a in c_attempts) - sum(a["actual_correct"] for a in c_attempts)) / len(c_attempts)
+            c_accuracy = round(sum(c_accs) / len(c_attempts), 1)
             breakdown.append(
                 MetacognitionCourseSummary(
                     course_id=c_id,
                     course_name=c_name,
                     quizzes_evaluated=len(c_attempts),
-                    calibration_accuracy_percentage=round(sum(c_accs) / len(c_attempts), 1),
-                    bias=self._determine_bias(c_gap),
+                    calibration_accuracy_percentage=c_accuracy,
+                    bias=self._determine_bias(c_gap, c_accuracy),
                 )
             )
 
@@ -136,13 +138,15 @@ class MetacognitionService:
             for a in attempts[:3]
         ]
 
+        course_accuracy = round(sum(accuracies) / total_quizzes, 1)
+
         return CourseMetacognitionResponse(
             course_id=course_id,
             course_name=course_name,
-            calibration_accuracy_percentage=round(sum(accuracies) / total_quizzes, 1),
+            calibration_accuracy_percentage=course_accuracy,
             average_expected=avg_expected,
             average_actual=avg_actual,
-            bias=self._determine_bias(bias_gap),
+            bias=self._determine_bias(bias_gap, course_accuracy),
             quizzes_evaluated=total_quizzes,
             recent_attempts=recent,
         )
@@ -178,7 +182,7 @@ class MetacognitionService:
                     actual_correct=act,
                     expected_correct=exp,
                     calibration_accuracy=acc,
-                    bias=self._determine_bias(gap),
+                    bias=self._determine_bias(gap, acc),
                 )
             )
 

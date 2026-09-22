@@ -84,6 +84,50 @@ class TestMetacognitionService:
         assert course.bias == "overconfident"
 
     @pytest.mark.asyncio
+    async def test_summary_variable_bias_when_low_accuracy_and_balanced_gap(self) -> None:
+        """Verifica que si la brecha neta es 0 pero la precisión es baja (<75%), el sesgo sea 'variable'."""
+        repo_mock = AsyncMock()
+        repo_mock.get_raw_attempts = AsyncMock(
+            return_value=[
+                {
+                    "attempt_id": 1,
+                    "quiz_id": 10,
+                    "quiz_title": "Quiz 1",
+                    "course_id": 101,
+                    "course_name": "Matemáticas",
+                    "submitted_at": datetime(2026, 3, 1, 10, 0),
+                    "expected_correct": 8,
+                    "total_questions": 10,
+                    "actual_correct": 4,  # Overconfident by 4, accuracy = 60%
+                },
+                {
+                    "attempt_id": 2,
+                    "quiz_id": 11,
+                    "quiz_title": "Quiz 2",
+                    "course_id": 101,
+                    "course_name": "Matemáticas",
+                    "submitted_at": datetime(2026, 3, 3, 10, 0),
+                    "expected_correct": 4,
+                    "total_questions": 10,
+                    "actual_correct": 8,  # Underconfident by 4, accuracy = 60%
+                },
+            ]
+        )
+
+        service = MetacognitionService(MagicMock())
+        service._repo = repo_mock
+
+        result = await service.get_summary(user_id=1)
+
+        assert result.total_evaluated_quizzes == 2
+        assert result.average_expected == 6.0
+        assert result.average_actual == 6.0
+        assert result.bias_gap == 0.0
+        assert result.calibration_accuracy_percentage == 60.0
+        # Debido a que la precisión es 60% (< 75%), el sesgo no debe ser 'calibrated', sino 'variable'
+        assert result.bias == "variable"
+
+    @pytest.mark.asyncio
     async def test_course_detail_empty_state_with_course_name(self) -> None:
         """Verifica que si el curso no tiene intentos, se devuelva respuesta limpia con el nombre del curso."""
         repo_mock = AsyncMock()

@@ -14,6 +14,8 @@ from modules.analytics.infrastructure.repositories.stats_query_repository import
 
 logger = logging.getLogger(__name__)
 
+MAX_QUESTIONS: int = 25
+
 
 class QuizGenerationService:
     """
@@ -47,6 +49,11 @@ class QuizGenerationService:
         """
         Generates a quiz using context retrieved by course_id.
         """
+        if num_questions <= 0 or num_questions > MAX_QUESTIONS:
+            raise ValueError(
+                f"El número de preguntas debe estar entre 1 y {MAX_QUESTIONS}."
+            )
+
         effective_query = query_text.strip() if query_text and query_text.strip() else (
             "Resumen principal, conceptos clave y temas principales."
         )
@@ -106,6 +113,11 @@ class QuizGenerationService:
         """
         Generates a quiz using context retrieved only from specific documents.
         """
+        if num_questions <= 0 or num_questions > MAX_QUESTIONS:
+            raise ValueError(
+                f"El número de preguntas debe estar entre 1 y {MAX_QUESTIONS}."
+            )
+
         effective_query = query_text.strip() if query_text and query_text.strip() else (
             "Resumen principal, conceptos clave y temas principales."
         )
