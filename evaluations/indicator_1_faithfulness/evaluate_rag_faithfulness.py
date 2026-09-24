@@ -24,6 +24,7 @@ if str(ROOT_DIR) not in sys.path:
 from google import genai
 from google.genai import types
 from google.genai.errors import APIError
+from groq import AsyncGroq
 from pydantic import BaseModel, Field
 
 from core.settings import settings
@@ -108,12 +109,11 @@ class FaithfulnessEvaluator:
     def __init__(self):
         self._gemini_client = genai.Client(api_key=settings.GEMINI_API_KEY)
         self._gemini_model = settings.GEMINI_MODEL
-        self._groq_client = None
+        self._groq_client: Optional[AsyncGroq] = None
+        # Usar gpt-oss-20b para evitar límites de tokens por minuto (TPM) de modelos gigantes
+        self._groq_model: str = "openai/gpt-oss-20b"
         if settings.GROQ_API_KEY:
-            from groq import AsyncGroq
             self._groq_client = AsyncGroq(api_key=settings.GROQ_API_KEY)
-            # Usar gpt-oss-20b para evitar límites de tokens por minuto (TPM) de modelos gigantes
-            self._groq_model = "openai/gpt-oss-20b"
 
     async def evaluate_question_against_context(
         self,
@@ -215,6 +215,12 @@ Directivas de Evaluación:
             f"{json.dumps(schema_json, ensure_ascii=False)}\n"
             "No agregues texto conversational fuera del JSON."
         )
+
+        if not self._groq_client:
+            raise RuntimeError(
+                "El cliente de Groq no está inicializado. "
+                "Verifica que GROQ_API_KEY esté configurada en el entorno o archivo .env."
+            )
 
         try:
             completion = await self._groq_client.chat.completions.create(
