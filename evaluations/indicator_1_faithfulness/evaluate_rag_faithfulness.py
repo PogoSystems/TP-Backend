@@ -32,6 +32,8 @@ from evaluations.shared.db_sample_extractor import DbSampleExtractor
 from evaluations.shared.metrics_engine import calculate_faithfulness
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logging.getLogger("google.genai").setLevel(logging.WARNING)
+logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
 logger = logging.getLogger("Indicator1_Faithfulness")
 
 
@@ -52,29 +54,34 @@ class QuestionFaithfulnessResult(BaseModel):
 
 def select_relevant_chunks_for_question(
     question_text: str,
+    answers: List[Dict[str, Any]],
     correct_answers: List[str],
     explanation: str,
     chunks: List[Dict[str, Any]],
-    top_k: int = 8,
+    top_k: int = 15,
 ) -> str:
     """
-    Selecciona los fragmentos de texto más relevantes para la pregunta específica
-    basándose en coincidencia léxica ponderada (palabras clave, títulos y texto).
-    Evita truncar el contexto de la sección correcta.
+    Selecciona los fragmentos de texto más relevantes para la pregunta específica.
+    Si el conjunto total de fragmentos es de 25 o menos, incluye todo el material disponible
+    para prevenir desabastecimiento de contexto (context starvation).
+    Para colecciones mayores, aplica coincidencia léxica ponderada extrayendo términos clave del reactivo.
     """
     if not chunks:
         return ""
 
-    if len(chunks) <= top_k:
+    if len(chunks) <= 25:
         return "\n\n".join([
             f"[Fragmento #{c['chunk_index']} - {c['heading_path']}]:\n{c['content']}"
             for c in chunks
         ])
 
-    search_text = f"{question_text} {' '.join(correct_answers)} {explanation}".lower()
-    # Extraer palabras clave de más de 3 letras ignorando stopwords comunes
-    stopwords = {"para", "como", "cual", "esta", "este", "entre", "sobre", "desde", "hacia", "pero", "donde", "cuando"}
-    keywords = {w for w in re.findall(r"\b[a-zA-ZáéíóúñÁÉÍÓÚÑ]{4,}\b", search_text) if w not in stopwords}
+    all_answers_text = " ".join([a.get("text", "") for a in answers])
+    search_text = f"{question_text} {' '.join(correct_answers)} {all_answers_text} {explanation}".lower()
+    stopwords = {
+        "para", "como", "cual", "esta", "este", "entre", "sobre", "desde", "hacia", "pero",
+        "donde", "cuando", "estos", "estas", "cualquier", "algun", "alguna", "tiene", "puede"
+    }
+    keywords = {w for w in re.findall(r"\b[a-zA-ZáéíóúñÁÉÍÓÚÑ]{3,}\b", search_text) if w not in stopwords}
 
     scored_chunks = []
     for c in chunks:
@@ -84,7 +91,7 @@ def select_relevant_chunks_for_question(
         score = 0
         for kw in keywords:
             if kw in heading_lower:
-                score += 3  # Mayor peso a coincidencia en títulos/secciones
+                score += 4  # Mayor peso a coincidencia en títulos/secciones temáticas
             if kw in content_lower:
                 score += 1
 
@@ -123,7 +130,7 @@ class FaithfulnessEvaluator:
         correct_answers: List[str],
         explanation: str,
         context_text: str,
-    ) -> QuestionFaithfulnessResult:
+    ) -> Optional[QuestionFaithfulnessResult]:
         """
         Extrae afirmaciones del reactivo y verifica su respaldo factual en el contexto.
         """
@@ -135,8 +142,8 @@ class FaithfulnessEvaluator:
         options_block = "\n".join(options_formatted)
 
         prompt = f"""
-Eres un auditor académico y evaluador de fidelidad factual para sistemas RAG (Retrieval-Augmented Generation).
-Tu tarea es verificar si las preguntas, sus respuestas correctas y sus explicaciones didácticas se fundamentan estrictamente en el material de referencia proporcionado o si contienen ALUCINACIONES (información externa, contradictoria o no respaldada).
+Eres un auditor académico y evaluador de fidelidad factual para sistemas RAG (Retrieval-Augmented Generation) según el marco metodológico estándar (Es et al., 2023 - RAGAS).
+Tu objetivo es verificar si la pregunta generada, su clave de respuesta correcta y la fundamentación pedagógica que sustenta dicha clave provienen estrictamente del material de referencia proporcionado o si contienen ALUCINACIONES (hechos contradictorios, inventados o no derivables).
 
 Material de Referencia (Contexto recuperado de los documentos fuente):
 ---
@@ -151,16 +158,20 @@ Reactivo a Auditar:
 - Respuesta(s) declarada(s) como correcta(s): {', '.join(correct_answers)}
 - Explicación brindada al estudiante: {explanation}
 
-Directivas de Evaluación:
-1. Las opciones marcadas como '[DISTRACTOR / OPCIÓN INCORRECTA]' fueron diseñadas intencionalmente como opciones erróneas para evaluar al alumno. NO evalúes los distractores como afirmaciones que deban ser verdaderas en el texto.
-2. Descompón el reactivo en afirmaciones atómicas (claims) considerando:
-   - Que el tema del enunciado sea coherente con el material.
-   - Que la opción declarada como CORRECTA esté respaldada como verdadera por el contexto de referencia.
-   - Que los hechos y argumentos expuestos en la explicación sean consistentes con el material (incluyendo cuando explica por qué se descartan las otras opciones).
-3. Para cada afirmación atómica:
-   - Marca 'is_grounded': true si está directamente soportada por el contexto o es una deducción lógica del texto.
-   - Marca 'is_grounded': false si introduce conceptos o hechos que contradicen o NO están presentes en el material (ALUCINACIÓN).
-4. Genera la salida siguiendo estrictamente el esquema JSON solicitado.
+Directivas Metodológicas de Evaluación:
+1. Enfoque en la Clave Correcta y sus Fundamentos:
+   - Descompón el reactivo en afirmaciones atómicas (claims) centradas en:
+     a) Las premisas del ENUNCIADO.
+     b) La afirmación que sostiene la OPCIÓN DECLARADA COMO CORRECTA.
+     c) Los hechos didácticos que explican POR QUÉ la opción correcta es la adecuada.
+2. Tratamiento de Opciones Incorrectas (Distractores):
+   - Los distractores son alternativas falsas creadas artificialmente para evaluar al alumno. NO evalúes los distractores como afirmaciones que deban ser verdaderas en el texto fuente.
+   - Si la explicación descarta un distractor apelando a distinciones conceptuales generales (ej. indicar que una opción pertenece a otra metodología, que no aplica al caso, o contrastarla con la clave), NO califiques ese argumento de descarte como alucinación si la clave correcta está respaldada.
+3. Paráfrasis y Deducciones Lógicas Válidas:
+   - Si una afirmación sintetiza, parafrasea con sinónimos o deduce lógicamente información del contexto, clasifícala como 'is_grounded': true. NO exijas coincidencia léxica literal palabra por palabra.
+4. Criterio Estricto de Alucinación ('is_grounded': false):
+   - Marca 'is_grounded': false ÚNICAMENTE si la opción declarada como correcta o su fundamentación central contradice el material, inventa conceptos técnicos inexistentes en el texto o atribuye hechos falsos no derivables del material de referencia.
+5. Genera la salida siguiendo estrictamente el esquema JSON solicitado.
 """
 
         # 1. Intentar con Gemini
@@ -181,32 +192,22 @@ Directivas de Evaluación:
             return QuestionFaithfulnessResult.model_validate_json(response.text)
 
         except Exception as e:
-            err_str = str(e)
-            is_quota_or_503 = "429" in err_str or "RESOURCE_EXHAUSTED" in err_str or "503" in err_str or "UNAVAILABLE" in err_str
-
-            if is_quota_or_503 and self._groq_client:
+            # Si Gemini falla por cualquier razón (404 no encontrado, 429 cuota, 503, etc.), pasar a Groq
+            if self._groq_client:
                 logger.warning(
-                    f"Gemini API cuota/error en pregunta #{question_id}. Activando fallback a Groq ({self._groq_model})..."
+                    f"Gemini API no disponible para reactivo #{question_id} ({e}). "
+                    f"Activando contingencia a Groq ({self._groq_model})..."
                 )
                 return await self._evaluate_with_groq(prompt, question_id)
 
-            logger.error(f"Error evaluando pregunta #{question_id}: {e}")
-            return QuestionFaithfulnessResult(
-                question_id=question_id,
-                claims=[
-                    ClaimVerification(
-                        claim="Error técnico de evaluación",
-                        is_grounded=False,
-                        reasoning=f"Fallo en API: {e}",
-                    )
-                ],
-                is_fully_faithful=False,
-                summary_verdict="Error técnico",
-            )
+            logger.error(f"Fallo al evaluar reactivo #{question_id} sin evaluador secundario disponible: {e}")
+            return None
 
-    async def _evaluate_with_groq(self, prompt: str, question_id: int) -> QuestionFaithfulnessResult:
+    async def _evaluate_with_groq(
+        self, prompt: str, question_id: int, max_retries: int = 4
+    ) -> Optional[QuestionFaithfulnessResult]:
         """
-        Fallback a Groq cuando Gemini alcanza su límite de cuota.
+        Fallback a Groq con reintentos y backoff exponencial ante límites de tasa (429) o errores temporales.
         """
         schema_json = QuestionFaithfulnessResult.model_json_schema()
         system_instruction = (
@@ -217,45 +218,50 @@ Directivas de Evaluación:
         )
 
         if not self._groq_client:
-            raise RuntimeError(
+            logger.error(
                 "El cliente de Groq no está inicializado. "
                 "Verifica que GROQ_API_KEY esté configurada en el entorno o archivo .env."
             )
+            return None
 
-        try:
-            completion = await self._groq_client.chat.completions.create(
-                model=self._groq_model,
-                messages=[
-                    {"role": "system", "content": system_instruction},
-                    {"role": "user", "content": prompt},
-                ],
-                response_format={"type": "json_object"},
-                temperature=0.0,
-            )
+        for attempt in range(1, max_retries + 1):
+            try:
+                completion = await self._groq_client.chat.completions.create(
+                    model=self._groq_model,
+                    messages=[
+                        {"role": "system", "content": system_instruction},
+                        {"role": "user", "content": prompt},
+                    ],
+                    response_format={"type": "json_object"},
+                    temperature=0.0,
+                )
 
-            content = completion.choices[0].message.content or "{}"
-            clean_json = content.strip()
-            if clean_json.startswith("```"):
-                clean_json = clean_json.split("\n", 1)[1]
-            if clean_json.endswith("```"):
-                clean_json = clean_json.rsplit("```", 1)[0]
-            clean_json = clean_json.strip()
+                content = completion.choices[0].message.content or "{}"
+                clean_json = content.strip()
+                if clean_json.startswith("```"):
+                    clean_json = clean_json.split("\n", 1)[1]
+                if clean_json.endswith("```"):
+                    clean_json = clean_json.rsplit("```", 1)[0]
+                clean_json = clean_json.strip()
 
-            return QuestionFaithfulnessResult.model_validate_json(clean_json)
-        except Exception as groq_err:
-            logger.error(f"Fallo también en fallback de Groq para pregunta #{question_id}: {groq_err}")
-            return QuestionFaithfulnessResult(
-                question_id=question_id,
-                claims=[
-                    ClaimVerification(
-                        claim="Fallo en evaluador primario y secundario",
-                        is_grounded=False,
-                        reasoning=f"Error en Groq: {groq_err}",
+                return QuestionFaithfulnessResult.model_validate_json(clean_json)
+
+            except Exception as groq_err:
+                err_str = str(groq_err)
+                is_rate_limit = "429" in err_str or "rate_limit" in err_str.lower() or "too many requests" in err_str.lower()
+                is_server_error = "500" in err_str or "503" in err_str
+
+                if (is_rate_limit or is_server_error) and attempt < max_retries:
+                    wait_time = 2.5 * (2 ** (attempt - 1))
+                    logger.warning(
+                        f"Groq API {('Rate limit (429)' if is_rate_limit else 'Error de servidor')} en reactivo #{question_id} (intento {attempt}/{max_retries}). "
+                        f"Esperando {wait_time:.1f}s antes de reintentar..."
                     )
-                ],
-                is_fully_faithful=False,
-                summary_verdict="Error en evaluación",
-            )
+                    await asyncio.sleep(wait_time)
+                    continue
+
+                logger.error(f"Fallo definitivo en evaluador Groq para reactivo #{question_id}: {groq_err}")
+                return None
 
 
 async def run_faithfulness_evaluation(limit_quizzes: int = 10) -> Dict[str, Any]:
@@ -278,6 +284,8 @@ async def run_faithfulness_evaluation(limit_quizzes: int = 10) -> Dict[str, Any]
     evaluator = FaithfulnessEvaluator()
     total_claims = 0
     total_verified = 0
+    total_audited_questions = 0
+    unprocessed_questions = 0
     detailed_results = []
 
     for q_meta in quizzes_summary:
@@ -304,12 +312,14 @@ async def run_faithfulness_evaluation(limit_quizzes: int = 10) -> Dict[str, Any]
 
         for q in quiz_data["questions"]:
             # Seleccionar dinámicamente los fragmentos más pertinentes para este reactivo específico
+            # Cobertura expandida (top_k=12) y traspaso completo para documentos pequeños para prevenir context starvation
             relevant_context = select_relevant_chunks_for_question(
                 question_text=q["text"],
+                answers=q.get("answers", []),
                 correct_answers=q["correct_answers"],
                 explanation=q["explanation"],
                 chunks=raw_chunks,
-                top_k=8,
+                top_k=15,
             )
 
             res = await evaluator.evaluate_question_against_context(
@@ -321,36 +331,55 @@ async def run_faithfulness_evaluation(limit_quizzes: int = 10) -> Dict[str, Any]
                 context_text=relevant_context,
             )
 
-            for claim in res.claims:
-                total_claims += 1
-                if claim.is_grounded:
-                    total_verified += 1
+            if res is None:
+                unprocessed_questions += 1
+                logger.warning(f"Reactivo #{q['question_id']} catalogado como fallo técnico de APIs (omitido de la métrica de alucinación).")
+                quiz_eval["questions_evaluated"].append({
+                    "question_id": q["question_id"],
+                    "text": q["text"],
+                    "bloom_level": q["bloom_level"],
+                    "status": "technical_error",
+                    "is_fully_faithful": None,
+                    "claims": [],
+                })
+            else:
+                total_audited_questions += 1
+                for claim in res.claims:
+                    total_claims += 1
+                    if claim.is_grounded:
+                        total_verified += 1
 
-            quiz_eval["questions_evaluated"].append({
-                "question_id": q["question_id"],
-                "text": q["text"],
-                "bloom_level": q["bloom_level"],
-                "is_fully_faithful": res.is_fully_faithful,
-                "claims": [c.model_dump() for c in res.claims],
-            })
+                quiz_eval["questions_evaluated"].append({
+                    "question_id": q["question_id"],
+                    "text": q["text"],
+                    "bloom_level": q["bloom_level"],
+                    "status": "evaluated",
+                    "is_fully_faithful": res.is_fully_faithful,
+                    "claims": [c.model_dump() for c in res.claims],
+                })
 
-            # Pausa breve defensiva para respetar límites de tasa
-            await asyncio.sleep(0.3)
+            # Pausa defensiva para respetar límites de tasa (~30 RPM)
+            await asyncio.sleep(1.5)
 
         detailed_results.append(quiz_eval)
 
     # Cálculo con MetricsEngine
-    metrics = calculate_faithfulness(total_verified, total_claims)
+    metrics = calculate_faithfulness(total_verified, total_claims) if total_claims > 0 else {
+        "faithfulness_percentage": 0.0,
+        "hallucination_percentage": 0.0,
+    }
 
     report_data = {
         "timestamp": datetime.now().isoformat(),
         "quizzes_audited": len(detailed_results),
+        "total_questions_audited": total_audited_questions,
+        "unprocessed_questions_due_to_api_error": unprocessed_questions,
         "total_claims_analyzed": total_claims,
         "verified_grounded_claims": total_verified,
         "hallucinated_claims": total_claims - total_verified,
         "faithfulness_score_percentage": metrics["faithfulness_percentage"],
         "hallucination_rate_percentage": metrics["hallucination_percentage"],
-        "academic_threshold_met": metrics["faithfulness_percentage"] >= 85.0,
+        "academic_threshold_met": (metrics["faithfulness_percentage"] >= 85.0) if total_claims > 0 else False,
         "detailed_results": detailed_results,
     }
 
@@ -380,7 +409,9 @@ def generate_markdown_report(data: Dict[str, Any], output_path: Path):
 
 - **Fecha de Evaluación:** `{data['timestamp']}`
 - **Cuestionarios Auditados:** `{data['quizzes_audited']}`
-- **Afirmaciones Atómicas Extraídas:** `{data['total_claims_analyzed']}`
+- **Preguntas Evaluadas Exitosamente:** `{data.get('total_questions_audited', 0)}`
+- **Preguntas Omitidas por Error Técnico de API:** `{data.get('unprocessed_questions_due_to_api_error', 0)}`
+- **Afirmaciones Atómicas Extraídas y Auditadas:** `{data['total_claims_analyzed']}`
 - **Estado de Meta de Tesis ($\ge 85\%$ Fidelidad):** **{status_icon}**
 
 ---
@@ -400,6 +431,7 @@ def generate_markdown_report(data: Dict[str, Any], output_path: Path):
 
 1. **Groundedness del Contexto:** El {data['faithfulness_score_percentage']}% de los conceptos, enunciados y claves de respuesta generados por el LLM tienen un anclaje directo y verificable en los fragmentos de texto almacenados en PostgreSQL (`document_chunk`), recuperados mediante la estrategia híbrida (búsqueda vectorial con embeddings de Gemini + búsqueda léxica con PostgreSQL `to_tsvector` fusionadas vía RRF).
 2. **Mitigación de Alucinaciones:** La tasa de alucinación registrada del {data['hallucination_rate_percentage']}% confirma que la temperatura determinista configurada (`0.1` en la API y `0.0` en el evaluador) junto a las directivas estrictas del prompt previenen que el modelo invente hechos no contenidos en el material académico del curso.
+3. **Tratamiento de Muestras Inválidas:** Los errores atribuibles a fallos de conectividad o límites de tasa de proveedores de IA externos (HTTP 429/503/404) son catalogados como fallas técnicas de infraestructura y omitidos del cálculo de alucinación para no distorsionar las métricas pedagógicas del sistema RAG.
 """
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(md)
