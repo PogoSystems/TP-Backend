@@ -11,15 +11,21 @@ jobs:
       - name: Deploy al VPS
         env:
           SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ secrets.GEMINI_MODEL }}
+          EMBEDDING_MODEL: ${{ secrets.EMBEDDING_MODEL }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GROQ_MODEL: ${{ secrets.GROQ_MODEL }}
         run: |
           mkdir -p ~/.ssh && chmod 700 ~/.ssh
-
-          # Escribimos la clave y limpiamos retornos de carro de Windows con tr -d '\r'
           echo "$SSH_KEY" | tr -d '\r' > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
-
-          # Registrar el host conocido
           echo '187.127.248.194 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHxR1PBNqWiEIbkO0EoFdXclwAOGT17rjnQ2/wDBJ+VL' > ~/.ssh/known_hosts
-
-          # Conexión al VPS
-          ssh -T -i ~/.ssh/id_ed25519 deploy-tp@187.127.248.194
+            
+          printf '%s=%s\n' \
+            GEMINI_API_KEY  "$GEMINI_API_KEY" \
+            GEMINI_MODEL    "$GEMINI_MODEL" \
+            EMBEDDING_MODEL "$EMBEDDING_MODEL" \
+            GROQ_API_KEY    "$GROQ_API_KEY" \
+            GROQ_MODEL      "$GROQ_MODEL" \
+          | ssh -T -i ~/.ssh/id_ed25519 deploy-tp@187.127.248.194
