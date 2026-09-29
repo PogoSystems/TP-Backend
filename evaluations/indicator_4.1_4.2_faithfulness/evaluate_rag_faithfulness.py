@@ -58,18 +58,18 @@ def select_relevant_chunks_for_question(
     correct_answers: List[str],
     explanation: str,
     chunks: List[Dict[str, Any]],
-    top_k: int = 15,
+    top_k: int = 30,
 ) -> str:
     """
     Selecciona los fragmentos de texto más relevantes para la pregunta específica.
-    Si el conjunto total de fragmentos es de 25 o menos, incluye todo el material disponible
-    para prevenir desabastecimiento de contexto (context starvation).
-    Para colecciones mayores, aplica coincidencia léxica ponderada extrayendo términos clave del reactivo.
+    Si el conjunto total de fragmentos es de 120 o menos (~35,000 tokens), incluye todo el material disponible
+    para aprovechar la amplia ventana de contexto del LLM y prevenir desabastecimiento (context starvation).
+    Para colecciones mayores, aplica coincidencia léxica ponderada alfanumérica extrayendo términos clave del reactivo.
     """
     if not chunks:
         return ""
 
-    if len(chunks) <= 25:
+    if len(chunks) <= 120:
         return "\n\n".join([
             f"[Fragmento #{c['chunk_index']} - {c['heading_path']}]:\n{c['content']}"
             for c in chunks
@@ -81,7 +81,10 @@ def select_relevant_chunks_for_question(
         "para", "como", "cual", "esta", "este", "entre", "sobre", "desde", "hacia", "pero",
         "donde", "cuando", "estos", "estas", "cualquier", "algun", "alguna", "tiene", "puede"
     }
-    keywords = {w for w in re.findall(r"\b[a-zA-ZáéíóúñÁÉÍÓÚÑ]{3,}\b", search_text) if w not in stopwords}
+    keywords = {
+        w for w in re.findall(r"\b[a-zA-Z0-9áéíóúñÁÉÍÓÚÑ._/-]{2,}\b", search_text)
+        if w not in stopwords
+    }
 
     scored_chunks = []
     for c in chunks:
@@ -161,7 +164,7 @@ Reactivo a Auditar:
 Directivas Metodológicas de Evaluación:
 1. Enfoque en la Clave Correcta y sus Fundamentos:
    - Descompón el reactivo en afirmaciones atómicas (claims) centradas en:
-     a) Las premisas del ENUNCIADO.
+     a) Las premisas conceptuales del ENUNCIADO (excluyendo el marco narrativo o hipotético de simulación).
      b) La afirmación que sostiene la OPCIÓN DECLARADA COMO CORRECTA.
      c) Los hechos didácticos que explican POR QUÉ la opción correcta es la adecuada.
 2. Tratamiento de Opciones Incorrectas (Distractores):
@@ -169,9 +172,11 @@ Directivas Metodológicas de Evaluación:
    - Si la explicación descarta un distractor apelando a distinciones conceptuales generales (ej. indicar que una opción pertenece a otra metodología, que no aplica al caso, o contrastarla con la clave), NO califiques ese argumento de descarte como alucinación si la clave correcta está respaldada.
 3. Paráfrasis y Deducciones Lógicas Válidas:
    - Si una afirmación sintetiza, parafrasea con sinónimos o deduce lógicamente información del contexto, clasifícala como 'is_grounded': true. NO exijas coincidencia léxica literal palabra por palabra.
-4. Criterio Estricto de Alucinación ('is_grounded': false):
+4. Escenarios Didácticos y Casos Prácticos Simulados (Niveles Bloom Apply, Analyze, Evaluate):
+   - Si la pregunta formula un caso, situación o empresa hipotética para evaluar la aplicación práctica de un concepto (ej. "Un equipo de desarrollo de software enfrenta retrasos...", "Una empresa busca optimizar su rotación..."), NO califiques las premisas narrativas de dicha situación simulada como alucinaciones si el principio, técnica o concepto teórico evaluado en la opción correcta y su justificación están respaldados en el material de referencia.
+5. Criterio Estricto de Alucinación ('is_grounded': false):
    - Marca 'is_grounded': false ÚNICAMENTE si la opción declarada como correcta o su fundamentación central contradice el material, inventa conceptos técnicos inexistentes en el texto o atribuye hechos falsos no derivables del material de referencia.
-5. Genera la salida siguiendo estrictamente el esquema JSON solicitado.
+6. Genera la salida siguiendo estrictamente el esquema JSON solicitado.
 """
 
         # 1. Intentar con Gemini
@@ -319,7 +324,7 @@ async def run_faithfulness_evaluation(limit_quizzes: int = 10) -> Dict[str, Any]
                 correct_answers=q["correct_answers"],
                 explanation=q["explanation"],
                 chunks=raw_chunks,
-                top_k=15,
+                top_k=30,
             )
 
             res = await evaluator.evaluate_question_against_context(
