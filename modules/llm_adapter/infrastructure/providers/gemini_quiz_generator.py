@@ -37,16 +37,54 @@ class GeminiQuizGenerator():
             for bloom_level in bloom_levels:
                 match bloom_level:
                     case BloomLevel.REMEMBER:
-                        focused_bloom_levels += "- Remember: retrieve and recognize previously learned information\n"
+                        focused_bloom_levels += (
+                            "- Remember: Test pure retrieval and recognition of explicit definitions, facts, acronyms, or specific terminology directly stated in the context.\n"
+                        )
                     case BloomLevel.UNDERSTAND:
-                        focused_bloom_levels += "- Understand: explain, interpret, compare, or summarize meaning\n"
+                        focused_bloom_levels += (
+                            "- Understand: The student must demonstrate conceptual comprehension by explaining cause-and-effect mechanisms, conceptual consequences, or interpreting relationships in their own words.\n"
+                            "  * POSITIVE PATTERNS:\n"
+                            "    - Present a conceptual cause-effect scenario: e.g. What is the fundamental theoretical consequence on project control and verification if bidirectional traceability is omitted during a requirements change?\n"
+                            "    - Contrast the underlying purpose of two related engineering concepts (e.g. explaining the distinction between verification 'building the product right' vs validation 'building the right product' in practice).\n"
+                            "    - Paraphrase and explain why a specific engineering principle or mechanism is necessary conceptually.\n"
+                            "  * STRICT BOUNDARIES (WHAT NOT TO DO):\n"
+                            "    - Do NOT ask '¿Cuál es la intención/propósito de [X]?' or '¿Cuál es la definición de [X]?'.\n"
+                            "    - Do NOT ask questions that can be answered by recalling a verbatim sentence under headers like 'Intención', 'Valor' or 'Definición'. That is 'Remember'.\n"
+                        )
                     case BloomLevel.APPLY:
-                        focused_bloom_levels += "- Apply: use learned knowledge to solve or handle a new but relevant situation\n"
+                        focused_bloom_levels += (
+                            "- Apply: The student must APPLY a rule, standard procedure, or protocol to determine the correct operational course of action in a concrete project scenario or incident.\n"
+                            "  * POSITIVE PATTERNS:\n"
+                            "    - Present a concrete, realistic project dilemma or operational incident (e.g. 'A client submits an emergency change to an already approved baseline LB-01 during a release cycle; according to Configuration Management procedures, what is the immediate procedural step the engineering team must take?').\n"
+                            "    - Classify an unencountered incident or scenario into the correct procedural category according to established criteria.\n"
+                            "    - Determine the appropriate sequence of procedural actions to handle a defect, change request, or process violation in a project scenario.\n"
+                            "  * STRICT BOUNDARIES (WHAT NOT TO DO):\n"
+                            "    - PURELY THEORETICAL / CONCEPTUAL: Do NOT include mathematical calculations, arithmetic, formulas, or numerical computations.\n"
+                            "    - Do NOT ask for the code, name, inputs, or outputs of a standard practice (e.g. do NOT ask 'What documents are inputs to RDM 3.3?' or 'Which practice code prescribes X?' - that is 'Remember').\n"
+                            "    - Do NOT ask which step contains a subtle architectural flaw or diagnose root causes (that is 'Analyze').\n"
+                            "    - Do NOT ask to critique or justify whether a framework/tool was the right choice (that is 'Evaluate').\n"
+                        )
                     case BloomLevel.ANALYZE:
-                        focused_bloom_levels += "- Analyze: examine information to identify relationships, differences, causes, components, or implications\n"
+                        focused_bloom_levels += (
+                            "- Analyze: The student must DECONSTRUCT a given technical scenario to diagnose the root cause of an issue, identify a structural defect, or examine implicit relationships between components.\n"
+                            "  * POSITIVE PATTERNS:\n"
+                            "    - Present a concrete multi-step scenario and ask to diagnose which specific step introduces fragility or violates an architectural principle.\n"
+                            "    - Present two contrasting test cases or designs and ask to identify the underlying structural reason why one succeeds where the other fails.\n"
+                            "  * STRICT BOUNDARIES (WHAT NOT TO DO):\n"
+                            "    - Do NOT ask for bullet points, lists of differences, or trade-offs that are explicitly stated word-for-word in the text (e.g. do not ask 'what is the audience difference between TDD and BDD'). The student must analyze an unencountered scenario.\n"
+                        )
                     case BloomLevel.EVALUATE:
-                        focused_bloom_levels += "- Evaluate: make or select a judgment using explicit criteria, evidence, or justification\n"
-            bloom_instruction = f"\nCRITICAL INSTRUCTION: Focus EXCLUSIVELY on these levels of Bloom's Taxonomy: {focused_bloom_levels}\n"
+                        focused_bloom_levels += (
+                            "- Evaluate: The student must JUDGE, CRITIQUE, or JUSTIFY a decision between competing, viable alternatives by weighing trade-offs and criteria (e.g. assessing whether a team should adopt BDD despite its maintenance overhead under specific project constraints, or critiquing an architectural proposal against quality standards).\n"
+                            "  * POSITIVE PATTERNS:\n"
+                            "    - Present a situation where two valid engineering strategies conflict (e.g. high upfront maintenance vs fast feedback) and ask the student to justify which one is superior given specific business constraints.\n"
+                            "    - Ask to critique an engineering proposal by assessing whether its stated benefits justify its documented trade-offs.\n"
+                        )
+            bloom_instruction = (
+                f"\nCRITICAL INSTRUCTION: Focus EXCLUSIVELY on these levels of Bloom's Taxonomy and their operational definitions:\n"
+                f"{focused_bloom_levels}\n"
+                "Ensure that each question's actual mental task truly aligns with its assigned Bloom level, avoiding superficial phrasing.\n"
+            )
         prompt = f"""
 You are an expert educator. Generate exactly {num_questions} quiz questions in Spanish.
 
