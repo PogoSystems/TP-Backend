@@ -60,10 +60,11 @@ The reference material contains:
 Every question must:
 - Align with at least one syllabus objective or competency.
 - Be answerable from the provided course content.
-- Match the specified Bloom cognitive level. if specified.
+- Match the specified Bloom cognitive level, if specified.
 - Test the student's knowledge rather than the ability to recall the wording of the source.
 - Avoid mentioning the reference material, documents, or text.
 - Use only information supported by the provided material.
+- STRICT FIDELITY RULE: Use ONLY factual information explicitly contained in the reference material. If a concept, author, standard, acronym, or methodology is ONLY named as a bullet point, list item, or title WITHOUT an explicit conceptual explanation or definition in the reference material, DO NOT invent or expand its details, components, or definitions using external knowledge. Generate questions exclusively about topics whose core concepts and explanations are present in the provided text.
 
 Question types: Multiple Choice or True/False.
 
