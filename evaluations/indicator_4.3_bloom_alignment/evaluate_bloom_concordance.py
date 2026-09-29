@@ -7,6 +7,7 @@ ejecuta una auditoría ciega con el evaluador pedagógico y calcula:
 - Macro F1-Score (Meta de Tesis: >= 0.75)
 """
 
+import argparse
 import asyncio
 from datetime import datetime
 import json
@@ -15,10 +16,19 @@ from pathlib import Path
 import sys
 from typing import Any, Dict, List, Optional
 
-# Asegurar path raíz en sys.path
+# Asegurar codificación UTF-8 en stdout/stderr en entornos Windows
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
+
+# Asegurar path raíz y directorio local en sys.path
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+CURRENT_DIR = Path(__file__).resolve().parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
+if str(CURRENT_DIR) not in sys.path:
+    sys.path.insert(0, str(CURRENT_DIR))
 
 from core.settings import settings
 from evaluations.shared.db_sample_extractor import DbSampleExtractor
@@ -26,7 +36,7 @@ from evaluations.shared.metrics_engine import (
     calculate_classification_metrics,
     calculate_confusion_matrix,
 )
-from evaluations.indicator_2_bloom_alignment.bloom_pedagogical_evaluator import (
+from bloom_pedagogical_evaluator import (
     BLOOM_LEVELS,
     BloomPedagogicalEvaluator,
 )
@@ -42,30 +52,65 @@ logger = logging.getLogger("Indicator2_Bloom")
 SAMPLE_ACADEMIC_CONTEXT = """
 El Desarrollo Guiado por Comportamiento (BDD - Behavior-Driven Development) es una metodología ágil 
 que sintetiza las prácticas de Test-Driven Development (TDD) y Domain-Driven Design (DDD). 
-Su objetivo central es mejorar la comunicación entre los stakeholders del negocio y el equipo técnico mediante un lenguaje ubicuo compartido (Gherkin: Given, When, Then). 
+Su objetivo central es mejorar la comunicación entre los stakeholders del negocio y el equipo técnico mediante un lenguaje ubicuo compartido (Gherkin: Given, When, Then).
 
-En BDD, los criterios de aceptación de una Historia de Usuario se formalizan como escenarios ejecutables. 
-Diferencia fundamental: Mientras que las pruebas unitarias tradicionales de TDD verifican el estado o la implementación interna de una clase (caja blanca/gris), 
-los tests de BDD verifican comportamientos observables desde la perspectiva del usuario final (caja negra).
+Reglas Estructurales de la Sintaxis Gherkin:
+1. 'Given' (Dado): Establece el contexto previo o precondición del sistema (ejemplo: 'Dado que un cliente tiene un saldo inicial de $100').
+2. 'When' (Cuando): Especifica la acción detonante ejecutada por el actor (ejemplo: 'Cuando el cliente transfiere $40 a otra cuenta').
+3. 'Then' (Entonces): Declara el resultado observable esperado o postcondición verificable (ejemplo: 'Entonces el saldo remanente debe ser de $60').
+4. 'And' / 'But': Enlazan precondiciones o postcondiciones adicionales.
 
-Principales ventajas:
-1. Documentación viva siempre sincronizada con el código ejecutable.
-2. Reducción de malentendidos en los requerimientos funcionales antes de iniciar la codificación.
-3. Facilita la automatización de pruebas de extremo a extremo (E2E) con herramientas como Cucumber o Behave.
+Diferencias Arquitectónicas Fundamentales (TDD vs BDD):
+- Alcance: Las pruebas unitarias tradicionales de TDD verifican el estado interno o la lógica algorítmica de una clase (caja blanca/gris), mientras que los escenarios de BDD verifican comportamientos observables desde la perspectiva del usuario o del negocio (caja negra).
+- Audiencia: TDD está orientado exclusivamente a desarrolladores; BDD involucra a Product Owners, QA y desarrolladores ('Los Tres Amigos').
+- Automatización: Los pasos de Gherkin se mapean a código mediante 'Step Definitions' (Glue Code) usando frameworks como Cucumber o Behave.
 
-Limitaciones y riesgos:
-1. Curva de aprendizaje y costo de mantenimiento de las capas de glue code (definición de pasos).
-2. Riesgo de crear escenarios frágiles si se acoplan a detalles de la interfaz gráfica en lugar de reglas del negocio.
+Criterios de Evaluación y Buenas Prácticas:
+1. Regla de Declaratividad: Un escenario debe describir 'QUÉ' hace el sistema según las reglas del negocio, jamás 'CÓMO' lo hace a nivel de interfaz de usuario (anti-patrón: hacer clic en el botón con id #submit-btn). Los escenarios acoplados a la UI son frágiles y de alto costo de mantenimiento.
+2. Independencia y Atomicidad: Cada escenario debe ser autónomo y poder ejecutarse en cualquier orden sin depender del estado dejado por un escenario previo.
+3. Trade-offs de Adopción: BDD introduce una sobrecarga inicial de mantenimiento del pegamento (glue code). Es altamente rentable en dominios complejos con reglas de negocio cambiantes, pero es contraproducente en microservicios puramente matemáticos o algoritmos de bajo nivel donde TDD unitario puro es más eficiente.
 """
 
 
-async def generate_balanced_bloom_samples(questions_per_level: int = 3) -> List[Dict[str, Any]]:
+RESOURCE_FILE = Path(__file__).resolve().parent / "Resource.md"
+
+
+def get_academic_context(questions_per_level: int, custom_file: Optional[str] = None) -> str:
+    """
+    Retorna el contexto académico de referencia:
+    - Si se especifica custom_file y existe, lo carga.
+    - Si questions_per_level > 5 y Resource.md existe, carga el material curricular real y extenso (21KB, CMMI y Métricas).
+    - En caso contrario, usa SAMPLE_ACADEMIC_CONTEXT (resumen compacto de BDD).
+    """
+    if custom_file:
+        path = Path(custom_file)
+        if path.exists():
+            logger.info(f"Cargando contexto académico personalizado desde: {path.resolve()}")
+            return path.read_text(encoding="utf-8")
+        logger.warning(f"Archivo personalizado '{custom_file}' no encontrado. Evaluando alternativas...")
+
+    if questions_per_level > 5 and RESOURCE_FILE.exists():
+        logger.info(
+            f"Escala amplia ({questions_per_level} preguntas/nivel solicitadas). "
+            f"Cargando material curricular real desde {RESOURCE_FILE.name} (CMMI, Requerimientos y Métricas de Calidad)..."
+        )
+        return RESOURCE_FILE.read_text(encoding="utf-8")
+
+    return SAMPLE_ACADEMIC_CONTEXT
+
+
+async def generate_balanced_bloom_samples(
+    questions_per_level: int = 3,
+    context_file: Optional[str] = None,
+) -> List[Dict[str, Any]]:
     """
     Genera un conjunto balanceado de preguntas para cada uno de los 5 niveles cognitivos de Bloom
     utilizando el generador oficial de cuestionarios del sistema.
     """
     client = genai.Client(api_key=settings.GEMINI_API_KEY)
     quiz_generator = GeminiQuizGenerator(client=client)
+
+    context_text = get_academic_context(questions_per_level, custom_file=context_file)
 
     generated_samples = []
 
@@ -81,7 +126,7 @@ async def generate_balanced_bloom_samples(questions_per_level: int = 3) -> List[
         logger.info(f"Generando lote de prueba para nivel '{level_str}' ({questions_per_level} preguntas)...")
         try:
             quiz = await quiz_generator.generate_quiz_from_context(
-                context_text=SAMPLE_ACADEMIC_CONTEXT,
+                context_text=context_text,
                 num_questions=questions_per_level,
                 bloom_levels=[bloom_enum],
             )
@@ -105,6 +150,8 @@ async def run_bloom_concordance_evaluation(
     use_db_samples: bool = True,
     generate_synthetic_if_empty: bool = True,
     synthetic_samples_per_level: int = 4,
+    batch_size: int = 20,
+    context_file: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Ejecuta el protocolo de validación de concordancia cognitiva de Bloom.
@@ -128,10 +175,13 @@ async def run_bloom_concordance_evaluation(
                     "correct_answers": q["correct_answers"],
                 })
 
-    # 2. Generar muestra balanceada complementaria o principal si la BD está vacía
+    # 2. Generar muestra balanceada complementaria o principal si la BD está vacía o se ejecuta en modo live
     if not questions_pool and generate_synthetic_if_empty:
-        logger.info("Base de datos sin reactivos suficientes. Generando muestra balanceada multiclase...")
-        synthetic_pool = await generate_balanced_bloom_samples(questions_per_level=synthetic_samples_per_level)
+        logger.info(f"Modo en memoria activado. Generando lote balanceado ({synthetic_samples_per_level} preguntas por nivel, total: {synthetic_samples_per_level * 5})...")
+        synthetic_pool = await generate_balanced_bloom_samples(
+            questions_per_level=synthetic_samples_per_level,
+            context_file=context_file,
+        )
         questions_pool.extend(synthetic_pool)
 
     if not questions_pool:
@@ -145,37 +195,38 @@ async def run_bloom_concordance_evaluation(
     y_evaluated: List[str] = []
     evaluations_log: List[Dict[str, Any]] = []
 
-    for idx, item in enumerate(questions_pool, start=1):
-        target = item["target_bloom_level"].lower()
-        if target not in BLOOM_LEVELS:
-            continue
+    batch_size = max(1, batch_size)
+    for start_idx in range(0, len(questions_pool), batch_size):
+        batch = questions_pool[start_idx : start_idx + batch_size]
+        end_idx = min(start_idx + batch_size, len(questions_pool))
+        logger.info(f"Evaluando lote de reactivos #{start_idx + 1} a #{end_idx} de {len(questions_pool)}...")
 
-        logger.info(f"Evaluando reactivo #{idx}/{len(questions_pool)} [Objetivo: {target}]...")
-        result = await evaluator.evaluate_question_bloom_level(
-            question_text=item["text"],
-            answers=item["answers"],
-            explanation=item["explanation"],
-        )
+        batch_results = await evaluator.evaluate_batch_bloom_level(batch)
 
-        if result is None:
-            logger.warning(f"Reactivo #{idx} omitido por error técnico de conectividad o cuota de API.")
-            continue
+        for q_item, result in zip(batch, batch_results):
+            target = q_item["target_bloom_level"].lower()
+            if target not in BLOOM_LEVELS:
+                continue
 
-        y_target.append(target)
-        y_evaluated.append(result.cognitive_level)
+            if result is None:
+                logger.warning("Reactivo omitido por error técnico de conectividad o cuota de API.")
+                continue
 
-        evaluations_log.append({
-            "index": idx,
-            "question_text": item["text"],
-            "target_level": target,
-            "evaluated_level": result.cognitive_level,
-            "is_concordant": target == result.cognitive_level,
-            "confidence": result.confidence,
-            "reasoning": result.cognitive_demand_analysis,
-        })
+            y_target.append(target)
+            y_evaluated.append(result.cognitive_level)
 
-        # Pausa defensiva para respetar límites de tasa (~30 RPM)
-        await asyncio.sleep(1.5)
+            evaluations_log.append({
+                "index": len(y_target),
+                "question_text": q_item["text"],
+                "target_level": target,
+                "evaluated_level": result.cognitive_level,
+                "is_concordant": target == result.cognitive_level,
+                "confidence": result.confidence,
+                "reasoning": result.cognitive_demand_analysis,
+            })
+
+        # Pausa defensiva breve entre lotes para respetar cuotas de API
+        await asyncio.sleep(1.0)
 
     # 3. Cálculo de Métricas Matemáticas
     classification_results = calculate_classification_metrics(y_target, y_evaluated, BLOOM_LEVELS)
@@ -195,6 +246,20 @@ async def run_bloom_concordance_evaluation(
         "academic_threshold_met": academic_threshold_met,
         "evaluations_log": evaluations_log,
     }
+
+    # Resumen en consola para visualización en vivo
+    print("\n" + "=" * 65)
+    print("[RESULTADOS DE AUDITORIA] - TAXONOMIA DE BLOOM")
+    print("=" * 65)
+    print(f"Total reactivos evaluados: {len(y_target)}")
+    print(f"Macro F1-Score:           {macro_f1:.4f}  (Meta: >= 0.7500)")
+    print(f"Accuracy Global:          {classification_results['accuracy'] * 100:.2f}%")
+    print(f"Estado de la Meta:        {'[OK] META ALCANZADA' if academic_threshold_met else '[ALERTA] INFERIOR AL UMBRAL'}")
+    print("-" * 65)
+    print("Desglose por Nivel Cognitivo:")
+    for level, metrics in classification_results["per_class"].items():
+        print(f"  - {level.capitalize():<12} | Precision: {metrics['precision']:.4f} | Recall: {metrics['recall']:.4f} | F1: {metrics['f1_score']:.4f} | Soporte: {metrics['support']}")
+    print("=" * 65 + "\n")
 
     # 4. Guardar Reportes
     reports_dir = Path(__file__).parent / "reports"
@@ -288,4 +353,39 @@ def generate_markdown_report(data: Dict[str, Any], output_path: Path):
 
 
 if __name__ == "__main__":
-    asyncio.run(run_bloom_concordance_evaluation())
+    parser = argparse.ArgumentParser(description="Auditoría de concordancia cognitiva de Bloom")
+    parser.add_argument(
+        "--live",
+        action="store_true",
+        help="Generar nuevo lote balanceado de reactivos en memoria sin consultar ni persistir en BD",
+    )
+    parser.add_argument(
+        "--samples-per-level",
+        type=int,
+        default=5,
+        help="Número de reactivos por nivel cognitivo para la generación en memoria (default: 5)",
+    )
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=20,
+        help="Número de reactivos por lote para la evaluación con el juez pedagógico (default: 20)",
+    )
+    parser.add_argument(
+        "--context-file",
+        type=str,
+        default=None,
+        help="Ruta opcional a un archivo .md personalizado con material académico de referencia",
+    )
+    args = parser.parse_args()
+
+    use_db = not args.live
+    asyncio.run(
+        run_bloom_concordance_evaluation(
+            use_db_samples=use_db,
+            generate_synthetic_if_empty=True,
+            synthetic_samples_per_level=args.samples_per_level,
+            batch_size=args.batch_size,
+            context_file=args.context_file,
+        )
+    )

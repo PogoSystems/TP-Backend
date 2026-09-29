@@ -1,0 +1,1004 @@
+{
+  "timestamp": "2026-09-29T18:17:17.864050",
+  "total_questions_evaluated": 102,
+  "macro_f1_score": 0.9018,
+  "weighted_f1_score": 0.9015,
+  "overall_accuracy": 0.902,
+  "per_class_metrics": {
+    "remember": {
+      "precision": 0.8696,
+      "recall": 1.0,
+      "f1_score": 0.9302,
+      "support": 20
+    },
+    "understand": {
+      "precision": 0.8,
+      "recall": 0.9524,
+      "f1_score": 0.8696,
+      "support": 21
+    },
+    "apply": {
+      "precision": 0.9048,
+      "recall": 0.9048,
+      "f1_score": 0.9048,
+      "support": 21
+    },
+    "analyze": {
+      "precision": 1.0,
+      "recall": 0.9,
+      "f1_score": 0.9474,
+      "support": 20
+    },
+    "evaluate": {
+      "precision": 1.0,
+      "recall": 0.75,
+      "f1_score": 0.8571,
+      "support": 20
+    }
+  },
+  "confusion_matrix": [
+    [
+      20,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1,
+      20,
+      0,
+      0,
+      0
+    ],
+    [
+      2,
+      0,
+      19,
+      0,
+      0
+    ],
+    [
+      0,
+      2,
+      0,
+      18,
+      0
+    ],
+    [
+      0,
+      3,
+      2,
+      0,
+      15
+    ]
+  ],
+  "labels": [
+    "remember",
+    "understand",
+    "apply",
+    "analyze",
+    "evaluate"
+  ],
+  "academic_threshold_met": true,
+  "evaluations_log": [
+    {
+      "index": 1,
+      "question_text": "¿Cuál es la intención principal de la Gestión y Desarrollo de Requerimientos?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo solicita la intención principal de un concepto ('Gestión y Desarrollo de Requerimientos'). La respuesta es una recuperación directa de una definición o propósito clave presentado en el material, sin requerir interpretación o aplicación a un nuevo contexto."
+    },
+    {
+      "index": 2,
+      "question_text": "¿Qué valor aporta la Gestión y Desarrollo de Requerimientos?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pregunta por el valor que aporta un concepto. Esto implica la recuperación de una característica o beneficio específico y directo del material, sin necesidad de análisis o inferencia."
+    },
+    {
+      "index": 3,
+      "question_text": "Según el ciclo de vida de desarrollo presentado, ¿cuál es la primera fase?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pide identificar la primera fase de un ciclo de vida de desarrollo. Esto es una tarea de recuperación de información secuencial o posicional directamente del material de estudio."
+    },
+    {
+      "index": 4,
+      "question_text": "¿Qué entregable se genera en la fase de Análisis del ciclo de vida de desarrollo?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo solicita un entregable específico asociado a una fase particular del ciclo de vida. La tarea es recordar una asociación directa entre dos elementos presentados en el material."
+    },
+    {
+      "index": 5,
+      "question_text": "¿Qué entregable se asocia con la fase de Diseño en el ciclo de vida de desarrollo?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "Similar al reactivo anterior, se pide un entregable asociado a una fase específica ('Diseño'). Es una tarea de recuperación de una correspondencia directa."
+    },
+    {
+      "index": 6,
+      "question_text": "¿Qué entregable se produce en la fase de Construcción del ciclo de vida de desarrollo?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo requiere identificar un entregable producido en una fase concreta ('Construcción'). Es una recuperación de información factual y directa."
+    },
+    {
+      "index": 7,
+      "question_text": "¿Cuál de los siguientes es un entregable de la fase de Control de Calidad?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "Se solicita un entregable de la fase de 'Control de Calidad'. La demanda cognitiva es la recuperación de un dato específico y explícito del material."
+    },
+    {
+      "index": 8,
+      "question_text": "Según el ciclo de vida de desarrollo, ¿quién debe comunicar el pase a producción?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pregunta por el rol responsable de una acción específica ('comunicar el pase a producción') dentro de un proceso. Es una recuperación de un dato factual sobre responsabilidades."
+    },
+    {
+      "index": 9,
+      "question_text": "¿Qué entregable se asocia con la práctica RDM 2.2, que consiste en transformar las necesidades en requisitos priorizados?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "Se pide el entregable asociado a una práctica específica (RDM 2.2) y su descripción. Aunque hay una descripción, la tarea es recordar el nombre del entregable directamente vinculado a esa práctica."
+    },
+    {
+      "index": 10,
+      "question_text": "Según la práctica RDM 3.3, ¿qué herramienta se utiliza para la asignación de especificaciones a los programadores?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo solicita una herramienta específica utilizada para una tarea dentro de una práctica (RDM 3.3). Es una recuperación directa de un nombre de herramienta."
+    },
+    {
+      "index": 11,
+      "question_text": "¿Qué tipo de pruebas se mencionan explícitamente para validar los requisitos en la práctica RDM 3.7?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "Se pregunta por los tipos de pruebas mencionados explícitamente para validar requisitos en una práctica (RDM 3.7). La tarea es recordar una lista de elementos directamente citados en el material."
+    },
+    {
+      "index": 12,
+      "question_text": "¿Cuál es la intención de la Gestión de Riesgos?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "Similar al reactivo #1, se solicita la intención de la 'Gestión de Riesgos'. Es una recuperación directa de la definición o propósito principal del concepto."
+    },
+    {
+      "index": 13,
+      "question_text": "En el contexto de la Gestión de Riesgos, ¿cómo se define el término \"riesgo\"?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pide la definición del término 'riesgo' en un contexto dado. Es una tarea de recuperación de una definición textual o conceptual directa."
+    },
+    {
+      "index": 14,
+      "question_text": "En el contexto de la Gestión de Riesgos, ¿cómo se define el término \"oportunidad\"?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "Similar al reactivo #13, se solicita la definición del término 'oportunidad'. Es una recuperación directa de una definición explícita."
+    },
+    {
+      "index": 15,
+      "question_text": "¿Cuáles son los parámetros de evaluación para analizar riesgos u oportunidades según la práctica RSK 3.2?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pregunta por los parámetros de evaluación para analizar riesgos u oportunidades según una práctica (RSK 3.2). La tarea es recordar una lista de parámetros específicos."
+    },
+    {
+      "index": 16,
+      "question_text": "¿Qué tipos de estrategias de gestión de riesgos se mencionan en la práctica RSK 3.4?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "Se solicita recordar los tipos de estrategias de gestión de riesgos mencionados en una práctica (RSK 3.4). Es una tarea de recuperación de una lista de categorías o tipos."
+    },
+    {
+      "index": 17,
+      "question_text": "¿Cuál es la intención de la Gestión de Configuración?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pregunta por la intención de la 'Gestión de Configuración'. Es una recuperación directa de la definición o propósito principal del concepto, tal como se presenta en el material."
+    },
+    {
+      "index": 18,
+      "question_text": "¿Qué herramientas se mencionan explícitamente para el control de versiones en la Gestión de Configuración?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "Se pide identificar herramientas específicas para el control de versiones dentro de la Gestión de Configuración. La tarea es recordar nombres de herramientas explícitamente mencionadas."
+    },
+    {
+      "index": 19,
+      "question_text": "¿Cuál es el valor de la Integración de Producto?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pregunta por el valor de la 'Integración de Producto'. Es una recuperación directa de un beneficio o característica clave del concepto, sin necesidad de interpretación."
+    },
+    {
+      "index": 20,
+      "question_text": "¿Cuál es el valor del Desarrollo de Activos de Proceso?",
+      "target_level": "remember",
+      "evaluated_level": "remember",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "Similar al reactivo #19, se solicita el valor del 'Desarrollo de Activos de Proceso'. La demanda cognitiva es la recuperación de un beneficio o característica directamente establecida en el material."
+    },
+    {
+      "index": 21,
+      "question_text": "¿Cuál es la consecuencia conceptual fundamental si se omite la trazabilidad bidireccional entre los requisitos y los productos de trabajo durante un cambio de requisito?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo solicita identificar la 'consecuencia conceptual fundamental' de omitir la trazabilidad bidireccional. Esto requiere que el estudiante comprenda el propósito y el mecanismo de la trazabilidad, y pueda predecir el efecto negativo de su ausencia, lo cual se alinea con la capacidad de explicar el 'porqué' o 'para qué' de un principio."
+    },
+    {
+      "index": 22,
+      "question_text": "¿Por qué la validación y revisión del documento de análisis por parte del usuario final es crucial para desarrollar un entendimiento común de los requisitos con los proveedores?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "La pregunta indaga 'por qué' la validación por el usuario final es crucial. Esto exige que el estudiante explique la razón subyacente, el propósito y el beneficio de esta práctica para lograr un entendimiento común, lo cual es una interpretación de principios y mecanismos teóricos."
+    },
+    {
+      "index": 23,
+      "question_text": "¿Cómo contribuye conceptualmente un proceso de calidad interna robusto, que incluye la revisión par, a asegurar que los planes y productos de trabajo del proyecto permanezcan coherentes con los requisitos?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pide explicar 'cómo contribuye conceptualmente' un proceso de calidad interna. Esto requiere que el estudiante demuestre comprensión del mecanismo por el cual la revisión par asegura la coherencia, lo cual implica explicar el 'para qué' de un proceso."
+    },
+    {
+      "index": 24,
+      "question_text": "Explique cómo el uso de diagramas UML en el documento de diseño, basados en el análisis, ayuda a estructurar los requisitos a un nivel sistémico para preparar las bases para la programación.",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "La pregunta solicita 'explicar cómo' los diagramas UML ayudan a estructurar requisitos. Esto requiere que el estudiante interprete la función y el propósito de una herramienta (UML) en un contexto específico (preparación para la programación), lo cual es una explicación de un mecanismo."
+    },
+    {
+      "index": 25,
+      "question_text": "¿Cuál es la implicación conceptual de gestionar los requisitos no descritos a través de un proceso de gestión de cambios para asegurar que sean necesarios y suficientes?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pregunta por la 'implicación conceptual' de gestionar requisitos no descritos. Esto requiere que el estudiante comprenda la consecuencia o el resultado de aplicar un proceso de gestión de cambios, lo cual es una predicción de causa y efecto o la explicación del 'para qué'."
+    },
+    {
+      "index": 26,
+      "question_text": "¿Por qué son esenciales tanto las verificaciones técnicas (JUNIT, SONARQUBE) como las validaciones funcionales contra los criterios de aceptación del cliente para asegurar que la solución funcionará según lo previsto en el entorno de destino?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "La pregunta indaga 'por qué' tanto las verificaciones técnicas como las validaciones funcionales son esenciales. Esto requiere que el estudiante explique el propósito y la contribución específica de cada tipo de prueba para asegurar el funcionamiento de la solución, lo cual es una interpretación de principios y mecanismos."
+    },
+    {
+      "index": 27,
+      "question_text": "¿Cómo el proceso proactivo de identificación y gestión de incertidumbres (tanto riesgos como oportunidades) aumenta conceptualmente la probabilidad de alcanzar los objetivos del proyecto?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo solicita explicar 'cómo' la gestión proactiva de incertidumbres aumenta la probabilidad de éxito. Esto requiere que el estudiante comprenda el mecanismo por el cual la mitigación de riesgos y la capitalización de oportunidades impactan los objetivos, lo cual es una explicación de causa y efecto."
+    },
+    {
+      "index": 28,
+      "question_text": "¿Por qué analizar los riesgos basándose en su exposición (derivada de la probabilidad y el impacto) es un paso fundamental en la gestión efectiva de riesgos?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "La pregunta indaga 'por qué' analizar riesgos por exposición es fundamental. Esto exige que el estudiante explique la razón subyacente, el propósito y el beneficio de esta técnica para la priorización y optimización de la gestión de riesgos, lo cual es una interpretación de principios."
+    },
+    {
+      "index": 29,
+      "question_text": "¿Cuál es la diferencia conceptual subyacente en el enfoque de gestión para los riesgos 'vigentes' versus las oportunidades en el contexto de una estrategia de gestión de riesgos?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pide identificar la 'diferencia conceptual subyacente' en la gestión de riesgos vs. oportunidades. Esto requiere que el estudiante compare y contraste los enfoques y objetivos de gestión para cada uno, lo cual es una forma de interpretar principios y mecanismos."
+    },
+    {
+      "index": 30,
+      "question_text": "¿Cómo la gestión de la integridad de los productos de trabajo, a través de la identificación de la configuración, el control de versiones, el control de cambios y las auditorías, reduce conceptualmente la pérdida de trabajo y aumenta la capacidad de entregar la versión correcta de la solución al cliente?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "La pregunta solicita explicar 'cómo' la gestión de la integridad de productos de trabajo reduce la pérdida y aumenta la capacidad de entrega. Esto requiere que el estudiante comprenda el mecanismo combinado de varias prácticas (identificación, control de versiones, etc.) para lograr estos resultados, lo cual es una explicación de causa y efecto."
+    },
+    {
+      "index": 31,
+      "question_text": "¿Por qué mantener la trazabilidad de los cambios en los diversos entregables del proyecto es un beneficio clave de utilizar un sistema robusto de gestión de configuración y cambios?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pregunta 'por qué' mantener la trazabilidad de cambios es un beneficio clave. Esto exige que el estudiante explique la razón subyacente, el propósito y las ventajas de la trazabilidad para la auditoría y resolución de problemas, lo cual es una interpretación de principios."
+    },
+    {
+      "index": 32,
+      "question_text": "¿Cuál es el propósito conceptual principal de realizar auditorías de configuración por parte del equipo de procesos?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "La pregunta indaga el 'propósito conceptual principal' de las auditorías de configuración. Esto requiere que el estudiante identifique el objetivo fundamental de esta actividad, lo cual es una explicación del 'para qué' de un proceso."
+    },
+    {
+      "index": 33,
+      "question_text": "¿Cómo la integración y entrega exitosa de una solución que aborda los requisitos de funcionalidad y calidad conduce conceptualmente a una mayor satisfacción del cliente?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo solicita explicar 'cómo' la integración y entrega exitosa conduce a la satisfacción del cliente. Esto requiere que el estudiante comprenda la relación causal entre el cumplimiento de requisitos de funcionalidad/calidad y la generación de confianza/satisfacción, lo cual es una explicación de causa y efecto."
+    },
+    {
+      "index": 34,
+      "question_text": "¿Por qué es conceptualmente crítico confirmar que cada componente está correctamente identificado y opera según sus requisitos y diseño *antes* de la integración?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "La pregunta indaga 'por qué' es crítico confirmar componentes antes de la integración. Esto exige que el estudiante explique la razón subyacente, el beneficio preventivo y la importancia de evitar la propagación de defectos, lo cual es una interpretación de principios y consecuencias."
+    },
+    {
+      "index": 35,
+      "question_text": "Explique cómo tanto la verificación técnica (JUNIT, SONARQUBE) como la validación funcional contra los criterios de aceptación contribuyen a asegurar que los componentes integrados cumplen con los requisitos de la solución y el diseño.",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pide 'explicar cómo' la verificación técnica y la validación funcional contribuyen a asegurar el cumplimiento de requisitos. Esto requiere que el estudiante comprenda los roles distintos y complementarios de cada actividad en la garantía de calidad, lo cual es una interpretación de principios y mecanismos."
+    },
+    {
+      "index": 36,
+      "question_text": "¿Cuál es la razón conceptual para revisar y mantener actualizadas las descripciones de interfaz o conexión para cobertura, integridad y coherencia a lo largo de todo el ciclo de vida de la solución?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "La pregunta solicita la 'razón conceptual' para revisar y mantener actualizadas las descripciones de interfaz. Esto requiere que el estudiante explique el propósito fundamental y la importancia de esta práctica para la estabilidad y evolución de la solución, lo cual es una interpretación de principios."
+    },
+    {
+      "index": 37,
+      "question_text": "¿Cómo el desarrollo y mantenimiento de activos de proceso actualizados permite conceptualmente a una organización comprender y repetir un desempeño exitoso?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo pregunta 'cómo' el desarrollo y mantenimiento de activos de proceso permite repetir el éxito. Esto requiere que el estudiante comprenda el mecanismo por el cual la documentación de prácticas y estándares facilita la estandarización y mejora continua, lo cual es una explicación de causa y efecto."
+    },
+    {
+      "index": 38,
+      "question_text": "¿Por qué evaluar los componentes del proyecto y los procesos del cliente para determinar un estándar único es conceptualmente importante al decidir qué activos de proceso se necesitarán?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "La pregunta indaga 'por qué' evaluar componentes y procesos del cliente para un estándar único es importante. Esto exige que el estudiante explique la razón subyacente, el beneficio de la coherencia e interoperabilidad, lo cual es una interpretación de principios."
+    },
+    {
+      "index": 39,
+      "question_text": "¿Cuál es el beneficio conceptual de desarrollar y mantener una arquitectura de proceso que describe la estructura de los procesos organizacionales (gestión, ingeniería, soporte) y los activos de proceso?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "El reactivo solicita el 'beneficio conceptual' de desarrollar y mantener una arquitectura de proceso. Esto requiere que el estudiante comprenda el propósito y la ventaja de tener una visión estructurada de los procesos organizacionales, lo cual es una explicación del 'para qué'."
+    },
+    {
+      "index": 40,
+      "question_text": "¿Cómo los estándares de medición y análisis organizacionales, puestos a disposición para su uso, contribuyen conceptualmente a comprender la utilización de los activos de procesos?",
+      "target_level": "understand",
+      "evaluated_level": "understand",
+      "is_concordant": true,
+      "confidence": 0.9,
+      "reasoning": "La pregunta solicita 'cómo' los estándares de medición y análisis contribuyen a comprender la utilización de activos de proceso. Esto requiere que el estudiante comprenda el mecanismo por el cual estos estándares facilitan la recopilación, evaluación y toma de decisiones para la mejora, lo cual es una explicación de causa y efecto."
+    },
+    {
+      "index": 41,
+      "question_text": "¿Cuál es el valor fundamental de la Gestión y Desarrollo de Requerimientos en un proyecto de software?",
+      "target_level": "understand",
+      "evaluated_level": "remember",
+      "is_concordant": false,
+      "confidence": 0.9,
+      "reasoning": "El estudiante debe recordar el propósito o valor principal de la Gestión y Desarrollo de Requerimientos, que es una definición clave del concepto. No se requiere interpretación profunda ni aplicación a un escenario complejo, sino la recuperación de un hecho fundamental."
+    },
+    {
+      "index": 42,
+      "question_text": "Un usuario final revisa el Documento de Análisis y encuentra inconsistencias con sus expectativas iniciales. Según la práctica RDM 2.3, ¿cuál es el siguiente paso que el equipo debe tomar?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica específica RDM 2.3 a un escenario concreto de inconsistencias en el documento de análisis para determinar el siguiente paso procedimental correcto."
+    },
+    {
+      "index": 43,
+      "question_text": "El equipo de desarrollo ha completado los documentos de análisis y diseño, y el cronograma del proyecto está listo. Según la práctica RDM 3.3, ¿qué acción debe tomarse para que los programadores comiencen su trabajo?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica RDM 3.3 a un estado específico del proyecto (documentos listos) para identificar la acción correcta que permite a los programadores iniciar su trabajo."
+    },
+    {
+      "index": 44,
+      "question_text": "Durante el desarrollo de un sistema, el equipo identifica un requisito no descrito que es crucial para el flujo del sistema. Según la práctica RDM 3.5, ¿cómo debe proceder el equipo?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica RDM 3.5 para gestionar un requisito no descrito en un escenario de desarrollo, seleccionando el procedimiento de gestión de cambios adecuado."
+    },
+    {
+      "index": 45,
+      "question_text": "Un nuevo módulo de software ha sido desarrollado y se necesita verificar su funcionamiento. Según la práctica RDM 3.7, ¿qué tipo de pruebas se deben realizar inicialmente para validar los requisitos?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica RDM 3.7 para seleccionar el tipo de pruebas iniciales requeridas para validar los requisitos de un nuevo módulo de software en un escenario dado."
+    },
+    {
+      "index": 46,
+      "question_text": "Durante la fase pre-operativa de un proyecto, el equipo identifica una posible escasez de recursos clave. Según la Gestión de Riesgos (RSK 1.1), ¿cuál es la acción inmediata que deben tomar?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica RSK 1.1 para identificar la acción inmediata de registro de un riesgo (escasez de recursos) en la herramienta de gestión de riesgos, según el procedimiento establecido."
+    },
+    {
+      "index": 47,
+      "question_text": "Un riesgo identificado como 'medio' ha sido registrado en la herramienta de gestión de riesgos. Según la práctica RSK 2.2, ¿cuál es el siguiente paso procesal para este riesgo?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica RSK 2.2 para determinar el siguiente paso procesal en el seguimiento de un riesgo ya identificado y registrado, siguiendo la secuencia de la práctica."
+    },
+    {
+      "index": 48,
+      "question_text": "El equipo de gestión de riesgos ha analizado un riesgo mayor y ha decidido que no pueden eliminarlo por completo, pero pueden reducir su impacto. Según la práctica RSK 3.4, ¿qué tipo de plan de gestión de riesgos deberían desarrollar?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica RSK 3.4, relacionando la acción de 'reducir el impacto' de un riesgo con la estrategia de gestión de riesgos correspondiente ('mitigar')."
+    },
+    {
+      "index": 49,
+      "question_text": "Un desarrollador ha terminado de implementar una nueva funcionalidad y necesita guardar su código fuente de manera controlada. Según la práctica CM 1.1 de Gestión de Configuración, ¿qué acción debe realizar?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica CM 1.1 para seleccionar la acción correcta de control de versiones al guardar código fuente de manera controlada en un escenario de desarrollo."
+    },
+    {
+      "index": 50,
+      "question_text": "El equipo de desarrollo ha completado un conjunto de entregables que representan una versión estable del software. Según la práctica CM 2.3, ¿qué acción deben tomar para formalizar esta versión para uso interno o entrega al cliente?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica CM 2.3 para formalizar una versión estable del software mediante la publicación de líneas base, según el procedimiento de gestión de configuración."
+    },
+    {
+      "index": 51,
+      "question_text": "Se ha aprobado un cambio en un componente que ya está bajo gestión de configuración. Según la práctica CM 2.4, ¿cuál es el procedimiento a seguir para implementar este cambio?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica CM 2.4 para determinar el procedimiento correcto para implementar un cambio aprobado en un componente que ya está bajo gestión de configuración."
+    },
+    {
+      "index": 52,
+      "question_text": "Antes de iniciar la integración de varios componentes en el ambiente de desarrollo, el equipo necesita asegurarse de que cada componente individual esté listo. Según la práctica PI 2.4, ¿qué verificación es crucial en este punto?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica PI 2.4 para identificar la verificación crucial necesaria antes de iniciar la integración de componentes en el ambiente de desarrollo, según el protocolo establecido."
+    },
+    {
+      "index": 53,
+      "question_text": "Después de integrar varios componentes en el ambiente de desarrollo, el equipo necesita verificar si la solución resultante cumple con los requisitos. Según la práctica PI 2.5, ¿qué tipo de evaluación deben realizar?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica PI 2.5 para seleccionar el tipo de evaluación adecuado para verificar el cumplimiento de requisitos después de la integración de componentes en el ambiente de desarrollo."
+    },
+    {
+      "index": 54,
+      "question_text": "Un sistema ha pasado por varias etapas del ciclo de vida (desarrollo, integración, calidad) y ahora se prepara para producción. Según la práctica PI 3.1, ¿qué acción es necesaria en cada etapa para asegurar la coherencia?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica PI 3.1 para identificar la acción necesaria en cada etapa del ciclo de vida del sistema para asegurar la coherencia, siguiendo el procedimiento de pase a producción."
+    },
+    {
+      "index": 55,
+      "question_text": "Un nuevo proyecto con requisitos específicos ha comenzado. El equipo necesita establecer cómo se generarán los entregables. Según la práctica PAD 1.1, ¿cuál es la primera consideración respecto a los activos de proceso?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica PAD 1.1 para determinar la primera consideración respecto a los activos de proceso al inicio de un nuevo proyecto con requisitos específicos."
+    },
+    {
+      "index": 56,
+      "question_text": "Un cliente ha solicitado un proyecto que requiere una colaboración estrecha y un estándar de trabajo unificado. Según la práctica PAD 2.1, ¿qué acción debe tomar el equipo para establecer este estándar?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica PAD 2.1 para establecer un estándar de trabajo unificado en un proyecto que requiere colaboración estrecha, evaluando los componentes y procesos involucrados."
+    },
+    {
+      "index": 57,
+      "question_text": "El equipo ha finalizado la creación o actualización de varios procesos y activos. Según la práctica PAD 2.3, ¿cuál es el siguiente paso para que estos sean accesibles a todos los involucrados en el proyecto?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica PAD 2.3 para identificar el siguiente paso que hace accesibles los procesos y activos actualizados a todos los involucrados en el proyecto."
+    },
+    {
+      "index": 58,
+      "question_text": "Se ha realizado una mejora en un proceso existente y se ha actualizado su documentación. Según la práctica PAD 3.3, ¿qué acción es necesaria para que esta versión mejorada esté disponible y controlada?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica PAD 3.3 para asegurar la disponibilidad y control de una versión mejorada de un proceso existente, mediante el versionado y la publicación."
+    },
+    {
+      "index": 59,
+      "question_text": "El equipo de desarrollo ha completado el documento de diseño. Según la práctica RDM 2.6, ¿qué proceso interno deben seguir para asegurar la coherencia con los requisitos antes de avanzar?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica RDM 2.6 para identificar el proceso interno de calidad necesario para asegurar la coherencia del documento de diseño con los requisitos antes de avanzar."
+    },
+    {
+      "index": 60,
+      "question_text": "Un equipo está a punto de iniciar la construcción de un nuevo módulo que interactuará con varios sistemas existentes. Según la práctica RDM 3.4, ¿qué acción deben tomar para asegurar una conectividad adecuada antes de la construcción?",
+      "target_level": "apply",
+      "evaluated_level": "apply",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe aplicar la práctica RDM 3.4 para determinar las acciones necesarias para asegurar una conectividad adecuada antes de la construcción de un nuevo módulo que interactuará con sistemas existentes."
+    },
+    {
+      "index": 61,
+      "question_text": "Un equipo está trabajando en la integración de varios módulos de software. Según la práctica PI 2.3, para asegurar que la integración se realice correctamente y se controlen las dependencias, ¿qué procedimiento deben seguir?",
+      "target_level": "apply",
+      "evaluated_level": "remember",
+      "is_concordant": false,
+      "confidence": 0.9,
+      "reasoning": "El estudiante debe recordar directamente el procedimiento específico que la práctica PI 2.3 establece para la integración y el control de dependencias. La pregunta es una recuperación literal de información asociada a un código de práctica."
+    },
+    {
+      "index": 62,
+      "question_text": "Un equipo de proyecto ha identificado una oportunidad significativa que podría mejorar el alcance del proyecto. Según la práctica RSK 3.3, ¿qué acción deben tomar para gestionar esta oportunidad?",
+      "target_level": "apply",
+      "evaluated_level": "remember",
+      "is_concordant": false,
+      "confidence": 0.9,
+      "reasoning": "El estudiante debe recordar la acción específica que la práctica RSK 3.3 prescribe para gestionar una oportunidad. La pregunta requiere la recuperación de una acción definida en el contexto de una práctica dada."
+    },
+    {
+      "index": 63,
+      "question_text": "Un equipo de desarrollo comienza a implementar un nuevo conjunto de funcionalidades basándose en el \"Documento de Análisis\". Sin embargo, a mitad de la fase de construcción, el cliente expresa que la interpretación del equipo sobre un requisito clave es incorrecta, lo que lleva a un retrabajo significativo. ¿Cuál de las siguientes prácticas de \"Gestión y Desarrollo de Requerimientos\" fue probablemente deficiente, causando esta discrepancia?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario de discrepancia en la interpretación de requisitos y diagnosticar cuál práctica de gestión de requerimientos fue deficiente, identificando la causa raíz del problema. Esto implica descomponer el problema y relacionarlo con la función de cada práctica."
+    },
+    {
+      "index": 64,
+      "question_text": "Se detecta un error crítico en producción. El equipo de soporte informa que la funcionalidad no se comporta como el cliente espera. Al revisar el código, el desarrollador afirma que implementó exactamente lo que estaba en el \"Documento de Diseño\". Sin embargo, no hay una forma clara de verificar si el diseño se alineaba con el requisito original o si el cambio en el código se desvió del diseño. ¿Qué práctica de \"Gestión y Desarrollo de Requerimientos\" es la causa raíz más probable de esta dificultad para diagnosticar el problema?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario donde la trazabilidad es deficiente, impidiendo diagnosticar la fuente de un error. Debe identificar la práctica de gestión de requerimientos cuya ausencia o deficiencia es la causa raíz de esta dificultad."
+    },
+    {
+      "index": 65,
+      "question_text": "Un nuevo sistema es entregado a los usuarios finales. Aunque todas las funcionalidades técnicas operan correctamente, los usuarios reportan que el flujo de trabajo del sistema es contraintuitivo y no se alinea con sus procesos de negocio diarios, lo que reduce la eficiencia. ¿Qué entregable o práctica de la fase de \"Diseño\" fue probablemente insuficiente para capturar y representar adecuadamente la interacción del usuario con el sistema?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario donde un sistema es técnicamente funcional pero contraintuitivo para el usuario. Debe diagnosticar qué práctica o entregable de diseño fue insuficiente para capturar la interacción del usuario, identificando la causa de la baja eficiencia."
+    },
+    {
+      "index": 66,
+      "question_text": "Un proyecto de desarrollo de software se encuentra constantemente por encima del presupuesto y del cronograma debido a la aparición frecuente de nuevos requisitos no previstos que requieren cambios significativos en el alcance. ¿Qué aspecto de la \"Gestión y Desarrollo de Requerimientos\" es el principal responsable de esta situación recurrente?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario de 'scope creep' debido a requisitos no previstos y diagnosticar qué aspecto de la gestión de requerimientos es el principal responsable, relacionando la aparición de nuevos requisitos con la completitud de la definición inicial."
+    },
+    {
+      "index": 67,
+      "question_text": "Un módulo de software pasa exitosamente todas las pruebas unitarias (JUNIT) y el análisis de calidad de código (SONARQUBE) en el entorno de desarrollo. Sin embargo, cuando se integra con otros módulos y se somete a pruebas funcionales con los criterios de aceptación del cliente, se descubren fallos importantes en la lógica de negocio. ¿Qué deficiencia en la aplicación de la práctica RDM 3.7 (Validar los requisitos) es la causa raíz más probable de que estos fallos no se detectaran antes?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario donde las pruebas unitarias pasan, pero las funcionales fallan en la lógica de negocio. Debe diagnosticar la deficiencia en la práctica RDM 3.7 (Validar requisitos) que permitió que estos fallos no se detectaran antes, entendiendo la cobertura de diferentes tipos de pruebas."
+    },
+    {
+      "index": 68,
+      "question_text": "Durante la fase de análisis de riesgos de un proyecto, se identificó una vulnerabilidad de seguridad crítica con una alta probabilidad de ocurrencia y un impacto severo. Sin embargo, el riesgo fue clasificado como \"menor\" debido a una evaluación subjetiva del equipo, y no se asignaron recursos para mitigarlo. Posteriormente, la vulnerabilidad fue explotada, causando una interrupción importante del servicio. ¿Qué práctica de \"Gestión de Riesgos\" fue deficiente, llevando a esta clasificación errónea y sus consecuencias?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario de clasificación errónea de un riesgo crítico a pesar de su alta probabilidad e impacto, lo que lleva a consecuencias negativas. Debe diagnosticar qué práctica de gestión de riesgos fue deficiente en el análisis de la exposición."
+    },
+    {
+      "index": 69,
+      "question_text": "Un equipo de proyecto identificó una oportunidad de mercado para lanzar una nueva característica que podría generar ingresos adicionales. Se registró la oportunidad, pero no se asignó un responsable ni se definieron acciones concretas para capitalizarla. Como resultado, la oportunidad se perdió cuando un competidor lanzó una característica similar. ¿Qué práctica de \"Gestión de Riesgos\" fue la causa raíz de que la organización no pudiera aprovechar esta oportunidad?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario de oportunidad perdida por falta de acciones concretas y responsables. Debe diagnosticar qué práctica de gestión de riesgos fue la causa raíz de que la organización no pudiera capitalizar la oportunidad, enfocándose en el monitoreo y la asignación de acciones."
+    },
+    {
+      "index": 70,
+      "question_text": "Un proyecto tiene un \"Proceso de Gestión de Riesgos\" bien documentado y una lista exhaustiva de riesgos identificados con sus probabilidades e impactos. Sin embargo, cuando un riesgo crítico se materializa (por ejemplo, la renuncia inesperada de un desarrollador clave), el equipo entra en pánico y no tiene un plan de acción inmediato, lo que provoca retrasos significativos. ¿Qué práctica de \"Gestión de Riesgos\" fue probablemente deficiente, impidiendo una respuesta efectiva ante el riesgo materializado?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario donde, a pesar de la identificación y análisis de riesgos, el equipo carece de un plan de acción inmediato cuando un riesgo se materializa. Debe diagnosticar qué práctica de gestión de riesgos fue deficiente, impidiendo una respuesta efectiva."
+    },
+    {
+      "index": 71,
+      "question_text": "Dos desarrolladores trabajan simultáneamente en el mismo archivo de código fuente para implementar características diferentes. Al intentar integrar sus cambios en el repositorio central, se producen conflictos severos que requieren horas de trabajo manual para resolver, y en el proceso, se pierde parte del código de uno de los desarrolladores. ¿Qué práctica de \"Gestión de Configuración\" fue probablemente deficiente o no se aplicó correctamente, causando este problema?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario de conflictos severos y pérdida de código debido a trabajo concurrente en el mismo archivo. Debe diagnosticar qué práctica de gestión de configuración fue deficiente o no aplicada correctamente, identificando la necesidad de control de versiones."
+    },
+    {
+      "index": 72,
+      "question_text": "Un cliente recibe una nueva versión de software que contiene una funcionalidad que había sido explícitamente eliminada en una reunión de alcance anterior y que no debería haber sido incluida. Al investigar, se descubre que la versión desplegada no corresponde exactamente a la \"línea base\" aprobada por el cliente. ¿Qué deficiencia en la \"Gestión de Configuración\" es la causa raíz más probable de esta discrepancia entre lo entregado y lo acordado?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario donde la versión de software entregada no coincide con la línea base aprobada, incluyendo funcionalidades eliminadas. Debe diagnosticar qué deficiencia en la gestión de configuración es la causa raíz de esta discrepancia, enfocándose en la integridad de las líneas base."
+    },
+    {
+      "index": 73,
+      "question_text": "Se reporta un error crítico en un sistema en producción. Para diagnosticar el problema, el equipo de soporte necesita saber la versión exacta de una librería de terceros que se utilizó en esa implementación específica. Sin embargo, esta información no está fácilmente disponible ni registrada de forma sistemática. ¿Qué práctica de \"Gestión de Configuración\" fue deficiente, impidiendo una rápida identificación del componente afectado?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario donde la información de la versión de un componente no está disponible, impidiendo el diagnóstico de un error. Debe diagnosticar qué práctica de gestión de configuración fue deficiente en el registro sistemático de elementos."
+    },
+    {
+      "index": 74,
+      "question_text": "Un equipo de desarrollo integra varios módulos de software que individualmente pasaron todas sus pruebas unitarias. Sin embargo, después de la integración, el sistema completo exhibe un comportamiento inesperado y fallos intermitentes, especialmente cuando los módulos interactúan entre sí. ¿Qué práctica de \"Integración de Producto\" fue probablemente deficiente, causando estos problemas de interacción a nivel de sistema?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario donde módulos individuales funcionan, pero la integración causa fallos de interacción a nivel de sistema. Debe diagnosticar qué práctica de integración de producto fue deficiente, enfocándose en los procedimientos y criterios de integración y control de dependencias."
+    },
+    {
+      "index": 75,
+      "question_text": "Se integra una nueva funcionalidad en la aplicación principal. Aunque la funcionalidad en sí opera correctamente según sus especificaciones, se observa una degradación significativa del rendimiento en otras partes del sistema que no están directamente relacionadas con la nueva funcionalidad. ¿Qué práctica de \"Integración de Producto\" fue probablemente insuficiente para detectar este problema antes de la integración o durante las pruebas post-integración?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario donde una nueva funcionalidad causa degradación del rendimiento en otras partes del sistema. Debe diagnosticar qué práctica de integración de producto fue insuficiente para detectar este problema, considerando la evaluación de requisitos no funcionales."
+    },
+    {
+      "index": 76,
+      "question_text": "Dos equipos de desarrollo independientes crean componentes que deben interactuar para formar una solución completa. Al intentar integrar estos componentes, se encuentran con incompatibilidades en los formatos de datos y los protocolos de comunicación, lo que requiere un retrabajo considerable. ¿Qué práctica de \"Integración de Producto\" fue probablemente deficiente, causando estas incompatibilidades?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario de incompatibilidades en formatos de datos y protocolos de comunicación entre componentes independientes. Debe diagnosticar qué práctica de integración de producto fue deficiente, enfocándose en la revisión y mantenimiento de las descripciones de interfaz."
+    },
+    {
+      "index": 77,
+      "question_text": "Una nueva iniciativa de proyecto comienza en una organización. El equipo del proyecto dedica varias semanas a definir desde cero sus propios procedimientos para la gestión de la documentación, los estándares de codificación y los flujos de trabajo de prueba, a pesar de que la organización ha ejecutado proyectos similares en el pasado. ¿Qué deficiencia en el \"Desarrollo de Activos de Proceso\" es la causa raíz más probable de esta ineficiencia?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario donde un equipo redefine procedimientos existentes a pesar de la disponibilidad de activos organizacionales. Debe diagnosticar qué deficiencia en el desarrollo de activos de proceso es la causa raíz de esta ineficiencia, enfocándose en la identificación y reutilización."
+    },
+    {
+      "index": 78,
+      "question_text": "Una organización mantiene un repositorio central de \"Procesos de la organización\" en Alfresco y SVN. Sin embargo, los equipos de proyecto a menudo crean sus propias versiones de los procesos o ignoran los oficiales porque los encuentran desactualizados, difíciles de encontrar o no adaptados a sus necesidades específicas. ¿Qué deficiencia estructural en el \"Desarrollo de Activos de Proceso\" es la causa raíz de que los procesos oficiales no sean efectivamente utilizados?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario donde los procesos oficiales son ignorados por estar desactualizados o no adaptados. Debe diagnosticar qué deficiencia estructural en el desarrollo de activos de proceso es la causa raíz, enfocándose en la estrategia de construcción y actualización."
+    },
+    {
+      "index": 79,
+      "question_text": "Un gerente de proyecto intenta aplicar un conjunto de procesos estándar de la organización a un proyecto altamente innovador y de naturaleza experimental. El equipo encuentra que los procesos son demasiado rígidos y burocráticos para el ritmo rápido y la incertidumbre inherente del proyecto, lo que genera frustración y resistencia. ¿Qué aspecto del \"Desarrollo de Activos de Proceso\" fue probablemente deficiente, impidiendo una aplicación efectiva de los procesos en este contexto?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario donde procesos estándar son demasiado rígidos para un proyecto innovador, generando frustración. Debe diagnosticar qué aspecto del desarrollo de activos de proceso fue deficiente, impidiendo una aplicación efectiva debido a la falta de criterios de adaptación."
+    },
+    {
+      "index": 80,
+      "question_text": "Una organización invierte considerablemente en la creación y documentación de estándares de codificación, plantillas de diseño y guías de prueba. Sin embargo, después de un año, no se observa una mejora medible en la calidad del software o en la eficiencia del desarrollo. ¿Qué práctica de \"Desarrollo de Activos de Proceso\" es la causa raíz más probable de que la inversión en activos de proceso no esté generando los resultados esperados?",
+      "target_level": "analyze",
+      "evaluated_level": "analyze",
+      "is_concordant": true,
+      "confidence": 0.8,
+      "reasoning": "El estudiante debe analizar un escenario donde la inversión en activos de proceso no genera mejoras medibles. Debe diagnosticar qué práctica de desarrollo de activos de proceso es la causa raíz, enfocándose en la ausencia de estándares de medición y análisis para evaluar el impacto."
+    },
+    {
+      "index": 81,
+      "question_text": "Un equipo de desarrollo recibe un \"Documento de Análisis\" que detalla los requisitos funcionales y no funcionales. Sin embargo, durante la fase de diseño, surgen múltiples preguntas sobre la interpretación de ciertos requisitos clave, lo que retrasa el progreso y requiere reuniones adicionales con el cliente para aclaraciones. ¿Cuál es la causa raíz más probable de esta situación, según las prácticas de \"Gestión y Desarrollo de Requerimientos\"?",
+      "target_level": "analyze",
+      "evaluated_level": "understand",
+      "is_concordant": false,
+      "confidence": 0.9,
+      "reasoning": "El estudiante debe comprender el escenario presentado y relacionar la consecuencia (preguntas de interpretación) con la causa raíz más probable dentro de las prácticas de RDM. Esto implica entender el propósito de cada práctica y cómo su deficiencia se manifiesta en el problema descrito, no solo recordar su nombre o definición."
+    },
+    {
+      "index": 82,
+      "question_text": "Un desarrollador implementa una corrección urgente en un módulo de producción sin seguir el proceso establecido de gestión de cambios. Posteriormente, se descubre que esta corrección introduce un nuevo error en otra parte del sistema, causando una interrupción mayor. ¿Qué deficiencia en la \"Gestión de Configuración\" permitió que este problema ocurriera?",
+      "target_level": "analyze",
+      "evaluated_level": "understand",
+      "is_concordant": false,
+      "confidence": 0.9,
+      "reasoning": "El estudiante debe analizar el escenario de un cambio no controlado que causa un nuevo error y relacionarlo con la práctica de Gestión de Configuración cuya deficiencia o incumplimiento es la causa directa. Requiere comprender el rol de cada práctica en la prevención de tales problemas."
+    },
+    {
+      "index": 83,
+      "question_text": "Un equipo de desarrollo, bajo presión para acelerar la entrega, propone omitir la validación formal de los requisitos por parte del usuario final (RDM 2.3) y reducir las pruebas funcionales basadas en criterios de aceptación (RDM 3.7). ¿Cómo debería el equipo de gestión de requisitos evaluar esta propuesta, considerando el valor de la 'Gestión y Desarrollo de Requerimientos'?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe juzgar la idoneidad de una propuesta (omitir validación y reducir pruebas) en un contexto de presión, sopesando los riesgos y beneficios frente al valor fundamental de la gestión de requisitos. Esto implica emitir un juicio de valor fundamentado sobre si la propuesta es aceptable o inaceptable y por qué."
+    },
+    {
+      "index": 84,
+      "question_text": "Un gerente de proyecto sugiere posponer la obtención del compromiso formal de los participantes (RDM 2.4) y el desarrollo de la trazabilidad bidireccional (RDM 2.5) para permitir una mayor flexibilidad en los cambios de requisitos iniciales. ¿Cómo debería evaluarse esta estrategia en relación con la gestión de requisitos?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe evaluar una estrategia propuesta (posponer compromiso y trazabilidad) en el contexto de la gestión de requisitos, identificando sus posibles consecuencias negativas (riesgos) y juzgando su idoneidad. Esto requiere un juicio fundamentado sobre el impacto de la estrategia."
+    },
+    {
+      "index": 85,
+      "question_text": "Un cliente solicita continuamente nuevos requisitos sin pasar por un proceso formal de gestión de cambios, argumentando que son 'necesarios'. El equipo de desarrollo se siente abrumado. ¿Cómo debería el equipo justificar su respuesta al cliente, basándose en las prácticas RDM 3.5 y RDM 3.6?",
+      "target_level": "evaluate",
+      "evaluated_level": "apply",
+      "is_concordant": false,
+      "confidence": 0.9,
+      "reasoning": "El estudiante debe aplicar las prácticas RDM 3.5 y 3.6 a un escenario de cliente que solicita cambios ad-hoc para determinar la acción procedimental correcta y cómo justificarla. Esto implica seleccionar la respuesta que mejor se alinea con los principios de gestión de cambios y equilibrio de necesidades."
+    },
+    {
+      "index": 86,
+      "question_text": "Para cumplir con una fecha límite ajustada, un equipo propone reducir la frecuencia de las revisiones de calidad interna (RDM 2.6) de los entregables. ¿Cómo debería el líder del proyecto evaluar esta decisión, considerando la coherencia con los requisitos?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe juzgar la idoneidad de una decisión (reducir revisiones de calidad) bajo presión, evaluando sus implicaciones para la coherencia con los requisitos y la calidad del proyecto. Requiere emitir un juicio fundamentado sobre el riesgo de la decisión."
+    },
+    {
+      "index": 87,
+      "question_text": "Un equipo de diseño debate si invertir un tiempo considerable en la creación de diagramas UML muy detallados y pseudocódigo exhaustivo (RDM 3.1, RDM 3.2) antes de la programación, o si adoptar un enfoque más ligero y dejar gran parte del diseño para la fase de codificación. ¿Cuál enfoque debería justificar el equipo para preparar las bases de la programación, según las prácticas de gestión de requisitos?",
+      "target_level": "evaluate",
+      "evaluated_level": "apply",
+      "is_concordant": false,
+      "confidence": 0.9,
+      "reasoning": "El estudiante debe aplicar las prácticas RDM 3.1 y 3.2 a un dilema de diseño para justificar el enfoque que mejor prepara la programación. Esto implica seleccionar la opción que sigue los procedimientos establecidos para la estructuración y preparación de requisitos para la implementación."
+    },
+    {
+      "index": 88,
+      "question_text": "Durante la fase de análisis de un proyecto, se identifica un riesgo con una probabilidad baja de ocurrencia, pero con un impacto potencialmente 'mayor' (RSK 2.1) si se materializa. El equipo de gestión de riesgos debate entre una estrategia de 'aceptar activa' (RSK 3.4) con un plan de contingencia detallado, o una estrategia de 'mitigar' (RSK 3.4) invirtiendo recursos significativos en medidas preventivas. ¿Cuál de estas estrategias sería más justificable para este tipo de riesgo, considerando el objetivo de la 'Gestión de Riesgos'?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe evaluar dos estrategias de respuesta a un riesgo específico (baja probabilidad, alto impacto) y justificar cuál es la más adecuada, sopesando los costos y beneficios de cada una en el contexto de la gestión de riesgos. Esto implica un juicio de valor fundamentado."
+    },
+    {
+      "index": 89,
+      "question_text": "Un líder de proyecto sugiere que, una vez implementados los planes de mitigación, se reduzca la comunicación sobre el estado de los riesgos a las partes interesadas (RSK 2.2) para evitar alarmas innecesarias. ¿Cómo debería el equipo de gestión de riesgos evaluar esta propuesta?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe evaluar una propuesta para reducir la comunicación de riesgos, juzgando su idoneidad en relación con las prácticas de gestión de riesgos (RSK 2.2). Esto implica comprender la importancia de la comunicación continua y emitir un juicio sobre la validez de la propuesta."
+    },
+    {
+      "index": 90,
+      "question_text": "Un nuevo miembro del equipo de gestión de riesgos propone utilizar su 'intuición' y 'experiencia' para analizar los riesgos, en lugar de los parámetros definidos de probabilidad e impacto (RSK 3.2). ¿Cómo debería el equipo evaluar esta sugerencia?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe evaluar una sugerencia (usar intuición en lugar de parámetros definidos para el análisis de riesgos), juzgando su validez y sus implicaciones en el contexto de la gestión de riesgos (RSK 3.2). Requiere un juicio fundamentado sobre la objetividad y estandarización."
+    },
+    {
+      "index": 91,
+      "question_text": "Un gerente de proyecto argumenta que las respuestas ad-hoc a los riesgos son más ágiles y eficientes que desarrollar y mantener estrategias y planes de gestión de riesgos formales (RSK 3.3, RSK 3.4). ¿Cómo se puede justificar la necesidad de estrategias y planes formales en la gestión de riesgos?",
+      "target_level": "evaluate",
+      "evaluated_level": "understand",
+      "is_concordant": false,
+      "confidence": 0.9,
+      "reasoning": "El estudiante debe comprender y justificar el propósito y los beneficios de las estrategias y planes formales de gestión de riesgos (RSK 3.3, 3.4) en contraste con un enfoque ad-hoc. Esto implica explicar el 'porqué' de la formalidad en la gestión de riesgos."
+    },
+    {
+      "index": 92,
+      "question_text": "Un equipo decide identificar los riesgos solo cuando estos se hacen evidentes durante la ejecución del proyecto, en lugar de hacerlo de manera proactiva en las etapas iniciales (RSK 1.1). ¿Cómo debería evaluarse esta aproximación a la identificación de riesgos?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe evaluar una aproximación a la identificación de riesgos (reactiva), juzgando su idoneidad y sus consecuencias negativas en comparación con la identificación proactiva (RSK 1.1). Requiere un juicio fundamentado sobre la efectividad de la estrategia."
+    },
+    {
+      "index": 93,
+      "question_text": "Un equipo de desarrollo, bajo una fuerte presión para acelerar la entrega de un producto, propone omitir la publicación formal de líneas base (CM 2.3) y reducir la frecuencia de las auditorías de configuración (CM 2.6) para ahorrar tiempo. ¿Cómo debería el equipo de gestión de configuración evaluar esta propuesta, considerando el valor de la 'Gestión de Configuración'?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe juzgar la idoneidad de una propuesta (omitir líneas base y reducir auditorías) en un contexto de presión, sopesando los riesgos y beneficios frente al valor fundamental de la gestión de configuración. Esto implica emitir un juicio de valor fundamentado sobre si la propuesta es aceptable o inaceptable y por qué."
+    },
+    {
+      "index": 94,
+      "question_text": "Un equipo considera versionar únicamente el código fuente, excluyendo otros entregables del proyecto como documentos de análisis o diseño, para simplificar la gestión de configuración (CM 2.1, CM 2.2). ¿Cómo debería evaluarse esta decisión en relación con la integridad de los productos de trabajo?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe evaluar una decisión (versionar solo código fuente), juzgando su idoneidad y sus implicaciones para la integridad de los productos de trabajo en el contexto de la gestión de configuración (CM 2.1, CM 2.2). Requiere un juicio fundamentado sobre los riesgos de la decisión."
+    },
+    {
+      "index": 95,
+      "question_text": "Un desarrollador realiza cambios directos en un elemento de configuración para corregir un error crítico rápidamente, sin seguir el proceso formal de gestión de cambios (CM 2.4). ¿Cómo se puede justificar la importancia de adherirse al proceso de gestión de cambios en esta situación?",
+      "target_level": "evaluate",
+      "evaluated_level": "understand",
+      "is_concordant": false,
+      "confidence": 0.9,
+      "reasoning": "El estudiante debe comprender y justificar la importancia de adherirse al proceso formal de gestión de cambios (CM 2.4) incluso en situaciones críticas. Esto implica explicar los beneficios de la formalidad (trazabilidad, integridad, coherencia) y las consecuencias de su omisión."
+    },
+    {
+      "index": 96,
+      "question_text": "Un pequeño equipo de desarrollo propone utilizar convenciones manuales de nombres de archivo en lugar de un sistema de control de versiones (GIT, SVN) para ahorrar tiempo de configuración inicial (CM 1.1). ¿Cómo debería el equipo evaluar esta decisión, considerando la intención de la 'Gestión de Configuración'?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe evaluar una decisión (usar convenciones manuales en lugar de control de versiones), juzgando su idoneidad y sus implicaciones para la integridad de los productos de trabajo en el contexto de la gestión de configuración (CM 1.1). Requiere un juicio fundamentado sobre los riesgos de la decisión."
+    },
+    {
+      "index": 97,
+      "question_text": "Un proyecto se enfrenta a una fecha límite de integración muy ajustada. Se debate entre integrar los componentes tan pronto como pasen las pruebas unitarias, sin una confirmación exhaustiva de que cada componente opera de acuerdo a sus requerimientos y diseño (PI 2.4), o adherirse estrictamente a la práctica PI 2.4 antes de cualquier integración. ¿Cuál enfoque debería justificar el equipo para la integración, considerando la intención de la 'Integración de Producto'?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe evaluar dos enfoques de integración bajo presión y justificar cuál es el más adecuado, sopesando los riesgos y beneficios de cada uno en relación con la intención de la Integración de Producto (PI 2.4). Esto implica un juicio de valor fundamentado."
+    },
+    {
+      "index": 98,
+      "question_text": "Un líder de desarrollo sugiere que los procedimientos y criterios para la integración de soluciones y componentes (PI 2.3) son demasiado rígidos y deberían dejarse a la discreción individual de los desarrolladores para fomentar la agilidad. ¿Cómo debería el equipo de integración de producto evaluar esta propuesta?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe evaluar una propuesta para flexibilizar los procedimientos de integración, juzgando su idoneidad y sus implicaciones negativas en relación con las prácticas de Integración de Producto (PI 2.3). Requiere un juicio fundamentado sobre los riesgos de la discreción individual."
+    },
+    {
+      "index": 99,
+      "question_text": "Un equipo asume que las interfaces entre componentes serán compatibles sin una revisión y confirmación explícita (PI 3.1, PI 3.2), basándose en experiencias previas. ¿Cómo debería evaluarse esta suposición en el contexto de la integración de producto?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 1.0,
+      "reasoning": "El estudiante debe evaluar una suposición (compatibilidad de interfaces sin verificación explícita), juzgando su validez y sus implicaciones negativas en el contexto de la integración de producto (PI 3.1, PI 3.2). Requiere un juicio fundamentado sobre los riesgos de la suposición."
+    },
+    {
+      "index": 100,
+      "question_text": "Un gerente de proyecto propone un enfoque de integración ad-hoc para adaptarse a los cambios frecuentes en los requisitos, en lugar de seguir una estrategia de integración definida (PI 2.1). ¿Cómo se puede justificar la necesidad de una estrategia de integración formal en este escenario?",
+      "target_level": "evaluate",
+      "evaluated_level": "understand",
+      "is_concordant": false,
+      "confidence": 0.9,
+      "reasoning": "El estudiante debe comprender y justificar la necesidad de una estrategia de integración formal (PI 2.1) en contraste con un enfoque ad-hoc, incluso en un escenario de cambios frecuentes. Esto implica explicar los beneficios de la formalidad para la calidad y funcionalidad de la solución integrada."
+    },
+    {
+      "index": 101,
+      "question_text": "Un equipo de proyecto inicia un nuevo desarrollo y debe decidir si adaptar los activos de proceso existentes (PAD 3.4) o crear activos completamente nuevos (PAD 2.2) para ajustarse a las características únicas del proyecto. La adaptación podría ser más rápida pero menos 'perfecta', mientras que la creación desde cero sería más precisa pero consumiría más tiempo. ¿Cuál enfoque debería justificar el equipo, considerando el valor de 'Desarrollo de Activos de Proceso'?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe analizar un escenario con dos opciones contrapuestas, cada una con sus ventajas y desventajas (trade-offs). Luego, debe sopesar estas opciones y emitir un juicio sobre cuál es el enfoque más adecuado, justificando su elección en función de un valor organizacional específico ('Desarrollo de Activos de Proceso'). Esto implica comparar, contrastar, criticar implícitamente las desventajas y defender la opción elegida, lo cual es característico del nivel 'evaluate'."
+    },
+    {
+      "index": 102,
+      "question_text": "Un equipo decide almacenar los activos de proceso del proyecto en unidades locales compartidas para un acceso 'más rápido', en lugar de publicarlos en los repositorios centrales de la organización como Alfresco o SVN (PAD 2.3, PAD 3.3). ¿Cómo debería el líder del proyecto evaluar esta práctica?",
+      "target_level": "evaluate",
+      "evaluated_level": "evaluate",
+      "is_concordant": true,
+      "confidence": 0.95,
+      "reasoning": "El estudiante debe tomar una práctica específica descrita en el enunciado y juzgar su idoneidad o sus consecuencias negativas, contrastándola con las directrices establecidas (PAD 2.3, PAD 3.3) y los principios de gestión de activos de proceso (disponibilidad, control de versiones, reutilización). Esto requiere emitir un juicio crítico sobre la práctica, lo cual se alinea con el nivel 'evaluate'."
+    }
+  ]
+}

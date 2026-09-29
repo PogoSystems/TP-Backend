@@ -7,7 +7,7 @@ Incluye contingencia transparente a Groq ante cuotas agotadas (429) de Gemini.
 
 import json
 import logging
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 from google import genai
 from google.genai import types
 from groq import AsyncGroq
@@ -33,6 +33,28 @@ class BloomClassificationResult(BaseModel):
     )
     action_verbs_identified: List[str] = Field(
         default_factory=list, description="Verbos u operaciones cognitivas identificadas"
+    )
+
+
+class BloomItemEvaluation(BaseModel):
+    item_index: int = Field(description="Índice del reactivo evaluado (1, 2, 3...)")
+    cognitive_level: str = Field(
+        description="Nivel cognitivo predominante: 'remember', 'understand', 'apply', 'analyze', o 'evaluate'."
+    )
+    confidence: float = Field(
+        ge=0.0, le=1.0, description="Nivel de certeza de la clasificación (0.0 a 1.0)"
+    )
+    cognitive_demand_analysis: str = Field(
+        description="Breve justificación pedagógica analizando los procesos mentales que el estudiante debe movilizar"
+    )
+    action_verbs_identified: List[str] = Field(
+        default_factory=list, description="Verbos u operaciones cognitivas identificadas"
+    )
+
+
+class BloomBatchClassificationResult(BaseModel):
+    items: List[BloomItemEvaluation] = Field(
+        description="Lista ordenada de evaluaciones para cada uno de los reactivos del lote."
     )
 
 
@@ -71,12 +93,12 @@ Opciones de respuesta:
 {options_text}
 Explicación didáctica: {explanation}
 
-Criterios de Clasificación según la Taxonomía de Bloom:
-1. 'remember': Recuperar, reconocer, listar o recordar datos, fechas, definiciones literales o hechos sin necesidad de interpretar su significado profundo.
-2. 'understand': Demostrar comprensión traduciendo, resumiendo, interpretando, parafraseando o explicando conceptos e ideas con palabras propias.
-3. 'apply': Transferir y usar un concepto, procedimiento, fórmula, técnica o regla para resolver un problema práctico o situación inédita.
-4. 'analyze': Descomponer información en sus componentes esenciales, distinguir causas y efectos, identificar falacias, comparar elementos estructurales o determinar relaciones implícitas.
-5. 'evaluate': Emitir o justificar juicios de valor, críticas o decisiones fundamentadas usando criterios y estándares explícitos.
+Criterios de Clasificación según la Taxonomía de Bloom (Anderson & Krathwohl):
+1. 'remember': Recuperar, reconocer, listar o recordar datos, términos, definiciones, entradas/salidas de procesos, códigos de prácticas o viñetas literales sin interpretación profunda. Si una pregunta se responde con una frase memorizada textualmente o citando una definición textual del material, es 'remember'.
+2. 'understand': Explicar el 'porqué' o 'para qué', predecir consecuencias conceptuales de causa y efecto, o interpretar/parafrasear principios y mecanismos teóricos sin limitarse a recordar viñetas o títulos textuales.
+3. 'apply': Aplicar una regla, método, procedimiento estándar o protocolo ante un escenario/incidente de proyecto concreto para determinar la acción procedimental correcta o seleccionar el artefacto adecuado (puramente conceptual/procedimental, sin cálculos numéricos).
+4. 'analyze': Descomponer un escenario técnico para diagnosticar qué componente causa un error, identificar qué paso viola un principio estructural, o contrastar la lógica interna de dos implementaciones.
+5. 'evaluate': Emitir o justificar juicios de valor, evaluar la idoneidad de una metodología frente a trade-offs en conflicto, o criticar decisiones arquitectónicas fundamentando cuál es la alternativa superior bajo ciertas restricciones.
 
 Instrucciones:
 - No clasifiques por la presencia superficial de un verbo; analiza el proceso mental real que el estudiante debe ejecutar.
@@ -109,6 +131,98 @@ Instrucciones:
 
             logger.error(f"Fallo clasificando pregunta de Bloom sin evaluador secundario disponible: {e}")
             return None
+
+    async def evaluate_batch_bloom_level(
+        self,
+        questions: List[Dict[str, Any]],
+    ) -> List[Optional[BloomClassificationResult]]:
+        """
+        Clasifica un lote de preguntas (típicamente 5 a 10) de forma estrictamente ciega en una sola llamada a la API.
+        Si la llamada en lote falla, recurre de forma resiliente a la evaluación individual.
+        """
+        if not questions:
+            return []
+
+        formatted_items = []
+        for i, q in enumerate(questions, start=1):
+            text = q.get("text") or q.get("question_text", "")
+            answers = q.get("answers", [])
+            explanation = q.get("explanation", "")
+            options_text = "\n".join([f"   - {opt}" for opt in answers])
+            formatted_items.append(
+                f"### Reactivo #{i}:\n"
+                f"Enunciado: {text}\n"
+                f"Opciones:\n{options_text}\n"
+                f"Explicación didáctica: {explanation}\n"
+            )
+
+        batch_text = "\n".join(formatted_items)
+
+        prompt = f"""
+Eres un psicólogo educativo y experto en diseño curricular especializado en la Taxonomía Cognitiva de Bloom (Revisada por Anderson & Krathwohl).
+Tu tarea es analizar el siguiente lote de {len(questions)} reactivos de evaluación de forma estrictamente ciega y determinar qué nivel de complejidad cognitiva demanda cada uno para ser respondido correctamente.
+
+{batch_text}
+
+Criterios de Clasificación según la Taxonomía de Bloom (Anderson & Krathwohl):
+1. 'remember': Recuperar, reconocer, listar o recordar datos, términos, definiciones, entradas/salidas de procesos, códigos de prácticas o viñetas literales sin interpretación profunda. Si una pregunta se responde con una frase memorizada textualmente o citando una definición textual del material, es 'remember'.
+2. 'understand': Explicar el 'porqué' o 'para qué', predecir consecuencias conceptuales de causa y efecto, o interpretar/parafrasear principios y mecanismos teóricos sin limitarse a recordar viñetas o títulos textuales.
+3. 'apply': Aplicar una regla, método, procedimiento estándar o protocolo ante un escenario/incidente de proyecto concreto para determinar la acción procedimental correcta o seleccionar el artefacto adecuado (puramente conceptual/procedimental, sin cálculos numéricos).
+4. 'analyze': Descomponer un escenario técnico para diagnosticar qué componente causa un error, identificar qué paso viola un principio estructural, o contrastar la lógica interna de dos implementaciones.
+5. 'evaluate': Emitir o justificar juicios de valor, evaluar la idoneidad de una metodología frente a trade-offs en conflicto, o criticar decisiones arquitectónicas fundamentando cuál es la alternativa superior bajo ciertas restricciones.
+
+Instrucciones:
+- No clasifiques por la presencia superficial de un verbo; analiza el proceso mental real que el estudiante debe ejecutar.
+- Asigna exactamente uno de los 5 niveles: 'remember', 'understand', 'apply', 'analyze', 'evaluate' a cada reactivo.
+- Retorna exactamente {len(questions)} evaluaciones en el array 'items', conservando el 'item_index' (1 a {len(questions)}).
+- Genera la respuesta respetando el esquema JSON solicitado.
+"""
+        try:
+            response = await self._gemini_client.aio.models.generate_content(
+                model=self._gemini_model,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                    response_schema=BloomBatchClassificationResult,
+                    temperature=0.0,
+                ),
+            )
+
+            if not response.text:
+                raise ValueError("Respuesta vacía del clasificador de Bloom en lote")
+
+            batch_result = BloomBatchClassificationResult.model_validate_json(response.text)
+
+            # Mapear los resultados preservando el orden de entrada
+            results_map = {item.item_index: item for item in batch_result.items}
+            final_results: List[Optional[BloomClassificationResult]] = []
+            for i in range(1, len(questions) + 1):
+                item = results_map.get(i)
+                if item:
+                    res = BloomClassificationResult(
+                        cognitive_level=item.cognitive_level,
+                        confidence=item.confidence,
+                        cognitive_demand_analysis=item.cognitive_demand_analysis,
+                        action_verbs_identified=item.action_verbs_identified,
+                    )
+                    final_results.append(self._normalize_result(res))
+                else:
+                    final_results.append(None)
+            return final_results
+
+        except Exception as e:
+            logger.warning(
+                f"Fallo en evaluación en lote con Gemini ({e}). Ejecutando fallback reactivo por reactivo..."
+            )
+            individual_results = []
+            for q in questions:
+                res = await self.evaluate_question_bloom_level(
+                    question_text=q.get("text") or q.get("question_text", ""),
+                    answers=q.get("answers", []),
+                    explanation=q.get("explanation", ""),
+                )
+                individual_results.append(res)
+            return individual_results
 
     async def _evaluate_with_groq(self, prompt: str, max_retries: int = 4) -> Optional[BloomClassificationResult]:
         """
