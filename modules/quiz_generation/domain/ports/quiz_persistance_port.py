@@ -10,8 +10,12 @@ class QuizPersistencePort(Protocol):
     La implementación concreta vive en quiz_management/infrastructure.
     """
 
-    async def save(self, quiz: QuizAggregate) -> QuizAggregate:
-        """Persiste un quiz generado y retorna el aggregate con el ID asignado."""
+    async def save(
+        self,
+        quiz: QuizAggregate,
+        source_document_ids: list[int] | None = None,
+    ) -> QuizAggregate:
+        """Persiste un quiz generado y sus documentos fuente, retornando el aggregate con el ID asignado."""
         ...
     
     async def get_quiz_by_id(self, quiz_id: int) -> QuizAggregate:

@@ -162,7 +162,7 @@ class QuizGenerationService:
             ],
         )
 
-        await self._quiz_repository.save(quiz)
+        await self._quiz_repository.save(quiz, source_document_ids=document_ids)
         return quiz
 
     async def _generate_quiz_with_llm(

@@ -13,6 +13,7 @@ from modules.quiz_generation.domain.aggregates.answer import AnswerAggregate
 from modules.quiz_generation.infrastructure.models.quiz_model import QuizModel
 from modules.quiz_generation.infrastructure.models.question_model import QuestionModel
 from modules.quiz_generation.infrastructure.models.answer_model import AnswerModel
+from modules.quiz_management.infrastructure.models import QuizSourceDocumentModel
 
 
 class QuizPersistenceRepository:
@@ -31,8 +32,12 @@ class QuizPersistenceRepository:
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
 
-    async def save(self, quiz: QuizAggregate) -> QuizAggregate:
-        """Persiste un quiz generado y retorna el aggregate con el ID asignado."""
+    async def save(
+        self,
+        quiz: QuizAggregate,
+        source_document_ids: list[int] | None = None,
+    ) -> QuizAggregate:
+        """Persiste un quiz generado y sus fuentes, retornando el aggregate con el ID asignado."""
 
         # get the max score
         max_score = sum(q.score for q in quiz.questions)
@@ -56,6 +61,18 @@ class QuizPersistenceRepository:
                 self._session.add(answer_model)
                 await self._session.flush()
                 a.id = answer_model.id
+
+        # Persistencia de documentos fuente (trazabilidad RAG)
+        if source_document_ids:
+            source_models = [
+                QuizSourceDocumentModel(
+                    quiz_id=model.id,
+                    document_id=doc_id,
+                )
+                for doc_id in set(source_document_ids)
+            ]
+            self._session.add_all(source_models)
+            await self._session.flush()
 
         return quiz
 
