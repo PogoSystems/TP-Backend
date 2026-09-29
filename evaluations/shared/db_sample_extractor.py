@@ -71,17 +71,22 @@ class DbSampleExtractor:
             if not quiz:
                 return None
 
-            # 2. Obtener Preguntas y Respuestas
+            # 2. Obtener Preguntas y Respuestas en lote
             questions_stmt = select(QuestionModel).where(QuestionModel.quiz_id == quiz.id).order_by(QuestionModel.id)
             questions_res = await session.execute(questions_stmt)
             questions_models = questions_res.scalars().all()
 
+            q_ids = [qm.id for qm in questions_models]
+            answers_by_q: Dict[int, List[AnswerModel]] = {qid: [] for qid in q_ids}
+            if q_ids:
+                ans_stmt = select(AnswerModel).where(AnswerModel.question_id.in_(q_ids)).order_by(AnswerModel.id)
+                ans_res = await session.execute(ans_stmt)
+                for a in ans_res.scalars().all():
+                    answers_by_q[a.question_id].append(a)
+
             questions_data = []
             for qm in questions_models:
-                ans_stmt = select(AnswerModel).where(AnswerModel.question_id == qm.id)
-                ans_res = await session.execute(ans_stmt)
-                answers = ans_res.scalars().all()
-
+                answers = answers_by_q.get(qm.id, [])
                 correct_answers = [a.text for a in answers if a.is_correct]
                 all_answers = [{"text": a.text, "is_correct": a.is_correct} for a in answers]
 
