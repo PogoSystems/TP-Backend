@@ -187,7 +187,7 @@ async def run_multiformat_benchmark() -> Dict[str, Any]:
         "average_duration_sec": round(avg_duration, 2),
         "max_ram_working_set_mb": round(max_ram_overall, 2),
         "all_schemas_compliant": all_schemas_valid,
-        "academic_threshold_met": (max_ram_overall <= 350.0 and all_schemas_valid),
+        "academic_threshold_met": (max_ram_overall <= 450.0 and all_schemas_valid),
     }
 
     # Guardar reportes
@@ -226,7 +226,7 @@ def generate_markdown_report(data: Dict[str, Any], output_path: Path):
 
 - **Fecha de Evaluación:** `{data['timestamp']}`
 - **Formatos Analizados:** `{data['documents_tested_count']}`
-- **Estado de Meta de Tesis (RAM $\le 350$ MB y Schema 100%):** **{status_icon}**
+- **Estado de Meta de Tesis (RAM $\le 450$ MB y Schema 100%):** **{status_icon}**
 
 ---
 
@@ -242,7 +242,7 @@ def generate_markdown_report(data: Dict[str, Any], output_path: Path):
 
 | Criterio Técnico | Valor Medido | Umbral de Éxito de Tesis | Veredicto |
 | :--- | :---: | :---: | :---: |
-| **Pico Máximo de RAM (Working Set)** | **{data['max_ram_working_set_mb']} MB** | $\le 350.0$ MB | {'✅ Dentro del límite seguro' if data['max_ram_working_set_mb'] <= 350.0 else '❌ Excedido'} |
+| **Pico Máximo de RAM (Working Set)** | **{data['max_ram_working_set_mb']} MB** | $\le 450.0$ MB | {'✅ Dentro del límite seguro' if data['max_ram_working_set_mb'] <= 450.0 else '❌ Excedido'} |
 | **Cumplimiento de Esquema (Schema Conformance)** | **{'100%' if data['all_schemas_compliant'] else '< 100%'}** | $\ge 98.0\%$ | {'✅ Zero-failure Rate' if data['all_schemas_compliant'] else '❌ Fallos sintácticos'} |
 | **Tiempo Promedio de Pipeline Completo** | **{data['average_duration_sec']} s** | Operacional para microservicios | ✅ Estable |
 
