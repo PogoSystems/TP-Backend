@@ -3,6 +3,7 @@ from modules.quiz_generation.domain.aggregates.answer import AnswerAggregate
 from modules.quiz_generation.domain.aggregates.question import QuestionAggregate
 from modules.quiz_generation.domain.aggregates.quiz import QuizAggregate
 import logging
+import random
 
 from core.settings import settings
 from modules.quiz_generation.domain.ports.context_retrieval_port import ContextRetrievalPort
@@ -180,6 +181,9 @@ class QuizGenerationService:
             num_questions=num_questions,
             bloom_levels = bloom_levels,
         )
+
+        for question in generated_quiz.questions:
+            random.shuffle(question.answers)
 
         return generated_quiz
 
