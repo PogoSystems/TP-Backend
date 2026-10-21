@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-10-08T15:32:38.007968",
+  "documents_tested_count": 3,
+  "documents_results": [
+    {
+      "file_name": "Sesion 10 - Calidad y Mejora de Procesos de Software_v2.pdf",
+      "format": "PDF",
+      "size_kb": 895.38,
+      "page_or_slide_count": 33,
+      "chunks_count": 24,
+      "total_duration_sec": 25.99,
+      "peak_ram_working_set_mb": 261.04,
+      "peak_heap_mb": 17.56,
+      "ram_delta_mb": 40.71,
+      "schema_compliance": true,
+      "step_durations": {
+        "1. Ingesta y Extracción Multiformato": 6.71,
+        "2. Segmentación Semántica (Chunking)": 4.67,
+        "3. Generación de Embeddings": 1.21,
+        "4. Generación de Cuestionario (LLM)": 12.64,
+        "Evaluación de Garbage Collection (gc.collect)": 0.08
+      }
+    },
+    {
+      "file_name": "TF_Grupo3_ 1ASI0438_CMPS_202601.docx",
+      "format": "DOCX",
+      "size_kb": 1713.51,
+      "page_or_slide_count": 29,
+      "chunks_count": 66,
+      "total_duration_sec": 23.15,
+      "peak_ram_working_set_mb": 333.43,
+      "peak_heap_mb": 41.99,
+      "ram_delta_mb": 46.11,
+      "schema_compliance": true,
+      "step_durations": {
+        "1. Ingesta y Extracción Multiformato": 2.06,
+        "2. Segmentación Semántica (Chunking)": 0.41,
+        "3. Generación de Embeddings": 1.19,
+        "4. Generación de Cuestionario (LLM)": 18.68,
+        "Evaluación de Garbage Collection (gc.collect)": 0.15
+      }
+    },
+    {
+      "file_name": "upc-pre-202601-ASI0570-6525-FromZero-keynote-tb1.pptx",
+      "format": "PPTX",
+      "size_kb": 7090.77,
+      "page_or_slide_count": 7,
+      "chunks_count": 7,
+      "total_duration_sec": 16.4,
+      "peak_ram_working_set_mb": 333.43,
+      "peak_heap_mb": 32.62,
+      "ram_delta_mb": 5.84,
+      "schema_compliance": true,
+      "step_durations": {
+        "1. Ingesta y Extracción Multiformato": 0.31,
+        "2. Segmentación Semántica (Chunking)": 0.15,
+        "3. Generación de Embeddings": 1.23,
+        "4. Generación de Cuestionario (LLM)": 13.98,
+        "Evaluación de Garbage Collection (gc.collect)": 0.08
+      }
+    }
+  ],
+  "average_duration_sec": 21.85,
+  "max_ram_working_set_mb": 333.43,
+  "all_schemas_compliant": true,
+  "academic_threshold_met": true
+}
