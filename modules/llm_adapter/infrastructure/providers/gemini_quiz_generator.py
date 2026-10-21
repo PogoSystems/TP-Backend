@@ -1,4 +1,5 @@
 import logging
+import random
 from google import genai
 from google.genai import types
 from google.genai.errors import APIError
@@ -9,6 +10,30 @@ from modules.quiz_generation.schemas.generation_schemas import GeneratedQuiz
 from shared.value_objects.Bloom import BloomLevel
 
 logger = logging.getLogger(__name__)
+
+
+def shuffle_quiz_options(quiz: GeneratedQuiz) -> GeneratedQuiz:
+    """
+    Shuffles the answer choices within each question to eliminate positional bias
+    (where LLMs tend to place the correct answer as the first option).
+
+    Rules:
+    - Answers are shuffled strictly within each question; options never cross questions.
+    - Questions with 2 options (e.g. True/False or boolean choices) maintain standard
+      pedagogical ordering ('Verdadero' / 'True' first, 'Falso' / 'False' second).
+    - Questions with 3 or more options are shuffled randomly in-place.
+    - Guarantees that the GeneratedQuiz Pydantic structure and validation remain intact.
+    """
+    for question in quiz.questions:
+        if len(question.answers) > 2:
+            random.shuffle(question.answers)
+        elif len(question.answers) == 2:
+            texts = [ans.text.strip().lower() for ans in question.answers]
+            if set(texts) in ({"verdadero", "falso"}, {"true", "false"}, {"v", "f"}):
+                question.answers.sort(
+                    key=lambda a: 0 if a.text.strip().lower() in ("verdadero", "true", "v") else 1
+                )
+    return quiz
 
 
 class GeminiQuizGenerator():
@@ -135,7 +160,8 @@ Generate the output strictly following the requested JSON schema.
 
             logger.info("Successfully received response from Gemini API for quiz generation")
             # Parse and run Pydantic validators on our side to guarantee correctness
-            return GeneratedQuiz.model_validate_json(response.text)
+            quiz = GeneratedQuiz.model_validate_json(response.text)
+            return shuffle_quiz_options(quiz)
 
         except APIError as e:
             is_503 = getattr(e, "code", None) == 503 or "503" in str(e) or "UNAVAILABLE" in str(e).upper() or "HIGH DEMAND" in str(e).upper()
@@ -189,7 +215,8 @@ Generate the output strictly following the requested JSON schema.
             clean_json = clean_json.strip()
 
             logger.info("Successfully generated quiz via Groq fallback")
-            return GeneratedQuiz.model_validate_json(clean_json)
+            quiz = GeneratedQuiz.model_validate_json(clean_json)
+            return shuffle_quiz_options(quiz)
         except Exception as err:
             logger.error(f"Groq fallback failed during quiz generation: {err}")
             raise RuntimeError(f"Fallback to Groq failed after Gemini 503: {err}") from err

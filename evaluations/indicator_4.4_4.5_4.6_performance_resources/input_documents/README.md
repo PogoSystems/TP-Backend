@@ -9,12 +9,15 @@ Deposita en esta carpeta los **3 documentos académicos** para ejecutar el bench
 ---
 
 ### ¿Cómo los procesa el sistema?
-* **PDF:** Extraído con `PdfContentExtractor` (`pymupdf4llm` y `fitz`) optimizado en subproceso efímero para evitar retención de memoria en C.
-* **DOCX:** Extraído con `DocxContentExtractor` (`mammoth`) omitiendo imágenes pesadas.
-* **PPTX:** Extraído con `PptxContentExtractor` (`python-pptx`) estructurando diapositiva por diapositiva.
+
+- **PDF:** Extraído con `PdfContentExtractor` (`pymupdf4llm` y `fitz`) optimizado en subproceso efímero para evitar retención de memoria en C.
+- **DOCX:** Extraído con `DocxContentExtractor` (`mammoth`) omitiendo imágenes pesadas.
+- **PPTX:** Extraído con `PptxContentExtractor` (`python-pptx`) estructurando diapositiva por diapositiva.
 
 Una vez depositados, ejecuta:
+
 ```bash
-python evaluations/indicator_4_performance_resources/benchmark_multiformat.py
+python evaluations/indicator_4.4_4.5_4.6_performance_resources/benchmark_multiformat.py
 ```
+
 El script detectará automáticamente los 3 archivos, ejecutará el pipeline completo en cada uno y generará una tabla comparativa con los picos de memoria RAM (Working Set), tiempos de respuesta y cumplimiento de esquema Pydantic.
